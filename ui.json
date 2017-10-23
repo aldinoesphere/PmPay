@@ -1,10 +1,10 @@
 {
     "defaultEntryPoint": "index.html",
-    "namespace": "MyFirstView",
+    "namespace": "PmPay",
     "menuEntries": [
         {
-        "label": "Hello World",
-        "menu": "start",
+        "label": "General Settings",
+        "menu": "settings/orders/pmpay",
         "urlKey": "hello-world",
         "entryPoint": "index.html"
         }

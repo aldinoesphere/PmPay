@@ -1,8 +1,8 @@
 {
-    "name": "MyFirstView",
-    "description": "My first back end view",
-    "namespace": "MyFirstView",
-    "author": "Your name",
+    "name": "PmPay",
+    "description": "Pm Pay Backend Menu",
+    "namespace": "PmPay",
+    "author": "Payreto Dev",
     "type": "backend",
     "serviceProvider": "MyFirstView\\Providers\\MyFirstViewServiceProvider"
 }
