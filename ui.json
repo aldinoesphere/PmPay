@@ -1,12 +1,12 @@
 {
     "defaultEntryPoint": "index.html",
-    "namespace": "PmPay",
+    "namespace": "Pmpay",
     "menuEntries": [
-        {
-        "label": "General Settings",
-        "menu": "settings/orders/pmpay",
-        "urlKey": "hello-world",
-        "entryPoint": "index.html"
-        }
+                    {
+                    "label": "General Settings",
+                    "menu": "settings/orders/pmpay",
+                    "urlKey": "hello-world",
+                    "entryPoint": "index.html"
+                    }
     ]
 }
