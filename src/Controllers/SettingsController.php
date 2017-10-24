@@ -31,14 +31,22 @@ class SettingsController extends Controller
 	 */
 	private $systemService;
 
+	/**
+	 *
+	 * @var systemService
+	 */
+	private $settingsService;
+
 	public function __construct(
 		Request $request,
 		Response $response,
-		SystemService $systemService
+		SystemService $systemService,
+		SettingsService $settingsService
 	) {
 		$this->request = $request;
 		$this->response = $response;
 		$this->systemService = $systemService;
+		$this->SettingsService = $settingsService;
 	}
 
     public function loadConfiguration(Twig $twig):string
