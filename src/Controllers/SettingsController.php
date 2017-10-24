@@ -5,7 +5,6 @@ use Plenty\Plugin\Controller;
 use Plenty\Plugin\Http\Request;
 use Plenty\Plugin\Http\Response;
 use Plenty\Plugin\Application;
-use Plenty\Plugin\Log\Loggable;
 use Plenty\Plugin\Templates\Twig;
 use Plenty\Modules\Frontend\Services\SystemService;
 
@@ -14,7 +13,6 @@ use Plenty\Modules\Frontend\Services\SystemService;
 */
 class SettingsController extends Controller
 {
-	use Loggable;
 
 	/**
 	 * @var Request
