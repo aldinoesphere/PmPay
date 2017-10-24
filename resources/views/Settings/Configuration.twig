@@ -1,1 +1,14 @@
-{% var_dump(settingType) %}
+{% extends getPartial('page-design') %}
+{% import "Ceres::PageDesign.Macros.LayoutContainer" as LayoutContainer %}
+
+{% block PartialHead %}
+    <title>{{ trans("Ceres::Template.orderCheckout") }} | {{ config("Ceres.header.company_name") }}</title>
+{% endblock %}
+
+{% block PageBody %}
+
+    <div class="page-content checkout container-max">
+    	{% settingType %}
+    </div>
+
+{% endblock %}
