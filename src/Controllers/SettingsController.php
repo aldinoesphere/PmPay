@@ -10,6 +10,8 @@ use Plenty\Plugin\Application;
 use Plenty\Plugin\Log\Loggable;
 use Plenty\Plugin\Templates\Twig;
 use Plenty\Modules\Frontend\Services\SystemService;
+
+use PmPay\Services\Database\SettingsService;
  
 class SettingsController extends Controller
 {
