@@ -71,14 +71,18 @@ class SettingsController extends Controller
 		return $this->settingsService->loadSetting($plentyId, $settingType);
 	}
 
-    public function loadConfiguration(Twig $twig):string
+    public function loadConfiguration(Twig $twig, $settingType):string
     {
     	$plentyId = $this->systemService->getPlentyId();
+
+    	$configuration = $this->settingsService->getConfiguration($plentyId, $settingType);
+        
         return $twig->render(
         		'PmPay::Settings.Configuration',
         		[
         			'plentyId' => $plentyId,
-        			'settingType' => 'pmpay_general'
+        			'settingType' => $settingType,
+        			'settings' => $configuration
         		]
         	);
     }
