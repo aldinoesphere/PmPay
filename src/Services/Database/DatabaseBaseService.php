@@ -1,9 +1,8 @@
 <?php
 
-namespace PayPal\Services\Database;
+namespace PmPay\Services\Database;
 
-use PayPal\Models\Database\Account;
-use PayPal\Models\Database\Settings;
+use PmPay\Models\Database\Settings;
 use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
 use Plenty\Modules\Plugin\DataBase\Contracts\Model;
 
