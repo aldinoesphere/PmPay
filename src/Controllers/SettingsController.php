@@ -48,7 +48,7 @@ class SettingsController extends Controller
 		$this->request = $request;
 		$this->response = $response;
 		$this->systemService = $systemService;
-		$this->SettingsService = $settingsService;
+		$this->settingsService = $settingsService;
 	}
 
     public function loadConfiguration(Twig $twig, $settingType):string
