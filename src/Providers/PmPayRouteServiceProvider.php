@@ -3,7 +3,7 @@ namespace PmPay\Providers;
 
 use Plenty\Plugin\RouteServiceProvider;
 use Plenty\Plugin\Routing\Router;
-use Plenty\Plugin\Routing\ApiRouter;
+// use Plenty\Plugin\Routing\ApiRouter;
 
 
 /**
@@ -17,11 +17,10 @@ class PmPayRouteServiceProvider extends RouteServiceProvider
 	* @param Router $router
 	* @param ApiRouter $apiRouter
 	*/
-	public function map(Router $router, ApiRouter $apiRouter) {
-		var_dump('sdfsfsf');exit;
+	public function map(Router $router) {
 
 		// Routes for display Skrill settings
-		$router->get('pmpay/settings/pmpay_general', 'PmPay\Controllers\SettingsController@loadConfiguration');
+		$router->get('pmpay', 'PmPay\Controllers\SettingsController@loadConfiguration');
 
 		// Routes for save Skrill settings
 		$router->post('pmpay/settings/save', 'PmPay\Controllers\SettingsController@saveConfiguration');

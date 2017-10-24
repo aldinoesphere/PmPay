@@ -50,17 +50,9 @@ class SettingsController extends Controller
 	 */
 	public function loadConfiguration(Twig $twig, $settingType)
 	{
-		$plentyId = $this->systemService->getPlentyId();
+		// $plentyId = $this->systemService->getPlentyId();
 
-		return $twig->render(
-						'PmPay::Configuration.Settings',
-						array(
-							'status' => $this->request->get('status'),
-							'locale' => substr($_COOKIE['plentymarkets_lang_'], 0, 2),
-							'plentyId' => $plentyId,
-							'settingType' => $settingType
-						)
-		);
+		return $twig->render('PmPay::Configuration.Settings');
 	}
 
 	public function saveConfiguration() {
