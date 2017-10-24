@@ -1,6 +1,6 @@
 {
     "name": "PmPay",
-    "description": "Pm Pay Backend Menu",
+    "description": "PmPay Backend Menu",
     "namespace": "PmPay",
     "author": "Payreto Dev",
     "type": "payment",
