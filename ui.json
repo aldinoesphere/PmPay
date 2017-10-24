@@ -3,10 +3,16 @@
     "namespace": "PlentyPmpay",
     "menuEntries": [
                     {
-                    "label": "General Settings",
-                    "menu": "settings/orders/pmpay",
-                    "urlKey": "hello-world",
-                    "entryPoint": "../../../../../pmpay/general-setting"
+                        "label": "General Settings",
+                        "menu": "settings/orders/pmpay",
+                        "urlKey": "general-setting",
+                        "entryPoint": "../../../../../pmpay/general-setting"
+                    },
+                    {
+                        "label": "Credit Card",
+                        "menu": "settings/orders/pmpay",
+                        "urlKey": "credit-card",
+                        "entryPoint": "../../../../../pmpay/credit-card"
                     }
     ]
 }

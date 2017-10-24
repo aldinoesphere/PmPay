@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+<title>Skrill Settings</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, input, label, option, select {
+	font-family: Verdana,Arial,sans-serif,Unicode MS !important;
+    font-size: 12px !important;
+    color: #333 !important;
+}
+span {
+	font-family: Verdana,Arial,sans-serif,Unicode MS !important;
+    font-size: 11px !important;
+    color: #555 !important;
+}
+label {
+	float:left;
+	padding: 5px;
+	width: 200px;
+}
+.input-text, span, select {
+	float:left;
+	padding: 5px;
+	width: 400px;
+}
+select {
+	width: 415px;
+}
+img {
+	height: 35px;
+	margin-right: 5px;
+}
+.div-separator {
+	margin-bottom: 10px;
+}
+.div-tooltips {
+	margin-left: 205px;
+}
+.div-img {
+	height: 35px;
+}
+.clear {
+	clear: both;
+}
+.input-button {
+	margin: 5px;
+    padding: 10px;
+	border: 1px solid transparent;
+	border-radius: 0.25rem;
+	background-color: #0db3e6;
+    color: #fff !important;
+    text-decoration: none;
+    cursor: pointer;
+    cursor: hand;
+}
+.message {
+	padding: 12px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+.success {
+	background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+}
+.failed {
+	background-color: #f2dede;
+    border-color: #ebcccc;
+    color: #a94442;
+}
+@media screen and (max-width: 768px) {
+	.div-tooltips {
+		margin-left: 0px;
+	}
+	.input-text, label, span {
+		width: 98%;
+	}
+	select {
+		width: 100%;
+	}
+}
+</style>
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function(event) {
+		setTimeout(removeMessage, 5000);
+	});
+	function removeMessage() {
+		if (document.getElementById('successMessage')) {
+			document.getElementById('successMessage').style.display = 'none';
+		}
+		if (document.getElementById('errorMessage')) {
+			document.getElementById('errorMessage').style.display = 'none';
+		}
+	}
+	function changeLanguage(language) {
+		document.getElementById('skrill_payment_name_en').style.display = 'none';
+		document.getElementById('skrill_payment_name_de').style.display = 'none';
+		document.getElementById('skrill_payment_name_'+language).style.display = 'block';
+	}
+</script>
+</head>
+<body>
+	<h3>Credit Card</h3>
+	<div id="pmpaySettings">
+		<form action="save" method="post" name="savesettings" class="settings">
+			<input type="hidden" name="settingType" value="{{ settingType }}" />
+			<input type="hidden" name="plentyId" value="{{ plentyId }}" />
+				<div>
+					<label for="User ID">Enabled *</label>
+					<select name="enabled">
+						<option value="1">Yes</option>
+						<option value="0">No</option>
+					</select>
+				</div>
+				<div class="clear"></div>
+				<div class="div-separator clear"></div>
+				<div>
+					<label for="Password">Card Types *</label>
+					<select name="cardTypes[]" multiple="multiple">
+						<option value="VSA">Visa</option>
+						<option value="MASTER">Master Card</option>
+						<option value="AMEX">American Express</option>
+					</select>
+				</div>
+				<div class="clear"></div>
+				<div class="div-separator clear"></div>
+				<div>
+					<label for="Merchant Email">Transaction-Mode </label>
+					<select name="transactionMode">
+						<option value="DB">Debit</option>
+						<option value="PA">Pre - Authorization</option>
+					</select>
+				</div>
+				<div class="clear"></div>
+				<div class="div-separator clear"></div>
+				<div>
+					<label for="Shop Url">Entity-ID</label>
+					<input type="text" class="input-text" name="entityId" value="{{ setting.entityId }}"/>
+				</div>
+			<div class="div-separator clear"></div>
+			<div>
+				<input name="savebutton" type="submit" class="input-button" value="Save Configuration" />
+			</div>
+		</form>
+	</div>
+</body>
+</html>

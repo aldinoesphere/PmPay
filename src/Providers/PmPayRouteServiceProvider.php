@@ -9,8 +9,11 @@ class PmPayRouteServiceProvider extends RouteServiceProvider
 {
 	public function map(Router $router) {
 
-		// Routes for display Skrill settings
+		// Routes for display PmPay settings
 		$router->get('pmpay/general-setting','PmPay\Controllers\SettingsController@loadConfiguration');
+
+		// Routes for display PmPay settings
+		$router->get('pmpay/credit-card','PmPay\Controllers\SettingsController@loadConfigurationCreditCard');
 	}
 }
 

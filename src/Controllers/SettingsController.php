@@ -54,4 +54,15 @@ class SettingsController extends Controller
         		]
         	);
     }
+
+    public function loadConfigurationCreditCard(Twig $twig):string 
+    {
+    	return $twig->render(
+        		'PmPay::Settings.CrefitCard',
+        		[
+        			'plentyId' => $plentyId,
+        			'settingType' => 'CeditCard'
+        		]
+        	);
+    }
 }
