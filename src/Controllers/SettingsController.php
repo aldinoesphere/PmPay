@@ -49,7 +49,7 @@ class SettingsController extends Controller
 		$this->SettingsService = $settingsService;
 	}
 
-    public function loadConfiguration(Twig $twig):string
+    public function loadConfiguration(Twig $twig, $settingType):string
     {
     	$plentyId = $this->systemService->getPlentyId();
 
@@ -58,22 +58,22 @@ class SettingsController extends Controller
         		'PmPay::Settings.Configuration',
         		[
         			'plentyId' => $plentyId,
-        			'settingType' => 'pmpay_general'
+        			'settingType' => $settingType
         		]
         	);
     }
 
-    public function loadConfigurationCreditCard(Twig $twig):string 
-    {
-    	$plentyId = $this->systemService->getPlentyId();
-    	return $twig->render(
-        		'PmPay::Settings.CreditCard',
-        		[
-        			'plentyId' => $plentyId,
-        			'settingType' => 'pmpay_cc'
-        		]
-        	);
-    }
+    // public function loadConfigurationCreditCard(Twig $twig):string 
+    // {
+    // 	$plentyId = $this->systemService->getPlentyId();
+    // 	return $twig->render(
+    //     		'PmPay::Settings.CreditCard',
+    //     		[
+    //     			'plentyId' => $plentyId,
+    //     			'settingType' => 'pmpay_cc'
+    //     		]
+    //     	);
+    // }
 
     /**
 	 * Save Skrill backend configuration
