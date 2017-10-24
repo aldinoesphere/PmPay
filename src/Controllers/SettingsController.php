@@ -10,7 +10,6 @@ class SettingsController extends Controller
 {
     public function loadConfiguration(Twig $twig):string
     {
-        // return $twig->render('PmPay::Configuration.Settings');
-        print_r('test');
+        return $twig->render('PmPay::Configuration.Settings');
     }
 }
