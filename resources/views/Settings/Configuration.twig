@@ -105,6 +105,7 @@ img {
 </script>
 </head>
 <body>
+	<h3>General Setting</h3>
 	<div id="pmpaySettings">
 		<form action="save" method="post" name="savesettings" class="settings">
 			<input type="hidden" name="settingType" value="{{ settingType }}" />
@@ -134,7 +135,6 @@ img {
 			<div class="div-separator clear"></div>
 			<div>
 				<input name="savebutton" type="submit" class="input-button" value="Save Configuration" />
-				<terra-button [inputCaption]="'Button icon and text'" [inputIcon]="'icon-confirm'" [inputIsPrimary]="true" (outputClicked)="onClick()"></terra-button>
 			</div>
 		</form>
 	</div>
