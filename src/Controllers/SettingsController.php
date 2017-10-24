@@ -35,7 +35,7 @@ class SettingsController extends Controller
 	public function __construct(
 		Request $request,
 		Response $response,
-		SystemService $systemService,
+		SystemService $systemService
 	) {
 		$this->request = $request;
 		$this->response = $response;
