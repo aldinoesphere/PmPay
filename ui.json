@@ -6,13 +6,13 @@
                         "label": "General Settings",
                         "menu": "settings/orders/pmpay",
                         "urlKey": "general-setting",
-                        "entryPoint": "../../../../../pmpay/settings/general-setting"
+                        "entryPoint": "../../../../../pmpay/general-setting"
                     },
                     {
                         "label": "Credit Card",
                         "menu": "settings/orders/pmpay",
                         "urlKey": "credit-card",
-                        "entryPoint": "../../../../../pmpay/settings/credit-card"
+                        "entryPoint": "../../../../../pmpay/credit-card"
                     }
     ]
 }
