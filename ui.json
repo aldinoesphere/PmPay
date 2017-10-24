@@ -6,7 +6,7 @@
                     "label": "General Settings",
                     "menu": "settings/orders/pmpay",
                     "urlKey": "hello-world",
-                    "entryPoint": "../../../../../pmpay"
+                    "entryPoint": "../../../../../pmpay/general-setting"
                     }
     ]
 }
