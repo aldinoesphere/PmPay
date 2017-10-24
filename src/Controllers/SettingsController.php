@@ -44,8 +44,6 @@ class SettingsController extends Controller
     public function loadConfiguration(Twig $twig):string
     {
     	$plentyId = $this->systemService->getPlentyId();
-
-
         return $twig->render(
         		'PmPay::Settings.Configuration',
         		[
@@ -110,6 +108,6 @@ class SettingsController extends Controller
 			$status = 'failed';
 		}
 
-		// return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
+		return $this->response->redirectTo('pmpay/settings/');
 	}
 }
