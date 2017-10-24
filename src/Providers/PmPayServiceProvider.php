@@ -4,7 +4,7 @@ namespace PmPay\Providers;
  
 use Plenty\Plugin\ServiceProvider;
  
-class PmPayViewServiceProvider extends ServiceProvider
+class PmPayServiceProvider extends ServiceProvider
 {
     public function register()
     {
