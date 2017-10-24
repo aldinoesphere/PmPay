@@ -1,10 +1,10 @@
 <?php
  
-namespace MyFirstView\Providers;
+namespace PmPay\Providers;
  
 use Plenty\Plugin\ServiceProvider;
  
-class MyFirstViewServiceProvider extends ServiceProvider
+class PmPayViewServiceProvider extends ServiceProvider
 {
     public function register()
     {
