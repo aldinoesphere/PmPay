@@ -59,7 +59,7 @@ class SettingsController extends Controller
     {
     	$plentyId = $this->systemService->getPlentyId();
     	return $twig->render(
-        		'PmPay::Settings.CrefitCard',
+        		'PmPay::Settings.CreditCard',
         		[
         			'plentyId' => $plentyId,
         			'settingType' => 'CeditCard'
