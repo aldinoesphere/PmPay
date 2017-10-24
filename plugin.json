@@ -3,6 +3,6 @@
     "description": "Pm Pay Backend Menu",
     "namespace": "PmPay",
     "author": "Payreto Dev",
-    "type": "backend",
+    "type": "payment",
     "serviceProvider": "PmPay\\Providers\\PmPayServiceProvider"
 }
