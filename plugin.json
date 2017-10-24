@@ -4,5 +4,5 @@
     "namespace": "PmPay",
     "author": "Payreto Dev",
     "type": "backend",
-    "serviceProvider": "MyFirstView\\Providers\\MyFirstViewServiceProvider"
+    "serviceProvider": "PmPay\\Providers\\PmPayServiceProvider"
 }
