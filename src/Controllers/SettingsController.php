@@ -57,6 +57,7 @@ class SettingsController extends Controller
 
     public function loadConfigurationCreditCard(Twig $twig):string 
     {
+    	$plentyId = $this->systemService->getPlentyId();
     	return $twig->render(
         		'PmPay::Settings.CrefitCard',
         		[
