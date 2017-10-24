@@ -44,7 +44,7 @@ class SettingsController extends Controller
 
 
 	/**
-	 * Display Skrill backend configuration
+	 * Display PmPay backend configuration
 	 *
 	 * @param Twig $twig
 	 * @param string $settingType
@@ -60,8 +60,7 @@ class SettingsController extends Controller
 							'status' => $this->request->get('status'),
 							'locale' => substr($_COOKIE['plentymarkets_lang_'], 0, 2),
 							'plentyId' => $plentyId,
-							'settingType' => $settingType,
-							'setting' => $configuration
+							'settingType' => $settingType
 						)
 		);
 	}
