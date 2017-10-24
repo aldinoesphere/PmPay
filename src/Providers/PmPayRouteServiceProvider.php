@@ -18,6 +18,7 @@ class PmPayRouteServiceProvider extends RouteServiceProvider
 	* @param ApiRouter $apiRouter
 	*/
 	public function map(Router $router, ApiRouter $apiRouter) {
+		var_dump('sdfsfsf');exit;
 
 		// Routes for display Skrill settings
 		$router->get('pmpay/settings/pmpay_general', 'PmPay\Controllers\SettingsController@loadConfiguration');
