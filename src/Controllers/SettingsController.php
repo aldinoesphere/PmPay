@@ -31,14 +31,44 @@ class SettingsController extends Controller
 	 */
 	private $systemService;
 
+	/**
+	 * @var settingsService
+	 */
+	private $settingsService;
+
 	public function __construct(
 		Request $request,
 		Response $response,
-		SystemService $systemService
+		SystemService $systemService,
+		SettingsService $settingsService
 	) {
 		$this->request = $request;
 		$this->response = $response;
 		$this->systemService = $systemService;
+		$this->settingsService = $settingsService;
+	}
+
+	/**
+	 * load the settings
+	 *
+	 * @param string $settingType
+	 * @return array
+	 */
+	public function loadSettings($settingType)
+	{
+		return $this->settingsService->loadSettings($settingType);
+	}
+
+	/**
+	 * Load the settings for one webshop
+	 *
+	 * @param string $plentyId
+	 * @param string $settingType
+	 * @return null|mixed
+	 */
+	public function loadSetting($plentyId, $settingType)
+	{
+		return $this->settingsService->loadSetting($plentyId, $settingType);
 	}
 
     public function loadConfiguration(Twig $twig):string
