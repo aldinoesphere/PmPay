@@ -51,33 +51,28 @@ class SettingsController extends Controller
 	}
 
 	/**
-	 * load the settings
-	 *
-	 * @param string $settingType
-	 * @return array
-	 */
-	public function loadSettings($settingType)
-	{
-		return $this->settingsService->loadSettings($settingType);
-	}
+     * @return bool|mixed
+     */
+    public function loadSettings($settingType)
+    {
+        return $this->settingsService->loadSettings($settingType);
+    }
 
-	/**
-	 * Load the settings for one webshop
-	 *
-	 * @param string $plentyId
-	 * @param string $settingType
-	 * @return null|mixed
-	 */
-	public function loadSetting($plentyId, $settingType)
-	{
-		return $this->settingsService->loadSetting($plentyId, $settingType);
-	}
+    /**
+     * Load the settings for one webshop
+     *
+     * @param $webstore
+     */
+    public function loadSetting($webstore, $mode)
+    {
+        return $this->settingsService->loadSetting($webstore, $mode);
+    }
 
     public function loadConfiguration(Twig $twig, $settingType):string
     {
     	$plentyId = $this->systemService->getPlentyId();
 
-    	$configuration = $this->settingsService->getConfiguration($plentyId, $settingType);
+    	$configuration = $this->settingsService->loadSetting($plentyId, $settingType);
         
         return $twig->render(
         		'PmPay::Settings.Configuration',
