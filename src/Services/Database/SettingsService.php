@@ -52,7 +52,7 @@ class SettingsService extends DatabaseBaseService
         return $settings;
     }
 
-    public function saveConfiguration($mode, $settings)
+    public function saveSettings($mode, $settings)
     {
         if($settings)
         {

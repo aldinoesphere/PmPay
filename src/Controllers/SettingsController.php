@@ -128,7 +128,7 @@ class SettingsController extends Controller
 			);
 		};
 
-		$result = $this->settingsService->saveConfiguration($settings);
+		$result = $this->settingsService->saveSettings($plentyId, $settings);
 
 		if ($result == 1)
 		{
