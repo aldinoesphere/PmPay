@@ -144,7 +144,7 @@ img {
 				<div>
 					<label for="Card Type">Card Types *</label>
 					{% set cardTypes = setting.cardType|split(',') %}
-					{{ cardTypes }}
+					{{ dump(cardTypes) }}
 					<select name="cardTypes[]" multiple="multiple" value="{{ cardTypes }}">
 						<option value="VSA" {{ ('VSA' in cardTypes|keys) ? 'selected' : '' }}>Visa</option>
 						<option value="MASTER" {{ ('MASTER' in cardTypes|keys) ? 'selected' : '' }}>Master Card</option>
