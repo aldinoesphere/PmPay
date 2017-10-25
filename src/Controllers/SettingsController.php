@@ -137,7 +137,7 @@ class SettingsController extends Controller
 		$newCardTypes = [];
 
 		foreach ($cardTypes as $key => $value) {
-			array_push($newCardTypes, $val);
+			array_push($newCardTypes, $value);
 		}
 
 		$settings['settingType'] = $settingType;
