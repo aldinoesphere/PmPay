@@ -150,24 +150,23 @@ class SettingsController extends Controller
 			$settings['settings'][0]['PID_'.$plentyId] = array(
 				'language' => $this->request->get('language'),
 				'display' => $this->request->get('display'),
-				'cardType' => implode(',', $this->request->get('cardTypes[]')),
+				'cardType' => $this->request->get('cardTypes[]'),
 				'transactionMode' => $this->request->get('transactionMode'),
 				'entityId' => $this->request->get('entityId')
 			);
 		};
 
-		return $this->request->get('cardTypes[]');
-		// $result = $this->settingsService->saveConfiguration($settings);
+		$result = $this->settingsService->saveConfiguration($settings);
 
-		// if ($result == 1)
-		// {
-		// 	$status = 'success';
-		// }
-		// else
-		// {
-		// 	$status = 'failed';
-		// }
+		if ($result == 1)
+		{
+			$status = 'success';
+		}
+		else
+		{
+			$status = 'failed';
+		}
 
-		// return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
+		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
 	}
 }
