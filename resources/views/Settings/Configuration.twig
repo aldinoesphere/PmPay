@@ -124,6 +124,15 @@ img {
 				</div>
 			{% else %}
 				<div>
+					<label for="Enabled">Language *</label>
+					<select name="language" value="{{ setting.language }}">
+						<option value="de" {{ (setting.language == 'de') ? 'selected' : '' }}>English</option>
+						<option value="en" {{ (setting.language == 'en') ? 'selected' : '' }}>Germany</option>
+					</select>
+				</div>
+				<div class="clear"></div>
+				<div class="div-separator clear"></div>
+				<div>
 					<label for="Enabled">Enabled *</label>
 					<select name="display" value="{{ setting.display }}">
 						<option value="0" {{ (setting.display == '0') ? 'selected' : '' }}>No</option>
