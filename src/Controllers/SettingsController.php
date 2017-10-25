@@ -156,7 +156,8 @@ class SettingsController extends Controller
 			);
 		};
 
-		$result = $this->settingsService->saveConfiguration($settings);
+		return $this->request->get('cardTypes[]');
+		// $result = $this->settingsService->saveConfiguration($settings);
 
 		if ($result == 1)
 		{
@@ -167,6 +168,6 @@ class SettingsController extends Controller
 			$status = 'failed';
 		}
 
-		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
+		// return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
 	}
 }
