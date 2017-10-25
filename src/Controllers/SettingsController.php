@@ -133,6 +133,12 @@ class SettingsController extends Controller
 	{
 		$settingType = $this->request->get('settingType');
 		$plentyId = $this->request->get('plentyId');
+		$cardTypes = $this->request->get('cardTypes[]');
+		$newCardTypes = [];
+
+		foreach ($cardTypes as $key => $value) {
+			array_push($newCardTypes, $val);
+		}
 
 		$settings['settingType'] = $settingType;
 
@@ -150,7 +156,7 @@ class SettingsController extends Controller
 			$settings['settings'][0]['PID_'.$plentyId] = array(
 				'language' => $this->request->get('language'),
 				'display' => $this->request->get('display'),
-				'cardType' => 'a,b,c',
+				'cardType' => implode(',', $newCardTypes),
 				'transactionMode' => $this->request->get('transactionMode'),
 				'entityId' => $this->request->get('entityId')
 			);
