@@ -148,6 +148,7 @@ class SettingsController extends Controller
 		else
 		{
 			$settings['settings'][0]['PID_'.$plentyId] = array(
+				'language' => $this->request->get('language'),
 				'display' => $this->request->get('display'),
 				'cardType' => implode(',', $this->request->get('cardTypes[]')),
 				'transactionMode' => $this->request->get('transactionMode'),
