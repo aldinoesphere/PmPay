@@ -166,6 +166,6 @@ class SettingsController extends Controller
 			$status = 'failed';
 		}
 
-		return $this->response->redirectTo('pmpay/'.$settingType.'?status='.$status);
+		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
 	}
 }
