@@ -105,7 +105,8 @@ img {
 </script>
 </head>
 <body>
-	<h3>{{ str_ireplace('-', ' ', settingType) }}</h3>
+	{{setting}}
+	<h3>{{ settingType }}</h3>
 	<div id="pmpaySettings">
 		<form action="save" method="post" name="savesettings" class="settings">
 			<input type="hidden" name="settingType" value="{{ settingType }}" />
