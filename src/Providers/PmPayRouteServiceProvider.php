@@ -14,9 +14,9 @@ class PmPayRouteServiceProvider extends RouteServiceProvider
 			['v1'],
 			['namespace' => 'PmPay\Controllers', 'middleware' => 'oauth'],
 			function ($apiRouter) {
-				$apiRouter->post('payment/skrill/settings/', 'SettingsController@saveSettings');
-				$apiRouter->get('payment/skrill/settings/{settingType}', 'SettingsController@loadSettings');
-				$apiRouter->get('payment/skrill/setting/{plentyId}/{settingType}', 'SettingsController@loadSetting');
+				$apiRouter->post('payment/pmpay/settings/', 'SettingsController@saveSettings');
+				$apiRouter->get('payment/pmpay/settings/{settingType}', 'SettingsController@loadSettings');
+				$apiRouter->get('payment/pmpay/setting/{plentyId}/{settingType}', 'SettingsController@loadSetting');
 			}
 		);
 
