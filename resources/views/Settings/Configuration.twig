@@ -145,8 +145,8 @@ img {
 				<div>
 					<label for="Merchant Email">Transaction-Mode </label>
 					<select name="transactionMode" onchange="onChange()" value="{{ setting.transactionMode }}">
-						<option value="DB">Debit</option>
-						<option value="PA">Pre - Authorization</option>
+						<option value="DB" {{ (setting.transactionMode == 'DB') ? 'selected' : '' }}>Debit</option>
+						<option value="PA" {{ (setting.transactionMode == 'PA') ? 'selected' : '' }}>Pre - Authorization</option>
 					</select>
 				</div>
 				<div class="clear"></div>
