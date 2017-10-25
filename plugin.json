@@ -6,6 +6,6 @@
     "type": "payment",
     "serviceProvider": "PmPay\\Providers\\PmPayServiceProvider",
     "runOnBuild"        : [
-        "PmPay\\Migrations\\CreateSkrillTables"
+        "PmPay\\Migrations\\CreatePmPayTables"
     ]
 }
