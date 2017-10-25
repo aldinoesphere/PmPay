@@ -86,22 +86,11 @@ img {
 }
 </style>
 <script type="text/javascript">
-	document.addEventListener("DOMContentLoaded", function(event) {
-		setTimeout(removeMessage, 5000);
-	});
-	function removeMessage() {
-		if (document.getElementById('successMessage')) {
-			document.getElementById('successMessage').style.display = 'none';
-		}
-		if (document.getElementById('errorMessage')) {
-			document.getElementById('errorMessage').style.display = 'none';
-		}
-	}
-	function changeLanguage(language) {
-		document.getElementById('skrill_payment_name_en').style.display = 'none';
-		document.getElementById('skrill_payment_name_de').style.display = 'none';
-		document.getElementById('skrill_payment_name_'+language).style.display = 'block';
-	}
+	var data = document.querySelectorAll('[data-value]');
+
+	[].slice.call(data).forEach(function(elm) {
+		console.log(elm);
+	})
 </script>
 </head>
 <body>
@@ -136,7 +125,7 @@ img {
 			{% else %}
 				<div>
 					<label for="Enabled">Enabled *</label>
-					<select name="display" value="{{ setting.display }}">
+					<select name="display" data-value="{{ setting.display }}">
 						<option value="1">Yes</option>
 						<option value="0">No</option>
 					</select>
@@ -155,7 +144,7 @@ img {
 				<div class="div-separator clear"></div>
 				<div>
 					<label for="Merchant Email">Transaction-Mode </label>
-					<select name="transactionMode" value="{{ setting.transactionMode }}">
+					<select name="transactionMode" data-value="{{ setting.transactionMode }}">
 						<option value="DB">Debit</option>
 						<option value="PA">Pre - Authorization</option>
 					</select>
