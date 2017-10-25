@@ -21,10 +21,10 @@ class PmPayRouteServiceProvider extends RouteServiceProvider
 		);
 
 		// Routes for display General settings
-		$router->get('pmpay/{settingType}','PmPay\Controllers\SettingsController@loadConfiguration');
+		$router->get('pmpay/settings/{settingType}','PmPay\Controllers\SettingsController@loadConfiguration');
 
 		// Routes for 
-		$router->post('pmpay/save','PmPay\Controllers\SettingsController@saveConfiguration');
+		$router->post('pmpay/settings/save','PmPay\Controllers\SettingsController@saveConfiguration');
 	}
 }
 
