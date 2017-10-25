@@ -3,11 +3,12 @@ namespace PmPay\Providers;
 
 use Plenty\Plugin\RouteServiceProvider;
 use Plenty\Plugin\Routing\Router;
+use Plenty\Plugin\Routing\ApiRouter;
 
 
 class PmPayRouteServiceProvider extends RouteServiceProvider
 {
-	public function map(Router $router) {
+	public function map(Router $router, ApiRouter $apiRouter) {
 
 		$apiRouter->version(
 			['v1'],
