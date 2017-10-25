@@ -4,5 +4,8 @@
     "namespace": "PmPay",
     "author": "Payreto Dev",
     "type": "payment",
-    "serviceProvider": "PmPay\\Providers\\PmPayServiceProvider"
+    "serviceProvider": "PmPay\\Providers\\PmPayServiceProvider",
+    "runOnBuild"        : [
+        "PmPay\\Migrations\\CreateSkrillTables"
+    ]
 }
