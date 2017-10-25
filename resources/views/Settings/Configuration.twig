@@ -86,10 +86,12 @@ img {
 }
 </style>
 <script type="text/javascript">
-	var data = document.getElementsByTagName('select')[0].getAttribute('[data-value]');
+	var data = document.getElementsByTagName('select')[0].getAttribute('data-value');
+	var data1 = document.getElementsByTagName('select')[0];
 
 	function onChange() {
 		console.log(data);
+		console.log(data1);
 	}
 
 	// [].slice.call(data).forEach(function(elm) {
