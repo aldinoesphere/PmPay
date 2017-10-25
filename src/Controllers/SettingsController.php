@@ -133,7 +133,7 @@ class SettingsController extends Controller
 	{
 		$settingType = $this->request->get('settingType');
 		$plentyId = $this->request->get('plentyId');
-		return $cardTypes = $this->request->get('cardTypes[]');
+		$cardTypes = $this->request->get('cardTypes');
 		$newCardTypes = [];
 
 		foreach ($cardTypes as $key => $value) {
@@ -173,6 +173,6 @@ class SettingsController extends Controller
 			$status = 'failed';
 		}
 
-		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
+		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$cardTypes);
 	}
 }
