@@ -136,7 +136,7 @@ img {
 			{% else %}
 				<div>
 					<label for="Enabled">Enabled *</label>
-					<select name="display">
+					<select name="display" value="{{ setting.display }}">
 						<option value="1">Yes</option>
 						<option value="0">No</option>
 					</select>
@@ -145,7 +145,7 @@ img {
 				<div class="div-separator clear"></div>
 				<div>
 					<label for="Card Type">Card Types *</label>
-					<select name="cardTypes[]" multiple="multiple">
+					<select name="cardTypes[]" multiple="multiple" value="{{ setting.cardTypes }}">
 						<option value="VSA">Visa</option>
 						<option value="MASTER">Master Card</option>
 						<option value="AMEX">American Express</option>
@@ -155,7 +155,7 @@ img {
 				<div class="div-separator clear"></div>
 				<div>
 					<label for="Merchant Email">Transaction-Mode </label>
-					<select name="transactionMode">
+					<select name="transactionMode" value="{{ setting.transactionMode }}">
 						<option value="DB">Debit</option>
 						<option value="PA">Pre - Authorization</option>
 					</select>

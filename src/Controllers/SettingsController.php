@@ -155,7 +155,7 @@ class SettingsController extends Controller
 			);
 		};
 
-		return	$result = $this->settingsService->saveConfiguration($settings);
+		$result = $this->settingsService->saveConfiguration($settings);
 
 		if ($result == 1)
 		{
@@ -166,6 +166,6 @@ class SettingsController extends Controller
 			$status = 'failed';
 		}
 
-		// return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
+		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
 	}
 }
