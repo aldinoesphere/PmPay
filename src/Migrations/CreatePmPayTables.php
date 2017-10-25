@@ -37,7 +37,7 @@ class CreatePmPayTables
 		$migrate->createTable(Settings::class);
 
 		// Set default payment method name in all supported languages.
-		$service = pluginApp(SettingsService::class);
-		$service->setInitialSettings();
+		// $service = pluginApp(SettingsService::class);
+		// $service->setInitialSettings();
 	}
 }

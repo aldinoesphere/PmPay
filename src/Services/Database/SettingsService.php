@@ -149,21 +149,21 @@ class SettingsService extends DatabaseBaseService
      * set initial settings payment method name for each plentyId
      *
      */
-    public function setInitialSettings()
-    {
-        $clients = $this->getClients();
+    // public function setInitialSettings()
+    // {
+    //     $clients = $this->getClients();
 
-        foreach ($clients as $plentyId)
-        {
-            $settings = array();
-            $settings[] = array(
-                'PID_'.$plentyId => array(
-                    'language' => $value
-                )
-            );
-            $this->saveSettings('pmpay_settings', $settings);
-        }
-    }
+    //     foreach ($clients as $plentyId)
+    //     {
+    //         $settings = array();
+    //         $settings[] = array(
+    //             'PID_'.$plentyId => array(
+    //                 'language' => $value
+    //             )
+    //         );
+    //         $this->saveSettings('pmpay_settings', $settings);
+    //     }
+    // }
 
     /**
      * get PmPay configuration by plentyId and settingType
