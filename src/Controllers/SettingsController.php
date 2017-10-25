@@ -159,14 +159,14 @@ class SettingsController extends Controller
 		return $this->request->get('cardTypes[]');
 		// $result = $this->settingsService->saveConfiguration($settings);
 
-		if ($result == 1)
-		{
-			$status = 'success';
-		}
-		else
-		{
-			$status = 'failed';
-		}
+		// if ($result == 1)
+		// {
+		// 	$status = 'success';
+		// }
+		// else
+		// {
+		// 	$status = 'failed';
+		// }
 
 		// return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
 	}
