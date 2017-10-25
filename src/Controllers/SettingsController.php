@@ -1,8 +1,7 @@
 <?php
- 
+
 namespace PmPay\Controllers;
- 
- 
+
 use Plenty\Plugin\Controller;
 use Plenty\Plugin\Http\Request;
 use Plenty\Plugin\Http\Response;
@@ -10,9 +9,13 @@ use Plenty\Plugin\Application;
 use Plenty\Plugin\Log\Loggable;
 use Plenty\Plugin\Templates\Twig;
 use Plenty\Modules\Frontend\Services\SystemService;
-
 use PmPay\Services\Database\SettingsService;
- 
+use PmPay\Helper\PaymentHelper;
+
+/**
+* Class SettingsController
+* @package PmPay\Controllers
+*/
 class SettingsController extends Controller
 {
 	use Loggable;
@@ -34,16 +37,19 @@ class SettingsController extends Controller
 	private $systemService;
 
 	/**
-	 *
-	 * @var systemService
+	 * @var settingsService
 	 */
 	private $settingsService;
 
+	/**
+	 * SettingsController constructor.
+	 * @param SettingsService $settingsService
+	 */
 	public function __construct(
-		Request $request,
-		Response $response,
-		SystemService $systemService,
-		SettingsService $settingsService
+					Request $request,
+					Response $response,
+					SystemService $systemService,
+					SettingsService $settingsService
 	) {
 		$this->request = $request;
 		$this->response = $response;
@@ -51,34 +57,76 @@ class SettingsController extends Controller
 		$this->settingsService = $settingsService;
 	}
 
-    public function loadConfiguration(Twig $twig, $settingType):string
-    {
-    	$plentyId = $this->systemService->getPlentyId();
+	/**
+	 * save the settings
+	 *
+	 * @param Request $request
+	 */
+	public function saveSettings(Request $request)
+	{
+		return $this->settingsService->saveSettings($request->get('settingType'), $request->get('settings'));
+	}
 
+	/**
+	 * load the settings
+	 *
+	 * @param string $settingType
+	 * @return array
+	 */
+	public function loadSettings($settingType)
+	{
+		return $this->settingsService->loadSettings($settingType);
+	}
 
-        return $twig->render(
-        		'PmPay::Settings.Configuration',
-        		[
-        			'plentyId' => $plentyId,
-        			'settingType' => $settingType
-        		]
-        	);
-    }
+	/**
+	 * Load the settings for one webshop
+	 *
+	 * @param string $plentyId
+	 * @param string $settingType
+	 * @return null|mixed
+	 */
+	public function loadSetting($plentyId, $settingType)
+	{
+		return $this->settingsService->loadSetting($plentyId, $settingType);
+	}
 
-    // public function loadConfigurationCreditCard(Twig $twig):string 
-    // {
-    // 	$plentyId = $this->systemService->getPlentyId();
-    // 	return $twig->render(
-    //     		'PmPay::Settings.CreditCard',
-    //     		[
-    //     			'plentyId' => $plentyId,
-    //     			'settingType' => 'pmpay_cc'
-    //     		]
-    //     	);
-    // }
+	/**
+	 * Display PmPay backend configuration
+	 *
+	 * @param Twig $twig
+	 * @param string $settingType
+	 * @return void
+	 */
+	public function loadConfiguration(Twig $twig, $settingType)
+	{
+		$plentyId = $this->systemService->getPlentyId();
 
-    /**
-	 * Save Skrill backend configuration
+		try {
+			$configuration = $this->settingsService->getConfiguration($plentyId, $settingType);
+		}
+		catch (\Exception $e)
+		{
+			die('something wrong, please try again...');
+		}
+		if ($configuration['error']['code'] == '401')
+		{
+			die('access denied...');
+		}
+
+		return $twig->render(
+						'PmPay::Settings.Configuration',
+						array(
+							'status' => $this->request->get('status'),
+							'locale' => substr($_COOKIE['plentymarkets_lang_'], 0, 2),
+							'plentyId' => $plentyId,
+							'settingType' => $settingType,
+							'setting' => $configuration
+						)
+		);
+	}
+
+	/**
+	 * Save PmPay backend configuration
 	 *
 	 */
 	public function saveConfiguration()
@@ -88,7 +136,7 @@ class SettingsController extends Controller
 
 		$settings['settingType'] = $settingType;
 
-		if ($settingType == 'pmpay_general')
+		if ($settingType == 'general-setting')
 		{
 			$settings['settings'][0]['PID_'.$plentyId] = array(
 				'userId' => $this->request->get('userId'),
@@ -100,14 +148,14 @@ class SettingsController extends Controller
 		else
 		{
 			$settings['settings'][0]['PID_'.$plentyId] = array(
-				'enabled' => $this->request->get('enabled'),
-				'cardTypes' => implode(',', $this->request->get('cardTypes[]')),
+				'display' => $this->request->get('display'),
+				'cardType' => implode(',', $this->request->get('cardTypes[]')),
 				'transactionMode' => $this->request->get('transactionMode'),
 				'entityId' => $this->request->get('entityId')
 			);
 		};
 
-		$result = $this->settingsService->saveSettings($plentyId, $settings);
+		$result = $this->settingsService->saveConfiguration($settings);
 
 		if ($result == 1)
 		{
@@ -118,6 +166,6 @@ class SettingsController extends Controller
 			$status = 'failed';
 		}
 
-		// return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$status);
+		return $this->response->redirectTo('PmPay/'.$settingType.'?status='.$status);
 	}
 }
