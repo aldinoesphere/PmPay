@@ -173,6 +173,6 @@ class SettingsController extends Controller
 			$status = 'failed';
 		}
 
-		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.$cardTypes);
+		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.implode(',', $newCardTypes));
 	}
 }
