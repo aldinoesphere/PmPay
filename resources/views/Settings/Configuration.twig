@@ -86,7 +86,7 @@ img {
 }
 </style>
 <script type="text/javascript">
-	var data = document.querySelectorAll('[data-value]');
+	var data = document.getElementsByTagName('select')[0].getAttribute('[data-value]');
 
 	function onChange() {
 		console.log(data);
