@@ -89,9 +89,9 @@ img {
 	var data = document.getElementsByTagName('select')[0].getAttribute('data-value');
 	var data1 = document.getElementsByTagName('select')[0];
 
-	function onChange() {
-		console.log(data);
-		console.log(data1);
+	function onChange(value) {
+		console.log(this);
+		console.log(value);
 	}
 
 	// [].slice.call(data).forEach(function(elm) {
@@ -131,7 +131,7 @@ img {
 			{% else %}
 				<div>
 					<label for="Enabled">Enabled *</label>
-					<select name="display" data-value="{{ setting.display }}">
+					<select name="display" value="{{ setting.display }}">
 						<option value="1">Yes</option>
 						<option value="0">No</option>
 					</select>
@@ -150,7 +150,7 @@ img {
 				<div class="div-separator clear"></div>
 				<div>
 					<label for="Merchant Email">Transaction-Mode </label>
-					<select name="transactionMode" onchange="onChange()" data-value="{{ setting.transactionMode }}">
+					<select name="transactionMode" onchange="onChange()" value="{{ setting.transactionMode }}">
 						<option value="DB">Debit</option>
 						<option value="PA">Pre - Authorization</option>
 					</select>
