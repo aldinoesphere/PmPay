@@ -133,7 +133,7 @@ class SettingsController extends Controller
 	{
 		$settingType = $this->request->get('settingType');
 		$plentyId = $this->request->get('plentyId');
-		$cardTypes = $this->request->get('cardTypes[]');
+		return $cardTypes = $this->request->get('cardTypes[]');
 		$newCardTypes = [];
 
 		foreach ($cardTypes as $key => $value) {
