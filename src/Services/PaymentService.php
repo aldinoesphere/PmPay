@@ -19,6 +19,7 @@ use Plenty\Plugin\Log\Loggable;
 
 
 use PmPay\Helper\PaymentHelper;
+use PmPay\Services\Database\SettingsService;
 /**
 * 
 */
@@ -182,7 +183,6 @@ class PaymentService
 				'/payment/skrill/status?orderId='.$orderId.
 				'&paymentKey='.$paymentMethod->paymentKey,
 			'cancel_url' => $this->paymentHelper->getDomain().'/checkout',
-			'language' => $this->getLanguage(),
 			'logo_url' => $pmpaySettings['logoUrl'],
 			'prepare_only' => 1,
 			'pay_from_email' => $billingAddress['email'],
@@ -210,7 +210,6 @@ class PaymentService
 		}
 		catch (\Exception $e)
 		{
-			$this->getLogger(__METHOD__)->error('Skrill:getSidResult', $e);
 			return [
 				'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
 				'content' => 'An error occurred while processing your transaction. Please contact our support.'
