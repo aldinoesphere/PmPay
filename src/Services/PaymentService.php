@@ -231,6 +231,18 @@ class PaymentService
 		];
 	}
 
+	/**
+	 * get billing address
+	 *
+	 * @param Basket $basket
+	 * @return Address
+	 */
+	private function getBillingAddress(Basket $basket)
+	{
+		$addressId = $basket->customerInvoiceAddressId;
+		return $this->addressRepository->findAddressById($addressId);
+	}
+
 
 }
 

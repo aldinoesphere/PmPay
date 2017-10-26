@@ -139,7 +139,7 @@ class PaymentHelper
 		$paymentProperty[] = $this->getPaymentProperty(PaymentProperty::TYPE_ORIGIN, Payment::ORIGIN_PLUGIN);
 		$paymentProperty[] = $this->getPaymentProperty(
 						PaymentProperty::TYPE_BOOKING_TEXT,
-						$this->getPaymentBookingText($paymentStatus, $isCredentialValid)
+						$this->getPaymentBookingText($paymentStatus, true)
 		);
 
 		if (isset($paymentStatus['pay_to_email']))
@@ -199,7 +199,7 @@ class PaymentHelper
 				$this->updatePaymentPropertyValue(
 								$payment->properties,
 								PaymentProperty::TYPE_BOOKING_TEXT,
-								$this->getPaymentBookingText($paymentStatus, $isCredentialValid)
+								$this->getPaymentBookingText($paymentStatus, true)
 				);
 
 				$this->paymentRepository->updatePayment($payment);
