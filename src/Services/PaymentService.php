@@ -162,10 +162,7 @@ class PaymentService
 
 		if (!isset($orderData->order->id))
 		{
-			return [
-				'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
-				'content' => 'The order can not created'
-			];
+			return 'The order can not created';
 		}
 
 		$orderId = $orderData->order->id;
@@ -210,10 +207,7 @@ class PaymentService
 		}
 		catch (\Exception $e)
 		{
-			return [
-				'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
-				'content' => 'An error occurred while processing your transaction. Please contact our support.'
-			];
+			return 'An error occurred while processing your transaction. Please contact our support.';
 		}
 
 		// if ($pmpaySettings['display'] == 'REDIRECT')
@@ -225,10 +219,7 @@ class PaymentService
 		// 	$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $sidResult;
 		// }
 
-		return [
-			'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
-			'content' => $paymentPageUrl
-		];
+		return $paymentPageUrl;
 	}
 
 	/**
