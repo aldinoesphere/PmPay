@@ -181,16 +181,11 @@ class PaymentHelper
 
 		if (count($payments) > 0)
 		{
-			$generatedSignatured = $this->generateMd5sigByResponse($paymentStatus);
-			$isCredentialValid = $this->isPaymentSignatureEqualsGeneratedSignature(
-							$paymentStatus['md5sig'],
-							$generatedSignatured
-			);
 
 			$state = $this->mapTransactionState((string)$paymentStatus['status']);
 			foreach ($payments as $payment)
 			{
-				if ($isCredentialValid && $payment->status != $state)
+				if ($payment->status != $state)
 				{
 					$payment->status = $state;
 
@@ -431,6 +426,64 @@ class PaymentHelper
 		{
 			$this->paymentOrderRelationRepository->createOrderRelation($payment, $order);
 		}
+	}
+
+	/**
+	 * get payment booking text (use for show payment detail information).
+	 *
+	 * @param array $paymentStatus
+	 * @param bool $isCredentialValid
+	 * @return string
+	 */
+	public function getPaymentBookingText($paymentStatus, $isCredentialValid)
+	{
+		$paymentBookingText = [];
+		$countryRepository = pluginApp(CountryRepositoryContract::class);
+
+		if (isset($paymentStatus['transaction_id']))
+		{
+			$paymentBookingText[] = "Transaction ID : " . (string) $paymentStatus['transaction_id'];
+		}
+		if (isset($paymentStatus['payment_type']))
+		{
+			if ($paymentStatus['payment_type'] == 'NGP')
+			{
+				$paymentStatus['payment_type'] = 'OBT';
+			}
+			$paymentMethod = $this->getPaymentMethodByPaymentKey('PMPAY_' . $paymentStatus['payment_type']);
+			if (isset($paymentMethod))
+			{
+				$paymentBookingText[] = "Used payment method : " . $paymentMethod->name;
+			}
+		}
+		if (isset($paymentStatus['status']))
+		{
+			$paymentBookingText[] = "Payment status : " .
+				$this->getPaymentStatus((string)$paymentStatus['status'], $isCredentialValid);
+		}
+		if (isset($paymentStatus['IP_country']))
+		{
+			$ipCountry = $countryRepository->getCountryByIso($paymentStatus['IP_country'], 'isoCode2');
+			$paymentBookingText[] = "Order originated from : " . $ipCountry->name;
+		}
+		if (isset($paymentStatus['payment_instrument_country']))
+		{
+			$paymentInstrumentCountry = $countryRepository->getCountryByIso(
+							$paymentStatus['payment_instrument_country'],
+							'isoCode3'
+			);
+			$paymentBookingText[] = "Country (of the card-issuer) : " . $paymentInstrumentCountry->name;
+		}
+		if (isset($paymentStatus['pay_from_email']))
+		{
+			$paymentBookingText[] = "PmPay account email : " . $paymentStatus['pay_from_email'];
+		}
+		if (!empty($paymentBookingText))
+		{
+			return implode("\n", $paymentBookingText);
+		}
+
+		return '';
 	}
 
 }
