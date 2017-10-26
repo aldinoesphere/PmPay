@@ -96,17 +96,341 @@ class PaymentHelper
 		return null;
 	}
 
-	public function createPlentyPayment($paymentStatus) {
-		$pmpayData = json_decode($paymentStatus);
-		$paymentData = array();
-		// Set the payment data
-		$paymentData['mopId']           = 0;
-		$paymentData['transactionType'] = 2;
-		$paymentData['status']          = 2;
-		$paymentData['currency']        = $pmpayData->currency;
-		$paymentData['amount']          = $pmpayData->amount;
-		$paymentData['receivedAt']       = $pmpayData->entryDate;
-		$payment = $this->paymentRepository->createPayment($paymentData);
+	/**
+	 * Create a credit payment when status_url triggered and no payment created before.
+	 *
+	 * @param array $paymentStatus
+	 * @return Payment
+	 */
+	public function createPlentyPayment($paymentStatus)
+	{
+
+		$payment = pluginApp(Payment::class);
+
+		$mopId = 0;
+		$paymentMethod = $this->getPaymentMethodByPaymentKey($paymentStatus['paymentKey']);
+
+		if (isset($paymentMethod))
+		{
+			$mopId = $paymentMethod->id;
+		}
+
+		$payment->mopId = (int) $mopId;
+		$payment->transactionType = Payment::TRANSACTION_TYPE_BOOKED_POSTING;
+
+		$state = $this->mapTransactionState((string)$paymentStatus['status']);
+
+		$payment->status = $state;
+		$payment->currency = $paymentStatus['currency'];
+		$payment->amount = $paymentStatus['amount'];
+
+		if ($state == Payment::STATUS_APPROVED)
+		{
+			$payment->unaccountable = 0;
+		} else {
+			$payment->unaccountable = 1;
+		}
+
+		$paymentProperty = [];
+		$paymentProperty[] = $this->getPaymentProperty(
+						PaymentProperty::TYPE_TRANSACTION_ID,
+						$paymentStatus['transaction_id']
+		);
+		$paymentProperty[] = $this->getPaymentProperty(PaymentProperty::TYPE_ORIGIN, Payment::ORIGIN_PLUGIN);
+		$paymentProperty[] = $this->getPaymentProperty(
+						PaymentProperty::TYPE_BOOKING_TEXT,
+						$this->getPaymentBookingText($paymentStatus, $isCredentialValid)
+		);
+
+		if (isset($paymentStatus['pay_to_email']))
+		{
+			$paymentProperty[] = $this->getPaymentProperty(
+							PaymentProperty::TYPE_ACCOUNT_OF_RECEIVER,
+							$paymentStatus['pay_to_email']
+			);
+		}
+
+		if (isset($paymentStatus['failed_reason_code']))
+		{
+			$paymentProperty[] = $this->getPaymentProperty(
+							PaymentProperty::TYPE_EXTERNAL_TRANSACTION_STATUS,
+							$paymentStatus['failed_reason_code']
+			);
+		}
+
+		$payment->properties = $paymentProperty;
+		$payment->regenerateHash = true;
+
+		$payment = $this->paymentRepository->createPayment($payment);
+
+		return $payment;
+	}
+
+	/**
+	 * update the payment by transaction_id when status_url triggered if payment already created before.
+	 * create a payment if no payment created before.
+	 *
+	 * @param array $paymentStatus
+	 */
+	public function updatePlentyPayment($paymentStatus)
+	{
+		$payments = $this->paymentRepository->getPaymentsByPropertyTypeAndValue(
+						PaymentProperty::TYPE_TRANSACTION_ID,
+						$paymentStatus['transaction_id']
+		);
+
+		if (count($payments) > 0)
+		{
+			$generatedSignatured = $this->generateMd5sigByResponse($paymentStatus);
+			$isCredentialValid = $this->isPaymentSignatureEqualsGeneratedSignature(
+							$paymentStatus['md5sig'],
+							$generatedSignatured
+			);
+
+			$state = $this->mapTransactionState((string)$paymentStatus['status']);
+			foreach ($payments as $payment)
+			{
+				if ($isCredentialValid && $payment->status != $state)
+				{
+					$payment->status = $state;
+
+					if ($state == Payment::STATUS_APPROVED)
+					{
+						$payment->unaccountable = 0;
+						$payment->updateOrderPaymentStatus = true;
+					}
+				}
+
+				$this->updatePaymentPropertyValue(
+								$payment->properties,
+								PaymentProperty::TYPE_BOOKING_TEXT,
+								$this->getPaymentBookingText($paymentStatus, $isCredentialValid)
+				);
+
+				$this->paymentRepository->updatePayment($payment);
+			}
+		} else {
+			$payment = $this->createPlentyPayment($paymentStatus);
+
+			$this->assignPlentyPaymentToPlentyOrder($payment, (int) $paymentStatus['orderId']);
+		}
+	}
+
+	/**
+	 * check if the mopId is PmPay mopId.
+	 *
+	 * @param number $mopId
+	 * @return bool
+	 */
+	public function isPmPayPaymentMopId($mopId)
+	{
+		$paymentMethods = $this->paymentMethodRepository->allForPlugin('pmpay');
+
+		if (!is_null($paymentMethods))
+		{
+			foreach ($paymentMethods as $paymentMethod)
+			{
+				if ($paymentMethod->id == $mopId)
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * update payment property value.
+	 *
+	 * @param array $properties
+	 * @param int $propertyType
+	 * @param string $value
+	 */
+	public function updatePaymentPropertyValue($properties, $propertyType, $value)
+	{
+		if (count($properties) > 0)
+		{
+			foreach ($properties as $property)
+			{
+				if ($property->typeId == $propertyType)
+				{
+					$paymentProperty = $property;
+					break;
+				}
+			}
+
+			if (isset($paymentProperty))
+			{
+				$paymentProperty->value = $value;
+				$this->paymentPropertyRepository->changeProperty($paymentProperty);
+			}
+		}
+	}
+
+	/**
+	 * get payment property value.
+	 *
+	 * @param array $properties
+	 * @param int $propertyType
+	 * @return null|string
+	 */
+	public function getPaymentPropertyValue($properties, $propertyType)
+	{
+		if (count($properties) > 0)
+		{
+			foreach ($properties as $property)
+			{
+				if ($property instanceof PaymentProperty)
+				{
+					if ($property->typeId == $propertyType)
+					{
+						return $property->value;
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * get order payment status by transactionId (success or error)
+	 *
+	 * @param string $transactionId
+	 * @return array
+	 */
+	public function getOrderPaymentStatus($transactionId)
+	{
+		$payments = $this->paymentRepository->getPaymentsByPropertyTypeAndValue(
+						PaymentProperty::TYPE_TRANSACTION_ID,
+						$transactionId
+		);
+
+		$status = '';
+		$properties = [];
+
+		if (count($payments) > 0)
+		{
+			foreach ($payments as $payment)
+			{
+				$status = $payment->status;
+				$properties = $payment->properties;
+				break;
+			}
+		}
+
+		if ($status == Payment::STATUS_REFUSED)
+		{
+			$failedReasonCode = $this->getPaymentPropertyValue(
+							$properties,
+							PaymentProperty::TYPE_EXTERNAL_TRANSACTION_STATUS
+			);
+
+			return [
+				'type' => 'error',
+				'value' => 'The payment has been failed : ' 
+			];
+		}
+
+		return [
+			'type' => 'success',
+			'value' => 'The payment has been executed successfully.'
+		];
+	}
+
+	/**
+	 * get payment status (use for payment/refund detail information status).
+	 *
+	 * @param array $status
+	 * @param bool $isCredentialValid
+	 * @return string
+	 */
+	public function getPaymentStatus(string $status, $isCredentialValid = true)
+	{
+		if (!$isCredentialValid)
+		{
+			return 'Invalid Credential';
+		}
+
+		switch ($status)
+		{
+			case '0':
+				return 'Pending';
+			case '2':
+				return 'Processed';
+			case '-2':
+				return 'Failed';
+		}
+
+		return 'null';
+	}
+
+	/**
+	 * Returns the plentymarkets payment status matching the given payment response status.
+	 *
+	 * @param string $status
+	 * @param bool $isRefund
+	 * @return int
+	 */
+	public function mapTransactionState(string $status, $isRefund = false)
+	{
+		switch ($status)
+		{
+			case '0':
+				return Payment::STATUS_AWAITING_APPROVAL;
+			case '2':
+				if ($isRefund)
+				{
+					return Payment::STATUS_REFUNDED;
+				}
+				return Payment::STATUS_APPROVED;
+			case '-2':
+				return Payment::STATUS_REFUSED;
+		}
+
+		return Payment::STATUS_AWAITING_APPROVAL;
+	}
+
+	/**
+	 * Returns a PaymentProperty with the given params
+	 *
+	 * @param int $typeId
+	 * @param string $value
+	 * @return PaymentProperty
+	 */
+	private function getPaymentProperty($typeId, $value)
+	{
+		$paymentProperty = pluginApp(PaymentProperty::class);
+
+		$paymentProperty->typeId = $typeId;
+		$paymentProperty->value = (string) $value;
+
+		return $paymentProperty;
+	}
+
+
+	/**
+	 * Assign the payment to an order in plentymarkets.
+	 *
+	 * @param Payment $payment
+	 * @param int $orderId
+	 */
+	public function assignPlentyPaymentToPlentyOrder(Payment $payment, int $orderId)
+	{
+		$orderRepo = pluginApp(OrderRepositoryContract::class);
+		$authHelper = pluginApp(AuthHelper::class);
+
+		$order = $authHelper->processUnguarded(
+						function () use ($orderRepo, $orderId) {
+							return $orderRepo->findOrderById($orderId);
+						}
+		);
+
+		if (!is_null($order) && $order instanceof Order)
+		{
+			$this->paymentOrderRelationRepository->createOrderRelation($payment, $order);
+		}
 	}
 
 }

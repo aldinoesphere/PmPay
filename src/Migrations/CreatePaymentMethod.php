@@ -31,7 +31,7 @@ class CreatePaymentMethod
 	}
 
 	public function run() {
-		$this->createPaymentMethodByPaymentKey('PMPAY_APM', 'All Cards and Alternative Payment Methods');
+		$this->createPaymentMethodByPaymentKey('PMPAY_ACC', 'Credit Card Payment Methods');
 	}
 
 	/**

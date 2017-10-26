@@ -38,6 +38,36 @@ class PmPayServiceProvider extends ServiceProvider
 		EventProceduresService $eventProceduresService
     ) {
     	$this->registerPaymentMethod($payContainer, 'PMPAY_ACC', AccPaymentMethod::class);
+
+    	// Listen for the event that gets the payment method content
+		$eventDispatcher->listen(
+						GetPaymentMethodContent::class,
+						function (GetPaymentMethodContent $event) use ($paymentHelper, $basket, $paymentService, $paymentMethodService) {
+							if ($paymentHelper->isPmPayPaymentMopId($event->getMop()))
+							{
+								$content = $paymentService->getPaymentContent(
+												$basket->load(),
+												$paymentMethodService->findByPaymentMethodId($event->getMop())
+								);
+								$event->setValue(isset($content['content']) ? $content['content'] : null);
+								$event->setType(isset($content['type']) ? $content['type'] : '');
+							}
+						}
+		);
+
+		// Listen for the event that executes the payment
+		$eventDispatcher->listen(
+						ExecutePayment::class,
+						function (ExecutePayment $event) use ($paymentHelper, $paymentService) {
+							if ($paymentHelper->isPmPayPaymentMopId($event->getMop()))
+							{
+								$result = $paymentService->executePayment($event->getOrderId());
+
+								$event->setType($result['type']);
+								$event->setValue($result['value']);
+							}
+						}
+		);
     }
 
     /**

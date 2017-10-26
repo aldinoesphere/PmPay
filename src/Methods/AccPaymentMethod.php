@@ -25,5 +25,5 @@ class AccPaymentMethod extends AbstractPaymentMethod
 	/**
 	 * @var settingsType
 	 */
-	protected $settingsType = 'pmpay_acc';
+	protected $settingsType = 'credit-card';
 }
