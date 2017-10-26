@@ -3,6 +3,8 @@ namespace PmPay\Migrations;
 
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodRepositoryContract;
 
+use PmPay\Helper\PaymentHelper;
+
 /**
 * 
 */

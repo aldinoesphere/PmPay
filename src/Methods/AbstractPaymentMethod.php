@@ -82,7 +82,7 @@ class AbstractPaymentMethod extends PaymentMethodService
 	 */
 	public function isActive()
 	{
-		if ($this->isEnabled() && $this->isShowSeparately() && $this->isBillingCountriesAllowed())
+		if ($this->isEnabled())
 		{
 			return true;
 		}

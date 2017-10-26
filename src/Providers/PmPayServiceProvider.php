@@ -16,6 +16,10 @@ use Plenty\Modules\Frontend\Events\FrontendLanguageChanged;
 use Plenty\Modules\Frontend\Events\FrontendUpdateInvoiceAddress;
 use Plenty\Plugin\Events\Dispatcher;
 use Plenty\Plugin\ServiceProvider;
+
+use PmPay\Helper\PaymentHelper;
+use PmPay\Services\PaymentService;
+use PmPay\Methods\AccPaymentMethod;
  
 class PmPayServiceProvider extends ServiceProvider
 {
