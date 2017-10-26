@@ -90,5 +90,7 @@ class PmPayServiceProvider extends ServiceProvider
 							FrontendUpdateInvoiceAddress::class
 						]
 		);
+
+		$this->getLogger(__METHOD__)->error('PmPay:payContainer', $payContainer);
 	}
 }

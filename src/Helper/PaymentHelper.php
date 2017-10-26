@@ -70,6 +70,7 @@ class PaymentHelper
 		$webstoreHelper = pluginApp(\Plenty\Modules\Helper\Services\WebstoreHelper::class);
 		$webstoreConfig = $webstoreHelper->getCurrentWebstoreConfiguration();
 		$domain = $webstoreConfig->domainSsl;
+		$this->getLogger(__METHOD__)->error('PmPay:domain', $domain);
 
 		return $domain;
 	}
@@ -80,6 +81,7 @@ class PaymentHelper
 		{
 			// List all payment methods for the given plugin
 			$paymentMethods = $this->paymentMethodRepository->allForPlugin('pmpay');
+			$this->getLogger(__METHOD__)->error('PmPay:getPaymentMethodByPaymentKey', $paymentMethods);
 
 			if (!is_null($paymentMethods))
 			{
@@ -226,6 +228,8 @@ class PaymentHelper
 	public function isPmPayPaymentMopId($mopId)
 	{
 		$paymentMethods = $this->paymentMethodRepository->allForPlugin('pmpay');
+		
+		$this->getLogger(__METHOD__)->error('PmPay:isPmPayPaymentMopId', $paymentMethods);
 
 		if (!is_null($paymentMethods))
 		{
@@ -278,6 +282,8 @@ class PaymentHelper
 	 */
 	public function getPaymentPropertyValue($properties, $propertyType)
 	{
+		$this->getLogger(__METHOD__)->error('PmPay:getPaymentPropertyValue', $properties);
+
 		if (count($properties) > 0)
 		{
 			foreach ($properties as $property)
@@ -303,6 +309,8 @@ class PaymentHelper
 	 */
 	public function getOrderPaymentStatus($transactionId)
 	{
+		$this->getLogger(__METHOD__)->error('PmPay:transactionId', $transactionId);
+
 		$payments = $this->paymentRepository->getPaymentsByPropertyTypeAndValue(
 						PaymentProperty::TYPE_TRANSACTION_ID,
 						$transactionId
@@ -408,6 +416,8 @@ class PaymentHelper
 
 		$paymentProperty->typeId = $typeId;
 		$paymentProperty->value = (string) $value;
+		
+		$this->getLogger(__METHOD__)->error('PmPay:paymentProperty', $paymentProperty);
 
 		return $paymentProperty;
 	}
@@ -430,6 +440,8 @@ class PaymentHelper
 						}
 		);
 
+		$this->getLogger(__METHOD__)->error('PmPay:assignPlentyPaymentToPlentyOrder', $order);
+
 		if (!is_null($order) && $order instanceof Order)
 		{
 			$this->paymentOrderRelationRepository->createOrderRelation($payment, $order);
@@ -447,6 +459,9 @@ class PaymentHelper
 	{
 		$paymentBookingText = [];
 		$countryRepository = pluginApp(CountryRepositoryContract::class);
+
+		$this->getLogger(__METHOD__)->error('PmPay:countryRepository', $countryRepository);
+		$this->getLogger(__METHOD__)->error('PmPay:paymentStatus', $paymentStatus);
 
 		if (isset($paymentStatus['transaction_id']))
 		{

@@ -159,6 +159,8 @@ class PaymentService
 		$this->getLogger(__METHOD__)->error('PmPay:paymentMethod', $paymentMethod);
 
 	    $pmpaySettings = $this->getPmPaySettings();
+	    
+	    $this->getLogger(__METHOD__)->error('PmPay:pmpaySettings', $pmpaySettings);
 
 		$orderData = $this->orderService->placeOrder();
 
@@ -224,6 +226,7 @@ class PaymentService
 		// {
 		// 	$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $sidResult;
 		// }
+		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
 
 		return $paymentPageUrl;
 	}
@@ -309,6 +312,8 @@ class PaymentService
 			$item['name'] = $this->getBasketItemName($basketItem);
 			$items[] = $item;
 		}
+		$this->getLogger(__METHOD__)->error('PmPay:getBasketItems', $items);
+
 		return $items;
 	}
 
@@ -326,6 +331,9 @@ class PaymentService
 
 		/** @var \Plenty\Modules\Item\Item\Models\ItemText $itemText */
 		$itemText = $item->texts;
+
+		$this->getLogger(__METHOD__)->error('PmPay:getBasketItemName', $itemText);
+
 		return $itemText->first()->name1;
 	}
 
