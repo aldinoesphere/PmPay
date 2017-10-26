@@ -6,6 +6,7 @@
     "type": "payment",
     "serviceProvider": "PmPay\\Providers\\PmPayServiceProvider",
     "runOnBuild"        : [
-        "PmPay\\Migrations\\CreatePmPayTables"
+        "PmPay\\Migrations\\CreatePmPayTables",
+        "PmPay\\Migrations\\CreatePaymentMethod"
     ]
 }

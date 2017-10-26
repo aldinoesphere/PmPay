@@ -73,6 +73,28 @@ class PaymentHelper
 
 		return $domain;
 	}
+
+	public function getPaymentMethodByPaymentKey($paymentKey)
+	{
+		if (strlen($paymentKey))
+		{
+			// List all payment methods for the given plugin
+			$paymentMethods = $this->paymentMethodRepository->allForPlugin('pmpay');
+
+			if (!is_null($paymentMethods))
+			{
+				foreach ($paymentMethods as $paymentMethod)
+				{
+					if ($paymentMethod->paymentKey == $paymentKey)
+					{
+						return $paymentMethod;
+					}
+				}
+			}
+		}
+
+		return null;
+	}
 }
 
 ?>
