@@ -95,7 +95,7 @@ class PaymentService
 		AddressRepositoryContract $addressRepository,
 		CountryRepositoryContract $countryRepository,
 		PaymentHelper $paymentHelper,
-		SystemService $systemService,
+		SystemService $systemService
 	){
 		$this->itemRepository = $itemRepository;
 		$this->session = $session;
