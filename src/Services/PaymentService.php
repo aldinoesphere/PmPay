@@ -243,6 +243,112 @@ class PaymentService
 		return $this->addressRepository->findAddressById($addressId);
 	}
 
+	/**
+	 * get billing country code
+	 *
+	 * @param int $customerInvoiceAddressId
+	 * @return string
+	 */
+	public function getBillingCountryCode($customerInvoiceAddressId)
+	{
+		$billingAddress = $this->addressRepository->findAddressById($customerInvoiceAddressId);
+		return $this->countryRepository->findIsoCode($billingAddress->countryId, 'iso_code_3');
+	}
+
+	/**
+	 * get shipping address
+	 *
+	 * @param Basket $basket
+	 * @return Address
+	 */
+	private function getShippingAddress(Basket $basket)
+	{
+		$addressId = $basket->customerShippingAddressId;
+		if ($addressId != null && $addressId != - 99)
+		{
+			return $this->addressRepository->findAddressById($addressId);
+		}
+		else
+		{
+			return $this->getBillingAddress($basket);
+		}
+	}
+
+	/**
+	 * get address by given parameter
+	 *
+	 * @param Address $address
+	 * @return array
+	 */
+	private function getAddress(Address $address)
+	{
+		return [
+			'email' => $address->email,
+			'firstName' => $address->firstName,
+			'lastName' => $address->lastName,
+			'address' => $address->street . ' ' . $address->houseNumber,
+			'postalCode' => $address->postalCode,
+			'city' => $address->town,
+			'country' => $this->countryRepository->findIsoCode($address->countryId, 'iso_code_3'),
+			'birthday' => $address->birthday,
+			'companyName' => $address->companyName,
+			'phone' => $address->phone
+		];
+	}
+
+	/**
+	 * get basket items
+	 *
+	 * @param Basket $basket
+	 * @return array
+	 */
+	private function getBasketItems(Basket $basket)
+	{
+		$items = [];
+		/** @var BasketItem $basketItem */
+		foreach ($basket->basketItems as $basketItem)
+		{
+			$item = $basketItem->getAttributes();
+			$item['name'] = $this->getBasketItemName($basketItem);
+			$items[] = $item;
+		}
+		return $items;
+	}
+
+	/**
+	 * get basket item name
+	 *
+	 * @param BasketItem $basketItem
+	 * @return string
+	 */
+	private function getBasketItemName(BasketItem $basketItem)
+	{
+
+		/** @var \Plenty\Modules\Item\Item\Models\Item $item */
+		$item = $this->itemRepository->show($basketItem->itemId);
+
+		/** @var \Plenty\Modules\Item\Item\Models\ItemText $itemText */
+		$itemText = $item->texts;
+		return $itemText->first()->name1;
+	}
+
+	/**
+	 * Returns a random number with length as parameter given.
+	 *
+	 * @param int $length
+	 * @return string
+	 */
+	private function getRandomNumber($length)
+	{
+		$result = '';
+
+		for ($i = 0; $i < $length; $i++)
+		{
+			$result .= rand(0, 9);
+		}
+
+		return $result;
+	}
 
 }
 
