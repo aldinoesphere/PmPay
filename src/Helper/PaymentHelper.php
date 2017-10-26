@@ -107,6 +107,8 @@ class PaymentHelper
 
 		$payment = pluginApp(Payment::class);
 
+		$this->getLogger(__METHOD__)->error('PmPay:payment', $payment);
+
 		$mopId = 0;
 		$paymentMethod = $this->getPaymentMethodByPaymentKey($paymentStatus['paymentKey']);
 

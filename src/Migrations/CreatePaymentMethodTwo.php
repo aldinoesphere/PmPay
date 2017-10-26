@@ -8,7 +8,7 @@ use PmPay\Helper\PaymentHelper;
 /**
 * 
 */
-class CreatePaymentMethod
+class CreatePaymentMethodTwo
 {
 	
 	/**
