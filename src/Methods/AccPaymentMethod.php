@@ -6,7 +6,7 @@ use Plenty\Plugin\Log\Loggable;
 
 /**
 * Class AccPaymentMethod
-* @package Skrill\Methods
+* @package PmPay\Methods
 */
 class AccPaymentMethod extends AbstractPaymentMethod
 {
@@ -15,7 +15,7 @@ class AccPaymentMethod extends AbstractPaymentMethod
 	/**
 	 * @var name
 	 */
-	protected $name = 'Credit Cards';
+	protected $name = 'Pm Pay Credit Cards';
 
 	/**
 	 * @var logoFileName

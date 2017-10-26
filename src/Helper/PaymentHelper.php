@@ -95,6 +95,20 @@ class PaymentHelper
 
 		return null;
 	}
+
+	public function createPlentyPayment($paymentStatus) {
+		$pmpayData = json_decode($paymentStatus);
+		$paymentData = array();
+		// Set the payment data
+		$paymentData['mopId']           = (int)$this->getPayPalMopId();
+		$paymentData['transactionType'] = 2;
+		$paymentData['status']          = $this->mapStatus($pmpayData->status);
+		$paymentData['currency']        = $pmpayData->currency;
+		$paymentData['amount']          = $pmpayData->amount;
+		$paymentData['receivedAt']       = $pmpayData->entryDate;
+		$payment = $this->paymentRepository->createPayment($paymentData);
+	}
+
 }
 
 ?>

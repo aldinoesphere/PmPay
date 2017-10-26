@@ -82,11 +82,11 @@ class AbstractPaymentMethod extends PaymentMethodService
 	 */
 	public function isActive()
 	{
-		if ($this->isEnabled())
-		{
-			return true;
-		}
-		return false;
+		// if ($this->isEnabled())
+		// {
+		// 	return true;
+		// }
+		return true;
 	}
 
 	/**
