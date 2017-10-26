@@ -16,6 +16,7 @@ use Plenty\Modules\Frontend\Events\FrontendLanguageChanged;
 use Plenty\Modules\Frontend\Events\FrontendUpdateInvoiceAddress;
 use Plenty\Plugin\Events\Dispatcher;
 use Plenty\Plugin\ServiceProvider;
+use Plenty\Plugin\Log\Loggable;
 
 use PmPay\Helper\PaymentHelper;
 use PmPay\Services\PaymentService;
@@ -23,6 +24,9 @@ use PmPay\Methods\AccPaymentMethod;
  
 class PmPayServiceProvider extends ServiceProvider
 {
+	use Loggable;
+
+	
     public function register()
     {
  		$this->getApplication()->register(PmPayRouteServiceProvider::class);
@@ -91,6 +95,6 @@ class PmPayServiceProvider extends ServiceProvider
 						]
 		);
 
-		// $this->getLogger(__METHOD__)->error('PmPay:payContainer', $payContainer);
+		$this->getLogger(__METHOD__)->error('PmPay:payContainer', $payContainer);
 	}
 }

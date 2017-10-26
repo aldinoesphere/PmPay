@@ -42,7 +42,7 @@ class AbstractPaymentMethod extends PaymentMethodService
 	/**
 	 * @var settingsType
 	 */
-	protected $settingsType = 'credit-card';
+	protected $settingsType = 'general-setting';
 	
 	function __construct(Checkout $checkout, PaymentService $paymentService)
 	{

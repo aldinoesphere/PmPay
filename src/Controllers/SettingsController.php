@@ -113,6 +113,8 @@ class SettingsController extends Controller
 			die('access denied...');
 		}
 
+		$this->getLogger(__METHOD__)->error('PmPay:loadConfiguration', $configuration);
+
 		return $twig->render(
 						'PmPay::Settings.Configuration',
 						array(
@@ -172,6 +174,7 @@ class SettingsController extends Controller
 		{
 			$status = 'failed';
 		}
+		$this->getLogger(__METHOD__)->error('PmPay:saveConfiguration', $settings);
 
 		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.implode(',', $newCardTypes));
 	}
