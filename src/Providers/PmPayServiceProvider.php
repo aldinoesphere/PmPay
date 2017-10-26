@@ -26,7 +26,7 @@ class PmPayServiceProvider extends ServiceProvider
 {
 	use Loggable;
 
-	
+
     public function register()
     {
  		$this->getApplication()->register(PmPayRouteServiceProvider::class);
@@ -84,15 +84,15 @@ class PmPayServiceProvider extends ServiceProvider
 	private function registerPaymentMethod($payContainer, $paymentKey, $class)
 	{
 		$payContainer->register(
-						'PmPay::' . $paymentKey,
-						$class,
-						[
-							AfterBasketChanged::class,
-							AfterBasketItemAdd::class,
-							AfterBasketCreate::class,
-							FrontendLanguageChanged::class,
-							FrontendUpdateInvoiceAddress::class
-						]
+			'pmpay::' . $paymentKey,
+			$class,
+			[
+				AfterBasketChanged::class,
+				AfterBasketItemAdd::class,
+				AfterBasketCreate::class,
+				FrontendLanguageChanged::class,
+				FrontendUpdateInvoiceAddress::class
+			]
 		);
 
 		$this->getLogger(__METHOD__)->error('PmPay:payContainer', $payContainer);
