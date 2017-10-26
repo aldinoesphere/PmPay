@@ -56,8 +56,7 @@ class PaymentController extends Controller
 					Request $request,
 					Response $response,
 					BasketItemRepositoryContract $basketItemRepository,
-					FrontendSessionStorageFactoryContract $sessionStorage,
-					GatewayService $gatewayService
+					FrontendSessionStorageFactoryContract $sessionStorage
 	) {
 		$this->request = $request;
 		$this->response = $response;

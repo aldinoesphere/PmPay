@@ -25,6 +25,9 @@ class PmPayRouteServiceProvider extends RouteServiceProvider
 
 		// Routes for 
 		$router->post('pmpay/settings/save','PmPay\Controllers\SettingsController@saveConfiguration');
+
+		// Routes for Skrill payment widget
+		$router->get('payment/pmpay/pay/{sid}', 'Skrill\Controllers\PaymentController@handlePayment');
 	}
 }
 
