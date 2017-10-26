@@ -133,7 +133,52 @@ class PaymentService
 		return $this->settings;
 	}
 
-	
+	/**
+	 * this function will execute after we are doing a payment and show payment success or not.
+	 *
+	 * @param int $orderId
+	 * @return array
+	 */
+	public function executePayment($orderId)
+	{
+		$transactionId = $this->session->getPlugin()->getValue('pmpayTransactionId');
+
+		return $this->paymentHelper->getOrderPaymentStatus($transactionId);
+	}
+
+	/**
+	 * Get the PayPal payment content
+	 *
+	 * @param Basket $basket
+	 * @return string
+	 */
+	public function getPaymentContent(Basket $basket, $mode = 'pmpay'):string
+	{
+	 
+	    $paymentContent = '';
+	    $links = $resultJson->links;
+	    if(is_array($links))
+	    {
+	        foreach($links as $key => $value)
+	        {
+	            // Get the redirect URLs for the content
+	            if($value->method == 'REDIRECT')
+	            {
+	                $paymentContent = $value->href;
+	                $this->returnType = 'redirectUrl';
+	            }
+	        }
+	    }
+	    // Check whether the content is set. Else, return an error code.
+	    if(!strlen($paymentContent))
+	    {
+	        $this->returnType = 'errorCode';
+	        return 'An unknown error occurred, please try again.';
+	    }
+	    return $paymentContent;
+	}
+
+
 }
 
 ?>
