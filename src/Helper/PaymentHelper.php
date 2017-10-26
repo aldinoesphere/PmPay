@@ -102,39 +102,11 @@ class PaymentHelper
 		// Set the payment data
 		$paymentData['mopId']           = 0;
 		$paymentData['transactionType'] = 2;
-		$paymentData['status']          = $this->mapStatus($pmpayData->status);
+		$paymentData['status']          = 2;
 		$paymentData['currency']        = $pmpayData->currency;
 		$paymentData['amount']          = $pmpayData->amount;
 		$paymentData['receivedAt']       = $pmpayData->entryDate;
 		$payment = $this->paymentRepository->createPayment($paymentData);
-	}
-
-	/**
-	 * Map the PayPal payment status to the plentymarkets payment status
-	 *
-	 * @param string $status
-	 * @return int
-	 *
-	 */
-	public function mapStatus(string $status)
-	{
-	    if(!is_array($this->statusMap) || count($this->statusMap) <= 0)
-	    {
-	        $statusConstants = $this->paymentRepository->getStatusConstants();
-	        if(!is_null($statusConstants) && is_array($statusConstants))
-	        {
-	            $this->statusMap['created']               = $statusConstants['captured'];
-	            $this->statusMap['approved']              = $statusConstants['approved'];
-	            $this->statusMap['failed']                = $statusConstants['refused'];
-	            $this->statusMap['partially_completed']   = $statusConstants['partially_captured'];
-	            $this->statusMap['completed']             = $statusConstants['captured'];
-	            $this->statusMap['in_progress']           = $statusConstants['awaiting_approval'];
-	            $this->statusMap['pending']               = $statusConstants['awaiting_approval'];
-	            $this->statusMap['refunded']              = $statusConstants['refunded'];
-	            $this->statusMap['denied']                = $statusConstants['refused'];
-	        }
-	    }
-	    return (int)$this->statusMap[$status];
 	}
 
 }
