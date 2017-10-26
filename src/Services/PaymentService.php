@@ -220,11 +220,11 @@ class PaymentService
 
 		// if ($pmpaySettings['display'] == 'REDIRECT')
 		// {
-			$paymentPageUrl = $this->gatewayService->getPaymentPageUrl($sidResult);
+			// $paymentPageUrl = $this->gatewayService->getPaymentPageUrl($sidResult);
 		// }
 		// else
 		// {
-		// 	$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $sidResult;
+			$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $sidResult;
 		// }
 		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
 
