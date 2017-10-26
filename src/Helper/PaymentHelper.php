@@ -163,6 +163,8 @@ class PaymentHelper
 
 		$payment = $this->paymentRepository->createPayment($payment);
 
+		$this->getLogger(__METHOD__)->error('PmPay:payment', $payment);
+
 		return $payment;
 	}
 
@@ -178,6 +180,8 @@ class PaymentHelper
 						PaymentProperty::TYPE_TRANSACTION_ID,
 						$paymentStatus['transaction_id']
 		);
+
+		$this->getLogger(__METHOD__)->error('PmPay:updatePlentyPayment', $payments);
 
 		if (count($payments) > 0)
 		{
@@ -314,6 +318,8 @@ class PaymentHelper
 				break;
 			}
 		}
+
+		$this->getLogger(__METHOD__)->error('PmPay:status', $status);
 
 		if ($status == Payment::STATUS_REFUSED)
 		{

@@ -85,7 +85,9 @@ class PmPayServiceProvider extends ServiceProvider
 						[
 							AfterBasketChanged::class,
 							AfterBasketItemAdd::class,
-							AfterBasketCreate::class
+							AfterBasketCreate::class,
+							FrontendLanguageChanged::class,
+							FrontendUpdateInvoiceAddress::class
 						]
 		);
 	}

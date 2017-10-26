@@ -155,10 +155,14 @@ class PaymentService
 	 */
 	public function getPaymentContent(Basket $basket, PaymentMethod $paymentMethod):string
 	{
-	 
+	 	$this->getLogger(__METHOD__)->error('PmPay:basket', $basket);
+		$this->getLogger(__METHOD__)->error('PmPay:paymentMethod', $paymentMethod);
+
 	    $pmpaySettings = $this->getPmPaySettings();
 
 		$orderData = $this->orderService->placeOrder();
+
+		$this->getLogger(__METHOD__)->error('PmPay:orderData', $orderData);
 
 		if (!isset($orderData->order->id))
 		{
@@ -209,6 +213,8 @@ class PaymentService
 		{
 			return 'An error occurred while processing your transaction. Please contact our support.';
 		}
+
+		$this->getLogger(__METHOD__)->error('PmPay:sidResult', $sidResult);
 
 		// if ($pmpaySettings['display'] == 'REDIRECT')
 		// {
@@ -314,7 +320,7 @@ class PaymentService
 	 */
 	private function getBasketItemName(BasketItem $basketItem)
 	{
-
+		$this->getLogger(__METHOD__)->error('PmPay::item name', $basketItem);
 		/** @var \Plenty\Modules\Item\Item\Models\Item $item */
 		$item = $this->itemRepository->show($basketItem->itemId);
 
