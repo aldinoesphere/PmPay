@@ -152,30 +152,84 @@ class PaymentService
 	 * @param Basket $basket
 	 * @return string
 	 */
-	public function getPaymentContent(Basket $basket, $mode = 'pmpay'):string
+	public function getPaymentContent(Basket $basket, PaymentMethod $paymentMethod):string
 	{
 	 
-	    $paymentContent = '';
-	    $links = $resultJson->links;
-	    if(is_array($links))
-	    {
-	        foreach($links as $key => $value)
-	        {
-	            // Get the redirect URLs for the content
-	            if($value->method == 'REDIRECT')
-	            {
-	                $paymentContent = $value->href;
-	                $this->returnType = 'redirectUrl';
-	            }
-	        }
-	    }
-	    // Check whether the content is set. Else, return an error code.
-	    if(!strlen($paymentContent))
-	    {
-	        $this->returnType = 'errorCode';
-	        return 'An unknown error occurred, please try again.';
-	    }
-	    return $paymentContent;
+	    $pmpaySettings = $this->getPmPaySettings();
+
+		$orderData = $this->orderService->placeOrder();
+
+		if (!isset($orderData->order->id))
+		{
+			return [
+				'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
+				'content' => 'The order can not created'
+			];
+		}
+
+		$orderId = $orderData->order->id;
+		$transactionId = time() . $this->getRandomNumber(4) . $orderId;
+
+		$billingAddress = $this->getAddress($this->getBillingAddress($basket));
+
+		$parameters = [
+			'pay_to_email' => $pmpaySettings['merchantEmail'],
+			'recipient_description' => $pmpaySettings['userId'],
+			'transaction_id' => $transactionId,
+			'return_url' => $this->paymentHelper->getDomain().
+				'/payment/skrill/return?orderId='.$orderId,
+			'status_url' => $this->paymentHelper->getDomain().
+				'/payment/skrill/status?orderId='.$orderId.
+				'&paymentKey='.$paymentMethod->paymentKey,
+			'cancel_url' => $this->paymentHelper->getDomain().'/checkout',
+			'language' => $this->getLanguage(),
+			'logo_url' => $pmpaySettings['logoUrl'],
+			'prepare_only' => 1,
+			'pay_from_email' => $billingAddress['email'],
+			'firstname' => $billingAddress['firstName'],
+			'lastname' => $billingAddress['lastName'],
+			'address' => $billingAddress['address'],
+			'postal_code' => $billingAddress['postalCode'],
+			'city' => $billingAddress['city'],
+			'country' => $billingAddress['country'],
+			'amount' => $basket->basketAmount,
+			'currency' => $basket->currency,
+			'detail1_description' => "Order pay from " . $billingAddress['email'],
+			'merchant_fields' => 'platform',
+			'platform' => '21477252',
+		];
+		if ($paymentMethod->paymentKey == 'PMPAY_ACC')
+		{
+			$parameters['payment_methods'] = 'VSA, MSC, AMX';
+		}
+		
+
+		try
+		{
+			$sidResult = $this->gatewayService->getSidResult($parameters);
+		}
+		catch (\Exception $e)
+		{
+			$this->getLogger(__METHOD__)->error('Skrill:getSidResult', $e);
+			return [
+				'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
+				'content' => 'An error occurred while processing your transaction. Please contact our support.'
+			];
+		}
+
+		// if ($pmpaySettings['display'] == 'REDIRECT')
+		// {
+			$paymentPageUrl = $this->gatewayService->getPaymentPageUrl($sidResult);
+		// }
+		// else
+		// {
+		// 	$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $sidResult;
+		// }
+
+		return [
+			'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
+			'content' => $paymentPageUrl
+		];
 	}
 
 
