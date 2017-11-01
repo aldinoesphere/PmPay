@@ -149,7 +149,9 @@ class PaymentService
 	public function executePayment($orderId)
 	{
 		$transactionId = $this->session->getPlugin()->getValue('PmPayTransactionId');
-		$this->getLogger(__METHOD__)->error('PmPay:basket', $transactionId);
+
+		$this->session->getPlugin()->setValue('PmPayTransactionId', null);
+
 		return $this->paymentHelper->getOrderPaymentStatus($transactionId);
 	}
 
