@@ -84,7 +84,7 @@ class PmPayServiceProvider extends ServiceProvider
 	private function registerPaymentMethod($payContainer, $paymentKey, $class)
 	{
 		$payContainer->register(
-			'pmpay::' . $paymentKey,
+			'PmPay::' . $paymentKey,
 			$class,
 			[
 				AfterBasketChanged::class,
@@ -94,9 +94,5 @@ class PmPayServiceProvider extends ServiceProvider
 				FrontendUpdateInvoiceAddress::class
 			]
 		);
-
-		$this->getLogger(__METHOD__)->error('PmPay:PayContainer', AfterBasketChanged::class);
-		$this->getLogger(__METHOD__)->error('PmPay:payContainer-key', AfterBasketItemAdd::class);
-		$this->getLogger(__METHOD__)->error('PmPay:payContainer-class', $class);
 	}
 }
