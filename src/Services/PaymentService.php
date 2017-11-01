@@ -28,6 +28,11 @@ class PaymentService
 	use Loggable;
 
 	/**
+     * @var string
+     */
+    private $returnType = '';
+
+	/**
 	 *
 	 * @var ItemRepositoryContract
 	 */
@@ -115,6 +120,24 @@ class PaymentService
 	}
 
 	/**
+     * Get the type of payment from the content of the PayPal container
+     *
+     * @return string
+     */
+    public function getReturnType()
+    {
+        return $this->returnType;
+    }
+
+    /**
+     * @param string $returnType
+     */
+    public function setReturnType(string $returnType)
+    {
+        $this->returnType = 'htmlContent';
+    }
+
+	/**
 	 * Load the settings from the database for the given settings type
 	 *
 	 * @param $settingsType
@@ -166,10 +189,11 @@ class PaymentService
 		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay';
 		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
 
-		return [
-			'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
-			'content' => $paymentPageUrl
-		];
+		// return [
+		// 	'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
+		// 	'content' => $paymentPageUrl
+		// ];
+		return $paymentPageUrl;
 	}
 
 	/**
