@@ -97,17 +97,21 @@ class PaymentService
 		FrontendSessionStorageFactoryContract $session,
 		AddressRepositoryContract $addressRepository,
 		CountryRepositoryContract $countryRepository,
-		OrderService $orderService,
 		PaymentHelper $paymentHelper,
-		SystemService $systemService
+		SystemService $systemService,
+		SettingsService $settingsService,
+		OrderService $orderService,
+		OrderRepositoryContract $orderRepository
 	){
 		$this->itemRepository = $itemRepository;
 		$this->session = $session;
 		$this->addressRepository = $addressRepository;
 		$this->countryRepository = $countryRepository;
-		$this->orderService = $orderService;
 		$this->paymentHelper = $paymentHelper;
 		$this->systemService = $systemService;
+		$this->settingsService = $settingsService;
+		$this->orderService = $orderService;
+		$this->orderRepository = $orderRepository;
 	}
 
 	/**
