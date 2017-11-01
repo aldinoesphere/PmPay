@@ -47,7 +47,7 @@ class PmPayServiceProvider extends ServiceProvider
 		$eventDispatcher->listen(
 						GetPaymentMethodContent::class,
 						function (GetPaymentMethodContent $event) use ($paymentHelper, $basket, $paymentService, $paymentMethodService) {
-							if ($paymentHelper->isPmPayPaymentMopId($event->getMop()))
+							if ($paymentHelper->isSkrillPaymentMopId($event->getMop()))
 							{
 								$content = $paymentService->getPaymentContent(
 												$basket->load(),
@@ -63,7 +63,7 @@ class PmPayServiceProvider extends ServiceProvider
 		$eventDispatcher->listen(
 						ExecutePayment::class,
 						function (ExecutePayment $event) use ($paymentHelper, $paymentService) {
-							if ($paymentHelper->isPmPayPaymentMopId($event->getMop()))
+							if ($paymentHelper->isSkrillPaymentMopId($event->getMop()))
 							{
 								$result = $paymentService->executePayment($event->getOrderId());
 
@@ -95,8 +95,8 @@ class PmPayServiceProvider extends ServiceProvider
 			]
 		);
 
-		$this->getLogger(__METHOD__)->error('PmPay:PayContainer', $payContainer);
-		$this->getLogger(__METHOD__)->error('PmPay:payContainer-key', $paymentKey);
+		$this->getLogger(__METHOD__)->error('PmPay:PayContainer', AfterBasketChanged::class);
+		$this->getLogger(__METHOD__)->error('PmPay:payContainer-key', AfterBasketItemAdd::class);
 		$this->getLogger(__METHOD__)->error('PmPay:payContainer-class', $class);
 	}
 }
