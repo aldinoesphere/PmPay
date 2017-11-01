@@ -47,7 +47,7 @@ class PmPayServiceProvider extends ServiceProvider
 		$eventDispatcher->listen(
 						GetPaymentMethodContent::class,
 						function (GetPaymentMethodContent $event) use ($paymentHelper, $basket, $paymentService, $paymentMethodService) {
-							if ($paymentHelper->isSkrillPaymentMopId($event->getMop()))
+							if ($paymentHelper->isPmPayPaymentMopId($event->getMop()))
 							{
 								$content = $paymentService->getPaymentContent(
 												$basket->load(),
@@ -63,7 +63,7 @@ class PmPayServiceProvider extends ServiceProvider
 		$eventDispatcher->listen(
 						ExecutePayment::class,
 						function (ExecutePayment $event) use ($paymentHelper, $paymentService) {
-							if ($paymentHelper->isSkrillPaymentMopId($event->getMop()))
+							if ($paymentHelper->isPmPayPaymentMopId($event->getMop()))
 							{
 								$result = $paymentService->executePayment($event->getOrderId());
 
