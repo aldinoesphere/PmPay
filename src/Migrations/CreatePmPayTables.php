@@ -17,7 +17,7 @@ class CreatePmPayTables
 	/**
 	 * Run on plugin build
 	 *
-	 * Create skrill configuration tables.
+	 * Create pmpay configuration tables.
 	 *
 	 * @param Migrate $migrate
 	 */

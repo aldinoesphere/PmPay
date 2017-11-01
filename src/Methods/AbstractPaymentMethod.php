@@ -7,7 +7,7 @@ use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFact
 use Plenty\Plugin\Application;
 use Plenty\Plugin\Log\Loggable;
 
-use Skrill\Services\PaymentService;
+use PmPay\Services\PaymentService;
 /**
 * 
 */
@@ -100,8 +100,8 @@ class AbstractPaymentMethod extends PaymentMethodService
 	}
 
 	/**
-	 * Get additional costs for Skrill.
-	 * Skrill did not allow additional costs
+	 * Get additional costs for Pmpay.
+	 * Pmpay did not allow additional costs
 	 *
 	 * @return float
 	 */
