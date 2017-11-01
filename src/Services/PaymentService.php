@@ -159,8 +159,11 @@ class PaymentService
 	{
 		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $sidResult;
 		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
-
-		return $paymentPageUrl;
+		
+		return [
+			'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
+			'content' => $paymentPageUrl
+		];
 	}
 
 	/**
