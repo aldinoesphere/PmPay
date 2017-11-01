@@ -157,9 +157,9 @@ class PaymentService
 	 */
 	public function getPaymentContent(Basket $basket, PaymentMethod $paymentMethod):string
 	{
-		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $sidResult;
+		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay';
 		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
-		
+
 		return [
 			'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
 			'content' => $paymentPageUrl

@@ -86,9 +86,9 @@ class PaymentController extends Controller
 	/**
 	 * show payment widget
 	 */
-	public function handlePayment(Twig $twig, $sid)
+	public function handlePayment(Twig $twig)
 	{
-		$paymentPageUrl = $this->gatewayService->getPaymentPageUrl($sid);
+		$paymentPageUrl = 'test';
 		$this->getLogger(__METHOD__)->error('PmPay:paymentPageUrl', $paymentPageUrl);
 
 		return $twig->render('PmPay::Payment.PaymentWidget', ['paymentPageUrl' => $paymentPageUrl]);

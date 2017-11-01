@@ -27,7 +27,7 @@ class PmPayRouteServiceProvider extends RouteServiceProvider
 		$router->post('pmpay/settings/save','PmPay\Controllers\SettingsController@saveConfiguration');
 
 		// Routes for PmPay payment widget
-		$router->get('payment/pmpay/pay/{sid}', 'PmPay\Controllers\PaymentController@handlePayment');
+		$router->get('payment/pmpay/pay', 'PmPay\Controllers\PaymentController@handlePayment');
 	}
 }
 
