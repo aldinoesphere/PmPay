@@ -41,8 +41,7 @@ class PmPayServiceProvider extends ServiceProvider
 		PaymentMethodRepositoryContract $paymentMethodService,
 		EventProceduresService $eventProceduresService
     ) {
-    	$this->getLogger(__METHOD__)->error('PmPay:register', $this->registerPaymentMethod($payContainer, 'PMPAY_ACC', AccPaymentMethod::class));
-    	// $this->registerPaymentMethod($payContainer, 'PMPAY_ACC', AccPaymentMethod::class);
+    	$this->registerPaymentMethod($payContainer, 'PMPAY_ACC', AccPaymentMethod::class);
 
     	// Listen for the event that gets the payment method content
 		$eventDispatcher->listen(

@@ -126,7 +126,7 @@ class PaymentService
 	}
 
 	/**
-	 * get the settings from the database for the given settings type is skrill_general
+	 * get the settings from the database for the given settings type is pmpay_general
 	 *
 	 * @return array|null
 	 */
@@ -183,9 +183,9 @@ class PaymentService
 			'recipient_description' => $pmpaySettings['userId'],
 			'transaction_id' => $transactionId,
 			'return_url' => $this->paymentHelper->getDomain().
-				'/payment/skrill/return?orderId='.$orderId,
+				'/payment/pmpay/return?orderId='.$orderId,
 			'status_url' => $this->paymentHelper->getDomain().
-				'/payment/skrill/status?orderId='.$orderId.
+				'/payment/pmpay/status?orderId='.$orderId.
 				'&paymentKey='.$paymentMethod->paymentKey,
 			'cancel_url' => $this->paymentHelper->getDomain().'/checkout',
 			'logo_url' => $pmpaySettings['logoUrl'],
