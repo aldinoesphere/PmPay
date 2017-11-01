@@ -48,7 +48,7 @@ class AbstractPaymentMethod extends PaymentMethodService
 	{
 		$this->checkout         = $checkout;
 		$this->paymentService   = $paymentService;
-		$this->paymentService->loadCurrentSettings($this->settingsType);
+		// $this->paymentService->loadCurrentSettings($this->settingsType);
 	}
 
 	/**
@@ -58,11 +58,11 @@ class AbstractPaymentMethod extends PaymentMethodService
 	 */
 	protected function isEnabled()
 	{
-		if (array_key_exists('enabled', $this->paymentService->settings) && $this->paymentService->settings['enabled'] == 1)
-		{
-			return true;
-		}
-		return false;
+		// if (array_key_exists('enabled', $this->paymentService->settings) && $this->paymentService->settings['enabled'] == 1)
+		// {
+		// 	return true;
+		// }
+		// return false;
 	}
 
 	/**
