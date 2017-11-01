@@ -17,7 +17,7 @@ use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
 use Plenty\Modules\Frontend\Services\SystemService;
 use Plenty\Plugin\Log\Loggable;
 
-
+use PmPay\Services\OrderService;
 use PmPay\Helper\PaymentHelper;
 use PmPay\Services\Database\SettingsService;
 /**
@@ -97,6 +97,7 @@ class PaymentService
 		FrontendSessionStorageFactoryContract $session,
 		AddressRepositoryContract $addressRepository,
 		CountryRepositoryContract $countryRepository,
+		OrderService $orderService,
 		PaymentHelper $paymentHelper,
 		SystemService $systemService
 	){
@@ -104,6 +105,7 @@ class PaymentService
 		$this->session = $session;
 		$this->addressRepository = $addressRepository;
 		$this->countryRepository = $countryRepository;
+		$this->orderService = $orderService;
 		$this->paymentHelper = $paymentHelper;
 		$this->systemService = $systemService;
 	}
