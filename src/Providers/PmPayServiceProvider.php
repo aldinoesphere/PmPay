@@ -95,8 +95,5 @@ class PmPayServiceProvider extends ServiceProvider
 			]
 		);
 
-		$this->getLogger(__METHOD__)->error('PmPay:payContainer', $payContainer);
-		$this->getLogger(__METHOD__)->error('PmPay:payContainer', $paymentKey);
-		$this->getLogger(__METHOD__)->error('PmPay:payContainer', $class);
 	}
 }
