@@ -167,7 +167,7 @@ class PaymentService
 		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
 
 		return [
-			'type' => 'redirectUrl',
+			'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
 			'content' => $paymentPageUrl
 		];
 	}
