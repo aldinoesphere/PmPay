@@ -145,7 +145,7 @@ class PaymentService
 	public function executePayment($orderId)
 	{
 		$transactionId = $this->session->getPlugin()->getValue('PmPayTransactionId');
-		$this->getLogger(__METHOD__)->error('PmPay:basket', $basket);
+		$this->getLogger(__METHOD__)->error('PmPay:basket', $transactionId);
 		return $this->paymentHelper->getOrderPaymentStatus($transactionId);
 	}
 
@@ -209,16 +209,16 @@ class PaymentService
 		}
 		
 
-		try
-		{
-			$sidResult = $this->gatewayService->getSidResult($parameters);
-		}
-		catch (\Exception $e)
-		{
-			return 'An error occurred while processing your transaction. Please contact our support.';
-		}
+		// try
+		// {
+		// 	$sidResult = $this->gatewayService->getSidResult($parameters);
+		// }
+		// catch (\Exception $e)
+		// {
+		// 	return 'An error occurred while processing your transaction. Please contact our support.';
+		// }
 
-		$this->getLogger(__METHOD__)->error('PmPay:sidResult', $sidResult);
+		// $this->getLogger(__METHOD__)->error('PmPay:sidResult', $sidResult);
 
 		// if ($pmpaySettings['display'] == 'REDIRECT')
 		// {
