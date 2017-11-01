@@ -155,7 +155,7 @@ class PaymentService
 	 * @param Basket $basket
 	 * @return string
 	 */
-	public function getPaymentContent(Basket $basket, PaymentMethod $paymentMethod):string
+	public function getPaymentContent(Basket $basket, PaymentMethod $paymentMethod)
 	{
 		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay';
 		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
