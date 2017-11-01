@@ -157,77 +157,7 @@ class PaymentService
 	 */
 	public function getPaymentContent(Basket $basket, PaymentMethod $paymentMethod):string
 	{
-	 	$this->getLogger(__METHOD__)->error('PmPay:basket', $basket);
-		$this->getLogger(__METHOD__)->error('PmPay:paymentMethod', $paymentMethod);
-
-	    $pmpaySettings = $this->getPmPaySettings();
-	    
-	    $this->getLogger(__METHOD__)->error('PmPay:pmpaySettings', $pmpaySettings);
-
-		$orderData = $this->orderService->placeOrder();
-
-		$this->getLogger(__METHOD__)->error('PmPay:orderData', $orderData);
-
-		if (!isset($orderData->order->id))
-		{
-			return 'The order can not created';
-		}
-
-		$orderId = $orderData->order->id;
-		$transactionId = time() . $this->getRandomNumber(4) . $orderId;
-
-		$billingAddress = $this->getAddress($this->getBillingAddress($basket));
-
-		$parameters = [
-			'pay_to_email' => $pmpaySettings['merchantEmail'],
-			'recipient_description' => $pmpaySettings['userId'],
-			'transaction_id' => $transactionId,
-			'return_url' => $this->paymentHelper->getDomain().
-				'/payment/pmpay/return?orderId='.$orderId,
-			'status_url' => $this->paymentHelper->getDomain().
-				'/payment/pmpay/status?orderId='.$orderId.
-				'&paymentKey='.$paymentMethod->paymentKey,
-			'cancel_url' => $this->paymentHelper->getDomain().'/checkout',
-			'logo_url' => $pmpaySettings['logoUrl'],
-			'prepare_only' => 1,
-			'pay_from_email' => $billingAddress['email'],
-			'firstname' => $billingAddress['firstName'],
-			'lastname' => $billingAddress['lastName'],
-			'address' => $billingAddress['address'],
-			'postal_code' => $billingAddress['postalCode'],
-			'city' => $billingAddress['city'],
-			'country' => $billingAddress['country'],
-			'amount' => $basket->basketAmount,
-			'currency' => $basket->currency,
-			'detail1_description' => "Order pay from " . $billingAddress['email'],
-			'merchant_fields' => 'platform',
-			'platform' => '21477252',
-		];
-		if ($paymentMethod->paymentKey == 'PMPAY_ACC')
-		{
-			$parameters['payment_methods'] = 'VSA, MSC, AMX';
-		}
-		
-
-		// try
-		// {
-		// 	$sidResult = $this->gatewayService->getSidResult($parameters);
-		// }
-		// catch (\Exception $e)
-		// {
-		// 	return 'An error occurred while processing your transaction. Please contact our support.';
-		// }
-
-		// $this->getLogger(__METHOD__)->error('PmPay:sidResult', $sidResult);
-
-		// if ($pmpaySettings['display'] == 'REDIRECT')
-		// {
-			// $paymentPageUrl = $this->gatewayService->getPaymentPageUrl($sidResult);
-		// }
-		// else
-		// {
-			$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $sidResult;
-		// }
+		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $sidResult;
 		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
 
 		return $paymentPageUrl;
