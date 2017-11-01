@@ -114,7 +114,7 @@ class PaymentService
 	 * @param $settingsType
 	 * @return array|null
 	 */
-	public function loadCurrentSettings($settingsType = 'pmpay-general')
+	public function loadCurrentSettings($settingsType = 'general-setting')
 	{
 		$setting = $this->settingsService->loadSetting($this->systemService->getPlentyId(), $settingsType);
 		if (is_array($setting) && count($setting) > 0)
@@ -143,7 +143,7 @@ class PaymentService
 	public function executePayment($orderId)
 	{
 		$transactionId = $this->session->getPlugin()->getValue('pmpayTransactionId');
-
+		$this->getLogger(__METHOD__)->error('PmPay:basket', $basket);
 		return $this->paymentHelper->getOrderPaymentStatus($transactionId);
 	}
 
