@@ -80,7 +80,7 @@ class PaymentHelper
 		if (strlen($paymentKey))
 		{
 			// List all payment methods for the given plugin
-			$paymentMethods = $this->paymentMethodRepository->allForPlugin('pmpay');
+			$paymentMethods = $this->paymentMethodRepository->allForPlugin('PlentyPmpay');
 			$this->getLogger(__METHOD__)->error('PmPay:getPaymentMethodByPaymentKey', $paymentMethods);
 
 			if (!is_null($paymentMethods))
@@ -227,7 +227,7 @@ class PaymentHelper
 	 */
 	public function isPmPayPaymentMopId($mopId)
 	{
-		$paymentMethods = $this->paymentMethodRepository->allForPlugin('pmpay');
+		$paymentMethods = $this->paymentMethodRepository->allForPlugin('PlentyPmpay');
 		
 		$this->getLogger(__METHOD__)->error('PmPay:isPmPayPaymentMopId', $paymentMethods);
 
