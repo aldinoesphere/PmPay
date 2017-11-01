@@ -2,6 +2,7 @@
     "name": "PmPay",
     "description": "PmPay Backend Menu",
     "namespace": "PmPay",
+    "version": "1.0.0",
     "author": "Payreto Dev",
     "type": "payment",
     "serviceProvider": "PmPay\\Providers\\PmPayServiceProvider",
