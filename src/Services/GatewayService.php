@@ -59,7 +59,8 @@ class GatewayService
 			throw new \Exception('Sid is not valid : ' . $response);
 		}
 
-		return $response;
+		$responseId = json_decode($response, true);
+		return $responseId["id"];
 	}
 
 	/**

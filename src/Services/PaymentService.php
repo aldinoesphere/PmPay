@@ -191,7 +191,7 @@ class PaymentService
 
 		try
 		{
-			$checkoutIdResult = $this->gatewayService->getCheckoutId($parameters);
+			$checkoutId = $this->gatewayService->getCheckoutId($parameters);
 		}
 		catch (\Exception $e)
 		{
@@ -202,8 +202,8 @@ class PaymentService
 			];
 		}
 
-		$this->getLogger(__METHOD__)->error('PmPay:parameters', $checkoutIdResult);
-		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $checkoutIdResult;
+		$this->getLogger(__METHOD__)->error('PmPay:parameters', $checkoutId);
+		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $checkoutId;
 
 		return [
 			'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
