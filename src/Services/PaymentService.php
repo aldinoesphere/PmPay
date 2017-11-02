@@ -202,18 +202,12 @@ class PaymentService
 			];
 		}
 
-
-		// $paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $checkoutIdResult["id"];
-		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
-
-		// return [
-		// 	'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
-		// 	'content' => $paymentPageUrl
-		// ];
+		$this->getLogger(__METHOD__)->error('PmPay:parameters', $paymentPageUrl);
+		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $checkoutIdResult;
 
 		return [
-			'type' => 'htmlContent',
-			'content' => $$checkoutIdResult
+			'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
+			'content' => $paymentPageUrl
 		];
 	}
 
