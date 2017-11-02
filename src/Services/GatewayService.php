@@ -83,33 +83,7 @@ class GatewayService
 	 */
 	public function getPaymentStatus($parameters)
 	{
-		$parameters['action'] = 'status_trn';
-		$response = $this->getGatewayResponse($this->skrillQueryUrl, $parameters);
-
-		$this->getLogger(__METHOD__)->error('Skrill:response', $response);
-
-		$responseCode = (int) substr($response, 0, 3);
-		if ($responseCode == 401)
-		{
-			if (strpos($response, 'Cannot login') !== false)
-			{
-				throw new \Exception('Please check MQI/API password');
-			}
-			elseif (strpos($response, 'Your account is currently locked') !== false)
-			{
-				$message = "Your account is currently locked. Please contact our Merchant Team: merchantservices@skrill.com";
-				throw new \Exception($message);
-			}
-			throw new \Exception('Get payment status failed!');
-		}
-
-		$responseInArray = $this->setResponseToArray($response);
-
-		if (!$responseInArray)
-		{
-			throw new \Exception('Get payment status failed!');
-		}
-		return $responseInArray;
+		
 	}
 
 }
