@@ -12,7 +12,7 @@ use Plenty\Plugin\Templates\Twig;
 
 use PmPay\Services\GatewayService;
 use PmPay\Helper\PaymentHelper;
-use PmPay\Services\Database\PaymentService;
+use PmPay\Services\PaymentService;
 
 /**
 * Class PaymentController
