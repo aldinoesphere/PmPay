@@ -105,7 +105,7 @@ class PaymentController extends Controller
 		$this->getLogger(__METHOD__)->error('PmPay:paymentPageUrl', $paymentPageUrl);
 
 		$data = [
-			'checkOutId' => $id,
+			'checkoutId' => $id,
 			'paymentPageUrl' => $paymentPageUrl
 		];
 
