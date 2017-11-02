@@ -20,6 +20,7 @@ use Plenty\Plugin\Log\Loggable;
 use PmPay\Services\OrderService;
 use PmPay\Helper\PaymentHelper;
 use PmPay\Services\Database\SettingsService;
+use PmPay\Services\GatewayService;
 /**
 * 
 */
@@ -100,6 +101,7 @@ class PaymentService
 		PaymentHelper $paymentHelper,
 		SystemService $systemService,
 		SettingsService $settingsService,
+		GatewayService $gatewayService,
 		OrderService $orderService,
 		OrderRepositoryContract $orderRepository
 	){
@@ -110,6 +112,7 @@ class PaymentService
 		$this->paymentHelper = $paymentHelper;
 		$this->systemService = $systemService;
 		$this->settingsService = $settingsService;
+		$this->gatewayService = $gatewayService;
 		$this->orderService = $orderService;
 		$this->orderRepository = $orderRepository;
 	}
