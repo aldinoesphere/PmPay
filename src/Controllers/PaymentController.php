@@ -11,6 +11,7 @@ use Plenty\Plugin\Log\Loggable;
 use Plenty\Plugin\Templates\Twig;
 
 use PmPay\Services\GatewayService;
+use PmPay\Helper\PaymentHelper;
 
 /**
 * Class PaymentController
