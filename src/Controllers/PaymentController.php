@@ -127,7 +127,7 @@ class PaymentController extends Controller
 	public function handleValidation($checkoutId)
 	{
 		$pmpaySettings = $this->paymentService->getPmPaySettings();
-		$ccSettings = $this->paymentService->getPmPaySettings('credit-card');
+		$ccSettings = $this->paymentService->getCcSettings('credit-card');
 
 		$parameters = [
 			'authentication.userId' => $pmpaySettings['userId'],
