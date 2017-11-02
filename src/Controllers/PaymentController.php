@@ -48,6 +48,12 @@ class PaymentController extends Controller
 	private $gatewayService;
 
 	/**
+	 *
+	 * @var paymentHelper
+	 */
+	private $paymentHelper;
+
+	/**
 	 * PaymentController constructor.
 	 *
 	 * @param Request $request
@@ -60,13 +66,15 @@ class PaymentController extends Controller
 					Response $response,
 					BasketItemRepositoryContract $basketItemRepository,
 					FrontendSessionStorageFactoryContract $sessionStorage,
-					GatewayService $gatewayService
+					GatewayService $gatewayService,
+					PaymentHelper $paymentHelper
 	) {
 		$this->request = $request;
 		$this->response = $response;
 		$this->basketItemRepository = $basketItemRepository;
 		$this->sessionStorage = $sessionStorage;
 		$this->gatewayService = $gatewayService;
+		$this->paymentHelper = $paymentHelper;
 	}
 
 	/**

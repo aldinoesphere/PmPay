@@ -54,10 +54,10 @@ class GatewayService
 		$checkOutUrl = $this->oppwaUrl . 'checkouts';
 		$response = $this->getGatewayResponse($checkOutUrl, $parameters);
 
-		// if ($response)
-		// {
-		// 	throw new \Exception('Sid is not valid : ' . $response);
-		// }
+		if (!$response)
+		{
+			throw new \Exception('Sid is not valid : ' . $response);
+		}
 
 		return $response;
 	}
