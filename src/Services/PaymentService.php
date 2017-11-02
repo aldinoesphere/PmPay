@@ -202,7 +202,7 @@ class PaymentService
 			];
 		}
 
-		$this->getLogger(__METHOD__)->error('PmPay:parameters', $paymentPageUrl);
+		$this->getLogger(__METHOD__)->error('PmPay:parameters', $checkoutIdResult);
 		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $checkoutIdResult;
 
 		return [
