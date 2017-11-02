@@ -10,6 +10,8 @@ use Plenty\Modules\Frontend\Session\Storage\Contracts\FrontendSessionStorageFact
 use Plenty\Plugin\Log\Loggable;
 use Plenty\Plugin\Templates\Twig;
 
+use PmPay\Services\GatewayService;
+
 /**
 * Class PaymentController
 * @package PmPay\Controllers
@@ -56,12 +58,14 @@ class PaymentController extends Controller
 					Request $request,
 					Response $response,
 					BasketItemRepositoryContract $basketItemRepository,
-					FrontendSessionStorageFactoryContract $sessionStorage
+					FrontendSessionStorageFactoryContract $sessionStorage,
+					GatewayService $gatewayService
 	) {
 		$this->request = $request;
 		$this->response = $response;
 		$this->basketItemRepository = $basketItemRepository;
 		$this->sessionStorage = $sessionStorage;
+		$this->gatewayService = $gatewayService;
 	}
 
 	/**
@@ -86,11 +90,25 @@ class PaymentController extends Controller
 	/**
 	 * show payment widget
 	 */
-	public function handlePayment(Twig $twig)
+	public function handlePayment(Twig $twig, $id)
 	{
-		$paymentPageUrl = 'test';
+		$paymentPageUrl = $this->paymentHelper->getDomain('payment/pmpay/validate/' . $id);
 		$this->getLogger(__METHOD__)->error('PmPay:paymentPageUrl', $paymentPageUrl);
+
+		$data = [
+			'checkOutId' => $id,
+			'paymentPageUrl' => $paymentPageUrl
+		];
 
 		return $twig->render('PmPay::Payment.PaymentWidget', ['paymentPageUrl' => $paymentPageUrl]);
 	}
+
+	/**
+	 * show payment widget
+	 */
+	public function handleValidation()
+	{
+
+	}
+
 }

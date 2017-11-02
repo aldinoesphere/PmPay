@@ -141,6 +141,17 @@ class PaymentService
 	}
 
 	/**
+	 * get the settings from the database for the given settings type is pmpay_general
+	 *
+	 * @return array|null
+	 */
+	public function getCcSettings()
+	{
+		$this->loadCurrentSettings('credit-card');
+		return $this->settings;
+	}
+
+	/**
 	 * this function will execute after we are doing a payment and show payment success or not.
 	 *
 	 * @param int $orderId
@@ -163,7 +174,33 @@ class PaymentService
 	 */
 	public function getPaymentContent(Basket $basket, PaymentMethod $paymentMethod)
 	{
-		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay';
+		$pmpaySettings = $this->getPmPaySettings();
+		$ccSettings = $this->getCcSettings();
+
+		$parameters = [
+			'authentication.userId' => $pmpaySettings['userId'],
+			'authentication.password' => $pmpaySettings['password'],
+			'authentication.entityId' => $ccSettings['entityId'],
+			'amount' => '92',
+			'currency' => 'EUR',
+			'paymentType' => $ccSettings['transactionMode']
+		];
+
+		try
+		{
+			$checkoutIdResult = $this->gatewayService->getCheckoutId($parameters);
+		}
+		catch (\Exception $e)
+		{
+			$this->getLogger(__METHOD__)->error('PmPay:getCheckoutId', $e);
+			return [
+				'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
+				'content' => 'An error occurred while processing your transaction. Please contact our support.'
+			];
+		}
+
+
+		$paymentPageUrl = $this->paymentHelper->getDomain().'/payment/pmpay/pay/' . $checkoutIdResult;
 		$this->getLogger(__METHOD__)->error('PmPay:parameters', $parameters);
 
 		return [

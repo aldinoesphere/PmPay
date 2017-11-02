@@ -65,14 +65,14 @@ class PaymentHelper
 	 *
 	 * @return string
 	 */
-	public function getDomain()
+	public function getDomain($params = '')
 	{
 		$webstoreHelper = pluginApp(\Plenty\Modules\Helper\Services\WebstoreHelper::class);
 		$webstoreConfig = $webstoreHelper->getCurrentWebstoreConfiguration();
 		$domain = $webstoreConfig->domainSsl;
 		$this->getLogger(__METHOD__)->error('PmPay:domain', $domain);
 
-		return $domain;
+		return $domain . '/' . $params;
 	}
 
 	public function getPaymentMethodByPaymentKey($paymentKey)
