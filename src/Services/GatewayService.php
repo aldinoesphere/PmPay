@@ -51,8 +51,8 @@ class GatewayService
 	 */
 	public function getCheckoutId($parameters)
 	{
-		$checkOutUrl = $this->oppwaUrl . 'checkouts';
-		$response = $this->getGatewayResponse($checkOutUrl, $parameters);
+		$checkoutUrl = $this->oppwaUrl . 'checkouts';
+		$response = $this->getGatewayResponse($checkoutUrl, $parameters);
 
 		if (!$response)
 		{
@@ -70,9 +70,18 @@ class GatewayService
 	 * @throws \Exception
 	 * @return string
 	 */
-	public function getSidResult($parameters)
+	public function paymentConfirmation($checkoutId, $parameters)
 	{
-		
+		$confirmationUrl = $this->oppwaUrl . 'checkouts/' . $checkoutId . '/payment';
+		$response = $this->getGatewayResponse($confirmationUrl, $parameters);
+
+		if (!$response)
+		{
+			throw new \Exception('Sid is not valid : ' . $response);
+		}
+
+		$responseId = json_decode($response, true);
+		return $responseId["id"];
 	}
 
 	/**

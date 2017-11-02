@@ -12,6 +12,7 @@ use Plenty\Plugin\Templates\Twig;
 
 use PmPay\Services\GatewayService;
 use PmPay\Helper\PaymentHelper;
+use PmPay\Services\Database\PaymentService;
 
 /**
 * Class PaymentController
@@ -54,6 +55,12 @@ class PaymentController extends Controller
 	private $paymentHelper;
 
 	/**
+	 *
+	 * @var paymentService
+	 */
+	private $paymentService;
+
+	/**
 	 * PaymentController constructor.
 	 *
 	 * @param Request $request
@@ -67,7 +74,8 @@ class PaymentController extends Controller
 					BasketItemRepositoryContract $basketItemRepository,
 					FrontendSessionStorageFactoryContract $sessionStorage,
 					GatewayService $gatewayService,
-					PaymentHelper $paymentHelper
+					PaymentHelper $paymentHelper,
+					PaymentService $paymentService,
 	) {
 		$this->request = $request;
 		$this->response = $response;
@@ -75,6 +83,7 @@ class PaymentController extends Controller
 		$this->sessionStorage = $sessionStorage;
 		$this->gatewayService = $gatewayService;
 		$this->paymentHelper = $paymentHelper;
+		$this->paymentService = $paymentService;
 	}
 
 	/**
@@ -99,13 +108,13 @@ class PaymentController extends Controller
 	/**
 	 * show payment widget
 	 */
-	public function handlePayment(Twig $twig, $id)
+	public function handlePayment(Twig $twig, $checkoutId)
 	{
-		$paymentPageUrl = $this->paymentHelper->getDomain() . 'payment/pmpay/validate/' . $id;
+		$paymentPageUrl = $this->paymentHelper->getDomain() . 'payment/pmpay/validate/' . $checkoutId;
 		$this->getLogger(__METHOD__)->error('PmPay:paymentPageUrl', $paymentPageUrl);
 
 		$data = [
-			'checkoutId' => $id,
+			'checkoutId' => $checkoutId,
 			'paymentPageUrl' => $paymentPageUrl
 		];
 
@@ -115,9 +124,19 @@ class PaymentController extends Controller
 	/**
 	 * show payment widget
 	 */
-	public function handleValidation()
+	public function handleValidation($checkoutId)
 	{
+		$pmpaySettings = $this->paymentService->getPmPaySettings();
+		$ccSettings = $this->paymentService->getPmPaySettings('credit-card');
 
+		$parameters = [
+			'authentication.userId' => $pmpaySettings['userId'],
+			'authentication.password' => $pmpaySettings['password'],
+			'authentication.entityId' => $ccSettings['entityId']
+		];
+
+		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
+		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
 	}
 
 }
