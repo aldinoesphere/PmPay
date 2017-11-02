@@ -39,7 +39,7 @@ class GatewayService
 			return curl_error($ch);
 		}
 		curl_close($ch);
-		return json_decode($responseData, true);
+		return $responseData;
 	}
 
 	/**
