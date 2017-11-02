@@ -51,7 +51,7 @@ class GatewayService
 	 */
 	public function getCheckoutId($parameters)
 	{
-		$checkOutUrl = $this->oppwaUrl . 'checkouts'
+		$checkOutUrl = $this->oppwaUrl . 'checkouts';
 		$response = $this->getGatewayResponse($checkOutUrl, $parameters);
 
 		// if ($response)
