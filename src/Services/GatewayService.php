@@ -31,7 +31,7 @@ class GatewayService
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$responseData = curl_exec($ch);
@@ -71,14 +71,7 @@ class GatewayService
 	 */
 	public function getSidResult($parameters)
 	{
-		$response = $this->getGatewayResponse($this->skrillPayUrl, $parameters);
-
-		if (!$this->isMd5Valid($response))
-		{
-			throw new \Exception('Sid is not valid : ' . $response);
-		}
-
-		return $response;
+		
 	}
 
 	/**
