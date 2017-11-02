@@ -109,7 +109,7 @@ class PaymentController extends Controller
 			'paymentPageUrl' => $paymentPageUrl
 		];
 
-		return $twig->render('PmPay::Payment.PaymentWidget', ['paymentPageUrl' => $paymentPageUrl]);
+		return $twig->render('PmPay::Payment.PaymentWidget', $data);
 	}
 
 	/**
