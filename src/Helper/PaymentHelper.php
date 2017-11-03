@@ -124,7 +124,7 @@ class PaymentHelper
 
 		$state = $this->mapTransactionState((string)$paymentStatus['status']);
 
-		$payment->status = $state;
+		$payment->status = 2;
 		$payment->currency = $paymentStatus['currency'];
 		$payment->amount = $paymentStatus['amount'];
 

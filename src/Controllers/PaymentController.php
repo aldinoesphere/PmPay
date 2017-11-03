@@ -109,6 +109,7 @@ class PaymentController extends Controller
 		$basketItems = $this->basketItemRepository->all();
 		$this->getLogger(__METHOD__)->error('PmPay:basketItems', $basketItems);
 
+		#Reset all basket.
 		foreach ($basketItems as $basketItem)
 		{
 			$this->basketItemRepository->removeBasketItem($basketItem->id);
