@@ -13,7 +13,7 @@ use Plenty\Plugin\Templates\Twig;
 use PmPay\Services\GatewayService;
 use PmPay\Helper\PaymentHelper;
 use PmPay\Services\PaymentService;
-
+use PmPay\Services\OrderService;
 /**
 * Class PaymentController
 * @package PmPay\Controllers
@@ -75,6 +75,7 @@ class PaymentController extends Controller
 					FrontendSessionStorageFactoryContract $sessionStorage,
 					GatewayService $gatewayService,
 					PaymentHelper $paymentHelper,
+					OrderService $orderService,
 					PaymentService $paymentService
 	) {
 		$this->request = $request;
@@ -83,6 +84,7 @@ class PaymentController extends Controller
 		$this->sessionStorage = $sessionStorage;
 		$this->gatewayService = $gatewayService;
 		$this->paymentHelper = $paymentHelper;
+		$this->orderService = $orderService;
 		$this->paymentService = $paymentService;
 	}
 
@@ -100,7 +102,7 @@ class PaymentController extends Controller
 
 		$basketItems = $this->basketItemRepository->all();
 		$this->getLogger(__METHOD__)->error('PmPay:basketItems', $basketItems);
-		
+
 		foreach ($basketItems as $basketItem)
 		{
 			$this->basketItemRepository->removeBasketItem($basketItem->id);
@@ -134,6 +136,11 @@ class PaymentController extends Controller
 		
 		$pmpaySettings = $this->paymentService->getPmPaySettings();
 		$ccSettings = $this->paymentService->getCcSettings();
+		$orderData = $this->orderService->placeOrder();
+
+		$orderId = $orderData->order->id;
+
+		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderData->order->id);
 
 		$parameters = [
 			'authentication.userId' => $pmpaySettings['userId'],
@@ -142,8 +149,7 @@ class PaymentController extends Controller
 		];
 
 		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
-		return $this->response->redirectTo('payment/pmpay/return');
-		// return $twig->render('PmPay::Payment.PaymentConfirmation', ['data' => $paymentConfirmation]);
+		return $this->response->redirectTo('payment/pmpay/return?orderId=' . $orderId);
 	}
 
 }
