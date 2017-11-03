@@ -30,7 +30,7 @@ class PmPayRouteServiceProvider extends RouteServiceProvider
 		$router->get('payment/pmpay/pay/{id}', 'PmPay\Controllers\PaymentController@handlePayment');
 
 		// Routes for PmPay payment widget
-		$router->get('payment/pmpay/validate/{id}', 'PmPay\Controllers\PaymentController@handleValidation');
+		$router->get('payment/pmpay/validate/{id}/', 'PmPay\Controllers\PaymentController@handleValidation');
 	}
 }
 

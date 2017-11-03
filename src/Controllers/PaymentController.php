@@ -130,9 +130,6 @@ class PaymentController extends Controller
 		$pmpaySettings = $this->paymentService->getPmPaySettings();
 		$ccSettings = $this->paymentService->getCcSettings();
 
-		$this->getLogger(__METHOD__)->error('PmPay:pmpaySettings', $pmpaySettings);
-		$this->getLogger(__METHOD__)->error('PmPay:ccSettings', $ccSettings);
-
 		$parameters = [
 			'authentication.userId' => $pmpaySettings['userId'],
 			'authentication.password' => $pmpaySettings['password'],
