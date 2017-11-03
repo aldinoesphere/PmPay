@@ -95,8 +95,8 @@ class GatewayService
 	public function paymentConfirmation($checkoutId, $parameters)
 	{
 		$confirmationUrl = $this->oppwaUrl . 'checkouts/' . $checkoutId . '/payment';
-		$confirmationUrl .= '?' . http_build_query($parameters) . "\n";
-		
+		$confirmationUrl .= '?' . http_build_query($parameters, '', '&');
+
 		$response = $this->getGatewayPaymentConfirmation($confirmationUrl);
 
 		if (!$response)

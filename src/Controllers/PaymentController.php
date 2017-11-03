@@ -127,18 +127,18 @@ class PaymentController extends Controller
 	public function handleValidation(Twig $twig, $checkoutId)
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:checkoutId', $checkoutId);
-		return $twig->render('PmPay::Payment.PaymentConfirmation', ['data' => $checkoutId]);
-		// $pmpaySettings = $this->paymentService->getPmPaySettings();
-		// $ccSettings = $this->paymentService->getCcSettings();
+		
+		$pmpaySettings = $this->paymentService->getPmPaySettings();
+		$ccSettings = $this->paymentService->getCcSettings();
 
-		// $parameters = [
-		// 	'authentication.userId' => $pmpaySettings['userId'],
-		// 	'authentication.password' => $pmpaySettings['password'],
-		// 	'authentication.entityId' => $ccSettings['entityId']
-		// ];
+		$parameters = [
+			'authentication.userId' => $pmpaySettings['userId'],
+			'authentication.password' => $pmpaySettings['password'],
+			'authentication.entityId' => $ccSettings['entityId']
+		];
 
-		// $paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
-		// $this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
+		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
+		return $twig->render('PmPay::Payment.PaymentConfirmation', ['data' => $paymentConfirmation]);
 	}
 
 }
