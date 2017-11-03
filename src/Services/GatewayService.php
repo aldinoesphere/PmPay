@@ -43,6 +43,28 @@ class GatewayService
 	}
 
 	/**
+	 * gateway payment confirmation
+	 *
+	 * @param string $confirmationUrl
+	 * @throws \Exception
+	 * @return string
+	 */
+	private function getGatewayPaymentConfirmation($confirmationUrl)
+	{
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $confirmationUrl);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$responseData = curl_exec($ch);
+		if(curl_errno($ch)) {
+			return curl_error($ch);
+		}
+		curl_close($ch);
+		return $responseData;
+	}
+
+	/**
 	 * Get Sid from gateway to use at payment page url
 	 *
 	 * @param array $parameters
@@ -73,7 +95,9 @@ class GatewayService
 	public function paymentConfirmation($checkoutId, $parameters)
 	{
 		$confirmationUrl = $this->oppwaUrl . 'checkouts/' . $checkoutId . '/payment';
-		$response = $this->getGatewayResponse($confirmationUrl, $parameters);
+		$confirmationUrl .= '?' . http_build_query($parameters) . "\n";
+
+		$response = $this->getGatewayPaymentConfirmation($confirmationUrl);
 
 		if (!$response)
 		{
