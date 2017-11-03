@@ -96,7 +96,7 @@ class GatewayService
 	{
 		$confirmationUrl = $this->oppwaUrl . 'checkouts/' . $checkoutId . '/payment';
 		$confirmationUrl .= '?' . http_build_query($parameters) . "\n";
-
+		$this->getLogger(__METHOD__)->error('PmPay:confirmationUrl', $confirmationUrl);
 		$response = $this->getGatewayPaymentConfirmation($confirmationUrl);
 
 		if (!$response)
