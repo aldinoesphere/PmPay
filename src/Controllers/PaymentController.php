@@ -138,6 +138,7 @@ class PaymentController extends Controller
 		];
 
 		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
+		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
 		return $twig->render('PmPay::Payment.PaymentConfirmation', ['data' => $paymentConfirmation]);
 	}
 
