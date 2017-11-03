@@ -126,6 +126,7 @@ class PaymentController extends Controller
 	 */
 	public function handleValidation($checkoutId)
 	{
+		$this->getLogger(__METHOD__)->error('PmPay:checkoutId', $checkoutId);
 		$pmpaySettings = $this->paymentService->getPmPaySettings();
 		$ccSettings = $this->paymentService->getCcSettings();
 
