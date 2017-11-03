@@ -124,7 +124,7 @@ class PaymentController extends Controller
 	/**
 	 * show payment widget
 	 */
-	public function handleValidation(Twig $twig, $checkoutId)
+	public function handleValidation($checkoutId)
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:checkoutId', $checkoutId);
 		
@@ -138,8 +138,8 @@ class PaymentController extends Controller
 		];
 
 		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
-		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
-		return $twig->render('PmPay::Payment.PaymentConfirmation', ['data' => $paymentConfirmation]);
+		return $this->response->redirectTo('payment/pmpay/return');
+		// return $twig->render('PmPay::Payment.PaymentConfirmation', ['data' => $paymentConfirmation]);
 	}
 
 }
