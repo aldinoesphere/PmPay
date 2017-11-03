@@ -110,7 +110,7 @@ class PaymentController extends Controller
 	 */
 	public function handlePayment(Twig $twig, $checkoutId)
 	{
-		$paymentPageUrl = $this->paymentHelper->getDomain() . 'payment/pmpay/validate/';
+		$paymentPageUrl = $this->paymentHelper->getDomain() . '/payment/pmpay/validate/';
 		$this->getLogger(__METHOD__)->error('PmPay:paymentPageUrl', $paymentPageUrl);
 
 		$data = [
