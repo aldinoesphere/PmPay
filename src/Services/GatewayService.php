@@ -81,7 +81,7 @@ class GatewayService
 		}
 
 		$responseId = json_decode($response, true);
-		return $responseId["id"];
+		return $responseId;
 	}
 
 	/**
