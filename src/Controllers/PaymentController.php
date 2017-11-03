@@ -96,7 +96,11 @@ class PaymentController extends Controller
 
 		$orderId = $this->request->get('orderId');
 
+		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
+
 		$basketItems = $this->basketItemRepository->all();
+		$this->getLogger(__METHOD__)->error('PmPay:basketItems', $basketItems);
+		
 		foreach ($basketItems as $basketItem)
 		{
 			$this->basketItemRepository->removeBasketItem($basketItem->id);
