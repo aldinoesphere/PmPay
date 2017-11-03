@@ -124,9 +124,10 @@ class PaymentController extends Controller
 	/**
 	 * show payment widget
 	 */
-	public function handleValidation($checkoutId)
+	public function handleValidation(Twig $twig, $checkoutId)
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:checkoutId', $checkoutId);
+		return $twig->render('PmPay::Payment.PaymentConfirmation', ['data' => $checkoutId]);
 		// $pmpaySettings = $this->paymentService->getPmPaySettings();
 		// $ccSettings = $this->paymentService->getCcSettings();
 
