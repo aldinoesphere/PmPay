@@ -380,24 +380,23 @@ class PaymentHelper
 	 * @param Payment $payment
 	 * @param int $orderId
 	 */
-	public function assignPlentyPaymentToPlentyOrder($payment, $orderId)
+	public function assignPlentyPaymentToPlentyOrder(Payment $payment, int $orderId)
 	{
-		return $this->paymentOrderRelationRepository->createOrderRelation($payment, $orderId);
-		// $orderRepo = pluginApp(OrderRepositoryContract::class);
-		// $authHelper = pluginApp(AuthHelper::class);
-
-		// $order = $authHelper->processUnguarded(
-		// 				function () use ($orderRepo, $orderId) {
-		// 					return $orderRepo->findOrderById($orderId);
-		// 				}
-		// );
-
-		// if (!is_null($order) && $order instanceof Order)
-		// {
-		// 	$this->getLogger(__METHOD__)->error('Skrill:payment', $payment);
-		// 	$this->getLogger(__METHOD__)->error('Skrill:order', $order);
-		// 	$this->paymentOrderRelationRepository->createOrderRelation($payment, $order);
-		// }
+		$orderRepo = pluginApp(OrderRepositoryContract::class);
+		$authHelper = pluginApp(AuthHelper::class);
+		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
+		$order = $authHelper->processUnguarded(
+						function () use ($orderRepo, $orderId) {
+							return $orderRepo->findOrderById($orderId);
+						}
+		);
+		$this->getLogger(__METHOD__)->error('PmPay:order', $order);
+		if (!is_null($order) && $order instanceof Order)
+		{
+			$this->getLogger(__METHOD__)->error('PmPay:payment', $payment);
+			$this->getLogger(__METHOD__)->error('PmPay:order', $order);
+			$this->paymentOrderRelationRepository->createOrderRelation($payment, $order);
+		}
 	}
 
 	/**
