@@ -51,9 +51,5 @@ class PaymentNotificationController extends Controller
 		// $this->paymentHelper->updatePlentyPayment($paymentStatus);
 
 		// return 'ok';
-		$data = [
-			'data' => $this->request->all()
-		];
-		return $twig->render('PmPay::Payment.PaymentConfirmation', $data);
 	}
 }
