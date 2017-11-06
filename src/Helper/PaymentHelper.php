@@ -380,7 +380,7 @@ class PaymentHelper
 	 * @param Payment $payment
 	 * @param int $orderId
 	 */
-	public function assignPlentyPaymentToPlentyOrder(Payment $payment, int $orderId)
+	public function assignPlentyPaymentToPlentyOrder($payment, $orderId)
 	{
 		return $this->paymentOrderRelationRepository->createOrderRelation($payment, $orderId);
 		// $orderRepo = pluginApp(OrderRepositoryContract::class);
