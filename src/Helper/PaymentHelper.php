@@ -199,7 +199,7 @@ class PaymentHelper
 		} else {
 			$payment = $this->createPlentyPayment($paymentStatus);
 
-			$this->assignPlentyPaymentToPlentyOrder($payment, (int) $paymentStatus['orderId']);
+			// $this->assignPlentyPaymentToPlentyOrder($payment, (int) $paymentStatus['orderId']);
 		}
 	}
 
