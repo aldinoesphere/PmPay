@@ -169,7 +169,9 @@ class PaymentHelper
 						$paymentStatus['transaction_id']
 		);
 
-		$this->getLogger(__METHOD__)->error('PmPay:updatePlentyPayment', $payments);
+		$this->getLogger(__METHOD__)->error('PmPay:PaymentProperty', $payments);
+		$this->getLogger(__METHOD__)->error('PmPay:updatePlentyPayment', PaymentProperty::TYPE_TRANSACTION_ID);
+		$this->getLogger(__METHOD__)->error('PmPay:transaction_id', $paymentStatus['transaction_id']);
 
 		if (count($payments) > 0)
 		{
