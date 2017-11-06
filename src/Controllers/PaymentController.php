@@ -156,7 +156,7 @@ class PaymentController extends Controller
 		];
 
 		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
-		return $this->response->redirectTo('payment/pmpay/status');
+		return $this->response->redirectTo('payment/pmpay/status', $paymentConfirmation);
 	}
 
 }
