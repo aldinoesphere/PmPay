@@ -139,6 +139,8 @@ class PaymentController extends Controller
 	 */
 	public function handleValidation($checkoutId)
 	{
+		$paymentData = [];
+
 		$this->getLogger(__METHOD__)->error('PmPay:checkoutId', $checkoutId);
 		
 		$pmpaySettings = $this->paymentService->getPmPaySettings();
@@ -156,8 +158,13 @@ class PaymentController extends Controller
 		];
 
 		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
+		$paymentData['transaction_id'] = $paymentConfirmation['id'];
+		$paymentData['paymentKey'] = $paymentConfirmation['paymentBrand'];
+		$paymentData['amount'] = $paymentConfirmation['amount'];
+		$paymentData['currency'] = $paymentConfirmation['currency'];
+		$paymentData['status'] = 2;
 		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
-		return $this->response->redirectTo('payment/pmpay/status?orderId=' . $orderId);
+		$this->paymentHelper->updatePlentyPayment($paymentStatus);
 	}
 
 }

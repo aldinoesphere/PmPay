@@ -124,7 +124,7 @@ class PaymentHelper
 
 		$state = $this->mapTransactionState((string)$paymentStatus['status']);
 
-		$payment->status = 2;
+		$payment->status = $state;
 		$payment->currency = $paymentStatus['currency'];
 		$payment->amount = $paymentStatus['amount'];
 
@@ -145,22 +145,6 @@ class PaymentHelper
 						PaymentProperty::TYPE_BOOKING_TEXT,
 						$this->getPaymentBookingText($paymentStatus, true)
 		);
-
-		if (isset($paymentStatus['pay_to_email']))
-		{
-			$paymentProperty[] = $this->getPaymentProperty(
-							PaymentProperty::TYPE_ACCOUNT_OF_RECEIVER,
-							$paymentStatus['pay_to_email']
-			);
-		}
-
-		if (isset($paymentStatus['failed_reason_code']))
-		{
-			$paymentProperty[] = $this->getPaymentProperty(
-							PaymentProperty::TYPE_EXTERNAL_TRANSACTION_STATUS,
-							$paymentStatus['failed_reason_code']
-			);
-		}
 
 		$payment->properties = $paymentProperty;
 		$payment->regenerateHash = true;
