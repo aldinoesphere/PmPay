@@ -151,7 +151,7 @@ class PaymentHelper
 
 		$payment = $this->paymentRepository->createPayment($payment);
 
-		$this->getLogger(__METHOD__)->error('PmPay:payment', $payment);
+		$this->getLogger(__METHOD__)->error('PmPay:payment_create_plenty', $payment);
 
 		return $payment;
 	}
@@ -164,43 +164,10 @@ class PaymentHelper
 	 */
 	public function updatePlentyPayment($paymentStatus)
 	{
-		$payments = [];
+		$payment = $this->createPlentyPayment($paymentStatus);
+		$this->getLogger(__METHOD__)->error('PmPay:payment_update_plenty', $payment);
 
-		$this->getLogger(__METHOD__)->error('PmPay:PaymentProperty', $payments);
-		$this->getLogger(__METHOD__)->error('PmPay:updatePlentyPayment', PaymentProperty::TYPE_TRANSACTION_ID);
-		$this->getLogger(__METHOD__)->error('PmPay:transaction_id', $paymentStatus['transaction_id']);
-
-		if (count($payments) > 0)
-		{
-
-			$state = $this->mapTransactionState((string)$paymentStatus['status']);
-			foreach ($payments as $payment)
-			{
-				if ($payment->status != $state)
-				{
-					$payment->status = $state;
-
-					if ($state == Payment::STATUS_APPROVED)
-					{
-						$payment->unaccountable = 0;
-						$payment->updateOrderPaymentStatus = true;
-					}
-				}
-
-				$this->updatePaymentPropertyValue(
-								$payment->properties,
-								PaymentProperty::TYPE_BOOKING_TEXT,
-								$this->getPaymentBookingText($paymentStatus, true)
-				);
-
-				$this->paymentRepository->updatePayment($payment);
-			}
-		} else {
-			$payment = $this->createPlentyPayment($paymentStatus);
-			$this->getLogger(__METHOD__)->error('PmPay:payment', $payment);
-
-			$this->assignPlentyPaymentToPlentyOrder($payment, (int) $paymentStatus['transaction_id']);
-		}
+		$this->assignPlentyPaymentToPlentyOrder($payment, (int) $paymentStatus['orderId']);
 	}
 
 	/**
