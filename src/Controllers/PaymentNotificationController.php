@@ -44,7 +44,7 @@ class PaymentNotificationController extends Controller
 	 * handle status_url from payment gateway
 	 * @return string
 	 */
-	public function handleStatus(Twig $twig)
+	public function handleStatus(Twig $twig, $id)
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:status_url', $this->request->all());
 
