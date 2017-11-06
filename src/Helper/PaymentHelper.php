@@ -164,10 +164,7 @@ class PaymentHelper
 	 */
 	public function updatePlentyPayment($paymentStatus)
 	{
-		$payments = $this->paymentRepository->getPaymentsByPropertyTypeAndValue(
-						PaymentProperty::TYPE_TRANSACTION_ID,
-						$paymentStatus['transaction_id']
-		);
+		$payments = 0;
 
 		$this->getLogger(__METHOD__)->error('PmPay:PaymentProperty', $payments);
 		$this->getLogger(__METHOD__)->error('PmPay:updatePlentyPayment', PaymentProperty::TYPE_TRANSACTION_ID);
@@ -200,7 +197,7 @@ class PaymentHelper
 			}
 		} else {
 			$payment = $this->createPlentyPayment($paymentStatus);
-			$this->getLogger(__METHOD__)->error('PmPay:payment', $payments);
+			$this->getLogger(__METHOD__)->error('PmPay:payment', $payment);
 
 			$this->assignPlentyPaymentToPlentyOrder($payment, (int) $paymentStatus['transaction_id']);
 		}
