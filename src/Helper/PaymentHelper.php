@@ -182,7 +182,7 @@ class PaymentHelper
 	{
 		$payments = $this->paymentRepository->getPaymentsByPropertyTypeAndValue(
 						PaymentProperty::TYPE_TRANSACTION_ID,
-						$paymentStatus['transaction_id']
+						$paymentStatus['orderId']
 		);
 
 		$this->getLogger(__METHOD__)->error('PmPay:updatePlentyPayment', $payments);

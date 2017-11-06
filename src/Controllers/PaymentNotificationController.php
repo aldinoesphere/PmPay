@@ -50,7 +50,7 @@ class PaymentNotificationController extends Controller
 		// $paymentStatus = $this->request->all();
 		$paymentStatus = [
 			'status' => 2,
-			'orderId' => $this->request->orderId
+			'orderId' => $this->request->get('orderId');
 		];
 		$this->paymentHelper->updatePlentyPayment($paymentStatus);
 		return $this->response->redirectTo('payment/pmpay/return?orderId=' . $orderId);
