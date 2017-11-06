@@ -164,8 +164,9 @@ class PaymentController extends Controller
 		$paymentData['currency'] = $paymentConfirmation['currency'];
 		$paymentData['status'] = 2;
 		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
-		$this->paymentHelper->updatePlentyPayment($paymentData);
-		return $this->response->redirectTo('payment/pmpay/return/?orderId='.$orderId);
+		if ($this->paymentHelper->updatePlentyPayment($paymentData)) {
+			return $this->response->redirectTo('payment/pmpay/return/?orderId='.$orderId);
+		}
 	}
 
 }
