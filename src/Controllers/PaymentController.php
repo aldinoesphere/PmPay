@@ -100,8 +100,6 @@ class PaymentController extends Controller
 	public function handleReturn($checkoutId)
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:return_url', $this->request->all());
-		$this->sessionStorage->getPlugin()->setValue('PmPayTransactionId', $this->request->get('transaction_id'));
-
 		$orderData = $this->orderService->placeOrder();
 
 		$orderId = $orderData->order->id;
@@ -168,6 +166,8 @@ class PaymentController extends Controller
 		$paymentData['currency'] = $paymentConfirmation['currency'];
 		$paymentData['status'] = 2;
 		$paymentData['orderId'] = $orderId;
+		$this->sessionStorage->getPlugin()->setValue('PmPayTransactionId', $paymentConfirmation['id']);
+
 		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
 
 		$this->paymentHelper->updatePlentyPayment($paymentData);
