@@ -97,14 +97,13 @@ class PaymentController extends Controller
 	/**
 	 * handle return_url from payment gateway
 	 */
-	public function handleReturn()
+	public function handleReturn($checkoutId)
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:return_url', $this->request->all());
 		$this->sessionStorage->getPlugin()->setValue('PmPayTransactionId', $this->request->get('transaction_id'));
 
 		$orderId = $this->request->get('orderId');
-		$checkoutId = $this->request->get('checkoutId');
-		
+
 		$this->handleValidation($checkoutId);
 
 		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
