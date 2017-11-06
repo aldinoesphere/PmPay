@@ -135,7 +135,7 @@ class PaymentController extends Controller
 	}
 
 	/**
-	 * show payment widget
+	 * handle validation payment
 	 */
 	public function handleValidation($checkoutId)
 	{
@@ -156,7 +156,7 @@ class PaymentController extends Controller
 		];
 
 		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
-		return $this->response->redirectTo('payment/pmpay/return?orderId=' . $orderId);
+		return $this->response->redirectTo('payment/pmpay/status?orderId=' . $orderId);
 	}
 
 }
