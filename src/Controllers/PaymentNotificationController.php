@@ -4,6 +4,7 @@ namespace PmPay\Controllers;
 
 use Plenty\Plugin\Controller;
 use Plenty\Plugin\Http\Request;
+use Plenty\Plugin\Http\Response;
 use Plenty\Plugin\Log\Loggable;
 use PmPay\Helper\PaymentHelper;
 
@@ -22,6 +23,11 @@ class PaymentNotificationController extends Controller
 	private $request;
 
 	/**
+	 * @var Response
+	 */
+	private $response;
+
+	/**
 	 *
 	 * @var PaymentHelper
 	 */
@@ -33,9 +39,10 @@ class PaymentNotificationController extends Controller
 	 * @param Request $request
 	 * @param PaymentHelper $paymentHelper
 	 */
-	public function __construct(Request $request, PaymentHelper $paymentHelper)
+	public function __construct(Request $request, Response $response, PaymentHelper $paymentHelper)
 	{
 		$this->request = $request;
+		$this->response = $response;
 		$this->paymentHelper = $paymentHelper;
 	}
 
