@@ -52,18 +52,4 @@ class PaymentNotificationController extends Controller
 
 		return 'ok';
 	}
-
-	/**
-	 * handle refund_status_url from refund payment gateway
-	 * @return string
-	 */
-	public function handleRefundStatus()
-	{
-		$this->getLogger(__METHOD__)->error('PmPay:refund_status_url', $this->request->all());
-
-		$refundStatus = $this->request->all();
-		$this->paymentHelper->updatePlentyRefundPayment($refundStatus);
-
-		return 'ok';
-	}
 }
