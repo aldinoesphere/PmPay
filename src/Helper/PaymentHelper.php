@@ -164,7 +164,7 @@ class PaymentHelper
 	 */
 	public function updatePlentyPayment($paymentStatus)
 	{
-		$payments = 0;
+		$payments = [];
 
 		$this->getLogger(__METHOD__)->error('PmPay:PaymentProperty', $payments);
 		$this->getLogger(__METHOD__)->error('PmPay:updatePlentyPayment', PaymentProperty::TYPE_TRANSACTION_ID);
