@@ -47,9 +47,13 @@ class PaymentNotificationController extends Controller
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:status_url', $this->request->all());
 
-		$paymentStatus = $this->request->all();
-		$this->paymentHelper->updatePlentyPayment($paymentStatus);
+		// $paymentStatus = $this->request->all();
+		// $this->paymentHelper->updatePlentyPayment($paymentStatus);
 
-		return 'ok';
+		// return 'ok';
+		$data = [
+			'data' => $this->request->all()
+		];
+		return $twig->render('PmPay::Payment.PaymentConfirmation', $data);
 	}
 }
