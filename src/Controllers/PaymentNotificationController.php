@@ -5,7 +5,6 @@ namespace PmPay\Controllers;
 use Plenty\Plugin\Controller;
 use Plenty\Plugin\Http\Request;
 use Plenty\Plugin\Log\Loggable;
-use Plenty\Plugin\Templates\Twig;
 use PmPay\Helper\PaymentHelper;
 
 /**
@@ -44,7 +43,7 @@ class PaymentNotificationController extends Controller
 	 * handle status_url from payment gateway
 	 * @return string
 	 */
-	public function handleStatus(Twig $twig, $id)
+	public function handleStatus()
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:status_url', $this->request->all());
 
@@ -52,9 +51,5 @@ class PaymentNotificationController extends Controller
 		// $this->paymentHelper->updatePlentyPayment($paymentStatus);
 
 		// return 'ok';
-		$data = [
-			'data' => $this->request->all()
-		];
-		return $twig->render('PmPay::Payment.PaymentConfirmation', $data);
 	}
 }
