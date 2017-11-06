@@ -102,7 +102,9 @@ class PaymentController extends Controller
 		$this->getLogger(__METHOD__)->error('PmPay:return_url', $this->request->all());
 		$this->sessionStorage->getPlugin()->setValue('PmPayTransactionId', $this->request->get('transaction_id'));
 
-		$orderId = $this->request->get('orderId');
+		$orderData = $this->orderService->placeOrder();
+
+		$orderId = $orderData->order->id;
 
 		$this->handleValidation($checkoutId);
 
