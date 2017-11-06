@@ -186,8 +186,8 @@ class PaymentService
 			'authentication.userId' => $pmpaySettings['userId'],
 			'authentication.password' => $pmpaySettings['password'],
 			'authentication.entityId' => $ccSettings['entityId'],
-			'amount' => '92',
-			'currency' => 'EUR',
+			'amount' => $basket->basketAmount,
+			'currency' => $basket->currency,
 			'paymentType' => $ccSettings['transactionMode']
 		];
 
