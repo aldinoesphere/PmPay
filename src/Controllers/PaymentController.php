@@ -158,9 +158,9 @@ class PaymentController extends Controller
 		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
 		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
 		$data = [
-			'a' => 0,
-			'b' => 1,
-			'c' => 2
+			'a' => '0',
+			'b' => '1',
+			'c' => '2'
 		];
 		return $this->response->redirectTo('payment/pmpay/status', $data);
 	}
