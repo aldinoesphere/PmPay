@@ -159,7 +159,7 @@ class PaymentController extends Controller
 
 		$paymentConfirmation = $this->gatewayService->paymentConfirmation($checkoutId, $parameters);
 		$paymentData['transaction_id'] = $paymentConfirmation['id'];
-		$paymentData['paymentKey'] = $paymentConfirmation['paymentBrand'];
+		$paymentData['paymentKey'] = 'PMPAY_ACC';
 		$paymentData['amount'] = $paymentConfirmation['amount'];
 		$paymentData['currency'] = $paymentConfirmation['currency'];
 		$paymentData['status'] = 2;

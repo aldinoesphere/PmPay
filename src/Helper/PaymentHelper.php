@@ -424,10 +424,10 @@ class PaymentHelper
 						}
 		);
 
-		$this->getLogger(__METHOD__)->error('PmPay:assignPlentyPaymentToPlentyOrder', $order);
-
 		if (!is_null($order) && $order instanceof Order)
 		{
+			$this->getLogger(__METHOD__)->error('Skrill:payment', $payment);
+			$this->getLogger(__METHOD__)->error('Skrill:order', $order);
 			$this->paymentOrderRelationRepository->createOrderRelation($payment, $order);
 		}
 	}
