@@ -164,7 +164,7 @@ class PaymentController extends Controller
 		$paymentData['currency'] = $paymentConfirmation['currency'];
 		$paymentData['status'] = 2;
 		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
-		$this->paymentHelper->updatePlentyPayment($paymentStatus);
+		$this->paymentHelper->updatePlentyPayment($paymentData);
 	}
 
 }
