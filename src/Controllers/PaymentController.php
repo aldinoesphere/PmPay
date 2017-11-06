@@ -103,6 +103,9 @@ class PaymentController extends Controller
 		$this->sessionStorage->getPlugin()->setValue('PmPayTransactionId', $this->request->get('transaction_id'));
 
 		$orderId = $this->request->get('orderId');
+		$checkoutId = $this->request->get('checkoutId');
+		
+		$this->handleValidation($checkoutId);
 
 		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
 
@@ -123,7 +126,7 @@ class PaymentController extends Controller
 	 */
 	public function handlePayment(Twig $twig, $checkoutId)
 	{
-		$paymentPageUrl = $this->paymentHelper->getDomain() . '/payment/pmpay/validate/' . $checkoutId . '/';
+		$paymentPageUrl = $this->paymentHelper->getDomain() . '/payment/pmpay/return/' . $checkoutId . '/';
 		$this->getLogger(__METHOD__)->error('PmPay:paymentPageUrl', $paymentPageUrl);
 
 		$data = [
@@ -166,9 +169,9 @@ class PaymentController extends Controller
 		$paymentData['orderId'] = $orderId;
 		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
 
-		if ($this->paymentHelper->updatePlentyPayment($paymentData)) {
-			return $this->response->redirectTo('payment/pmpay/return/?orderId='.$orderId);
-		}
+		$this->paymentHelper->updatePlentyPayment($paymentData);
+
+		return 'ok';
 	}
 
 }
