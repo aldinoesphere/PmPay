@@ -382,21 +382,22 @@ class PaymentHelper
 	 */
 	public function assignPlentyPaymentToPlentyOrder(Payment $payment, int $orderId)
 	{
-		$orderRepo = pluginApp(OrderRepositoryContract::class);
-		$authHelper = pluginApp(AuthHelper::class);
+		return $this->paymentOrderRelationRepository->createOrderRelation($payment, $orderId);
+		// $orderRepo = pluginApp(OrderRepositoryContract::class);
+		// $authHelper = pluginApp(AuthHelper::class);
 
-		$order = $authHelper->processUnguarded(
-						function () use ($orderRepo, $orderId) {
-							return $orderRepo->findOrderById($orderId);
-						}
-		);
+		// $order = $authHelper->processUnguarded(
+		// 				function () use ($orderRepo, $orderId) {
+		// 					return $orderRepo->findOrderById($orderId);
+		// 				}
+		// );
 
-		if (!is_null($order) && $order instanceof Order)
-		{
-			$this->getLogger(__METHOD__)->error('Skrill:payment', $payment);
-			$this->getLogger(__METHOD__)->error('Skrill:order', $order);
-			$this->paymentOrderRelationRepository->createOrderRelation($payment, $order);
-		}
+		// if (!is_null($order) && $order instanceof Order)
+		// {
+		// 	$this->getLogger(__METHOD__)->error('Skrill:payment', $payment);
+		// 	$this->getLogger(__METHOD__)->error('Skrill:order', $order);
+		// 	$this->paymentOrderRelationRepository->createOrderRelation($payment, $order);
+		// }
 	}
 
 	/**
