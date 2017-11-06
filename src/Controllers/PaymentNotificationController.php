@@ -48,8 +48,12 @@ class PaymentNotificationController extends Controller
 		$this->getLogger(__METHOD__)->error('PmPay:status_url', $this->request->all());
 
 		// $paymentStatus = $this->request->all();
-		// $this->paymentHelper->updatePlentyPayment($paymentStatus);
-
+		$paymentStatus = [
+			'status' => 2,
+			'orderId' => $this->request->orderId
+		];
+		$this->paymentHelper->updatePlentyPayment($paymentStatus);
+		return $this->response->redirectTo('payment/pmpay/return?orderId=' . $orderId);
 		// return 'ok';
 	}
 }
