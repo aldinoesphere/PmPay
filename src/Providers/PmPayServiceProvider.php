@@ -43,6 +43,28 @@ class PmPayServiceProvider extends ServiceProvider
     ) {
     	$this->registerPaymentMethod($payContainer, 'PMPAY_ACC', AccPaymentMethod::class);
 
+    	// Register Skrill Refund Event Procedure
+		$eventProceduresService->registerProcedure(
+						'PmPay',
+						ProcedureEntry::PROCEDURE_GROUP_ORDER,
+						[
+						'de' => 'Rückzahlung der PmPay-Zahlung',
+						'en' => 'Refund the PmPay-Payment'
+						],
+						'PmPay\Procedures\RefundEventProcedure@run'
+		);
+
+		// Register PmPay Update Order Status Event Procedure
+		$eventProceduresService->registerProcedure(
+						'PmPay',
+						ProcedureEntry::PROCEDURE_GROUP_ORDER,
+						[
+						'de' => 'Update order status the PmPay-Payment',
+						'en' => 'Update order status the PmPay-Payment'
+						],
+						'PmPay\Procedures\UpdateOrderStatusEventProcedure@run'
+		);
+
     	// Listen for the event that gets the payment method content
 		$eventDispatcher->listen(
 						GetPaymentMethodContent::class,
