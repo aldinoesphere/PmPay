@@ -348,6 +348,7 @@ class PaymentService
 		try
 		{
 			$pmpaySettings = $this->getPmPaySettings();
+			$transactionId = $payment->properties[0]->value;
 			$ccSettings = $this->getCcSettings();
 			$parameters = [
 				'authentication.userId' => $pmpaySettings['userId'],
@@ -358,10 +359,11 @@ class PaymentService
 				'paymentType' => 'RF'
 			];
 
-			$this->getLogger(__METHOD__)->error('PmPay:refund', $payment->properties[1]->value);
+			$this->getLogger(__METHOD__)->error('PmPay:refund', $payment->properties[0]->value);
 
-			// $response = $this->gatewayService->doRefund($parameters);
-			$response ='';
+			$response = $this->gatewayService->doRefund($transactionId, $parameters);
+
+			$this->getLogger(__METHOD__)->error('PmPay:response', $response);
 
 		}
 		catch (\Exception $e)
