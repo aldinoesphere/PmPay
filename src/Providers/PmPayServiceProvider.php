@@ -45,7 +45,7 @@ class PmPayServiceProvider extends ServiceProvider
 
     	// Register Skrill Refund Event Procedure
 		$eventProceduresService->registerProcedure(
-						'PmPay',
+						'PlentyPmpay',
 						ProcedureEntry::PROCEDURE_GROUP_ORDER,
 						[
 						'de' => 'Rückzahlung der PmPay-Zahlung',
@@ -56,7 +56,7 @@ class PmPayServiceProvider extends ServiceProvider
 
 		// Register PmPay Update Order Status Event Procedure
 		$eventProceduresService->registerProcedure(
-						'PmPay',
+						'PlentyPmpay',
 						ProcedureEntry::PROCEDURE_GROUP_ORDER,
 						[
 						'de' => 'Update order status the PmPay-Payment',
