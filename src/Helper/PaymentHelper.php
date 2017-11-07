@@ -491,7 +491,7 @@ class PaymentHelper
 	 * get payment booking text (use for show payment detail information).
 	 *
 	 * @param array $paymentStatus
-	 * @param bool $isCredentialValid
+	 * @param bool 
 	 * @return string
 	 */
 	public function getPaymentBookingText($paymentStatus)
@@ -521,7 +521,7 @@ class PaymentHelper
 		if (isset($paymentStatus['status']))
 		{
 			$paymentBookingText[] = "Payment status : " .
-				$this->getPaymentStatus((string)$paymentStatus['status'], $isCredentialValid);
+				$this->getPaymentStatus((string)$paymentStatus['status']);
 		}
 		if (isset($paymentStatus['IP_country']))
 		{
