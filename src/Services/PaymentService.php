@@ -358,7 +358,7 @@ class PaymentService
 				'paymentType' => 'RF'
 			];
 
-			$this->getLogger(__METHOD__)->error('PmPay:refund', $payment);
+			$this->getLogger(__METHOD__)->error('PmPay:refund', $payment->properties[1]->value);
 
 			// $response = $this->gatewayService->doRefund($parameters);
 			$response ='';
