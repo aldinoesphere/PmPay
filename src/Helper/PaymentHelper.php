@@ -390,60 +390,6 @@ class PaymentHelper
 	}
 
 	/**
-	 * get payment booking text (use for show payment detail information).
-	 *
-	 * @param array $paymentStatus
-	 * @param bool $isCredentialValid
-	 * @return string
-	 */
-	public function getPaymentBookingText($paymentStatus, $isCredentialValid)
-	{
-		$paymentBookingText = [];
-		$countryRepository = pluginApp(CountryRepositoryContract::class);
-
-		if (isset($paymentStatus['transaction_id']))
-		{
-			$paymentBookingText[] = "Transaction ID : " . (string) $paymentStatus['transaction_id'];
-		}
-		if (isset($paymentStatus['payment_type']))
-		{
-			if ($paymentStatus['payment_type'] == 'NGP')
-			{
-				$paymentStatus['payment_type'] = 'OBT';
-			}
-			$paymentMethod = $this->getPaymentMethodByPaymentKey('PMPAY_' . $paymentStatus['payment_type']);
-			if (isset($paymentMethod))
-			{
-				$paymentBookingText[] = "Used payment method : " . $paymentMethod->name;
-			}
-		}
-		if (isset($paymentStatus['status']))
-		{
-			$paymentBookingText[] = "Payment status : " .
-				$this->getPaymentStatus((string)$paymentStatus['status'], $isCredentialValid);
-		}
-		if (isset($paymentStatus['IP_country']))
-		{
-			$ipCountry = $countryRepository->getCountryByIso($paymentStatus['IP_country'], 'isoCode2');
-			$paymentBookingText[] = "Order originated from : " . $ipCountry->name;
-		}
-		if (isset($paymentStatus['payment_instrument_country']))
-		{
-			$paymentInstrumentCountry = $countryRepository->getCountryByIso(
-							$paymentStatus['payment_instrument_country'],
-							'isoCode3'
-			);
-			$paymentBookingText[] = "Country (of the card-issuer) : " . $paymentInstrumentCountry->name;
-		}
-		if (!empty($paymentBookingText))
-		{
-			return implode("\n", $paymentBookingText);
-		}
-
-		return '';
-	}
-
-	/**
 	 * get payment status (use for payment/refund detail information status).
 	 *
 	 * @param array $status
@@ -548,7 +494,7 @@ class PaymentHelper
 	 * @param bool $isCredentialValid
 	 * @return string
 	 */
-	public function getPaymentBookingText($paymentStatus, $isCredentialValid)
+	public function getPaymentBookingText($paymentStatus)
 	{
 		$paymentBookingText = [];
 		$countryRepository = pluginApp(CountryRepositoryContract::class);
