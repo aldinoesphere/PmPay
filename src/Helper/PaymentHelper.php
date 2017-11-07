@@ -354,6 +354,42 @@ class PaymentHelper
 	}
 
 	/**
+	 * get refund payment booking text (use for show refund payment detail information).
+	 *
+	 * @param array $refundStatus
+	 * @return string
+	 */
+	public function getRefundPaymentBookingText($refundStatus)
+	{
+		$paymentBookingText = [];
+
+		if (is_array($refundStatus))
+		{
+			$mbTransactionId = (string)$refundStatus['mb_transaction_id'];
+			$status = (string)$refundStatus['status'];
+		}
+		else
+		{
+			$mbTransactionId = (string)$refundStatus->mb_transaction_id;
+			$status = (string)$refundStatus->status;
+		}
+		if (isset($mbTransactionId))
+		{
+			$paymentBookingText[] = "MB Transaction ID : " . $mbTransactionId;
+		}
+		if (isset($status))
+		{
+			$paymentBookingText[] = "Refund status : " . $this->getPaymentStatus($status);
+		}
+		if (!empty($paymentBookingText))
+		{
+			return implode("\n", $paymentBookingText);
+		}
+
+		return '';
+	}
+
+	/**
 	 * get payment status (use for payment/refund detail information status).
 	 *
 	 * @param array $status

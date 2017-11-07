@@ -348,12 +348,13 @@ class PaymentService
 		try
 		{
 			$pmpaySettings = $this->getPmPaySettings();
+			$ccSettings = $this->getCcSettings();
 			$parameters = [
 				'authentication.userId' => $pmpaySettings['userId'],
 				'authentication.password' => $pmpaySettings['password'],
 				'authentication.entityId' => $ccSettings['entityId'],
-				'amount' => $basket->basketAmount,
-				'currency' => $basket->currency,
+				'amount' => $payment->amount,
+				'currency' => $paymnet->currency,
 				'paymentType' => 'RF'
 			];
 
