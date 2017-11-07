@@ -61,6 +61,56 @@ class PaymentHelper
 	}
 
 	/**
+	 * Create a debit payment when create a note (make refund).
+	 *
+	 * @param Payment $payment
+	 * @param array $refundStatus
+	 * @return Payment
+	 */
+	public function createPlentyRefundPayment($payment, $refundStatus)
+	{
+		$debitPayment = pluginApp(\Plenty\Modules\Payment\Models\Payment::class);
+
+		$debitPayment->mopId = $payment->mopId;
+		$debitPayment->parentId = $payment->id;
+		$debitPayment->type = 'debit';
+		$debitPayment->transactionType = Payment::TRANSACTION_TYPE_BOOKED_POSTING;
+		$debitPayment->currency = (string)$refundStatus->mb_currency;
+		$debitPayment->amount = (string)$refundStatus->mb_amount;
+
+		$state = $this->mapTransactionState((string)$refundStatus->status, true);
+
+		$debitPayment->status = $state;
+
+		if ($state == Payment::STATUS_REFUNDED)
+		{
+			$debitPayment->unaccountable = 0;
+		} else {
+			$debitPayment->unaccountable = 1;
+		}
+
+		$paymentProperty = [];
+		$paymentProperty[] = $this->getPaymentProperty(
+						PaymentProperty::TYPE_TRANSACTION_ID,
+						(string)$refundStatus->mb_transaction_id
+		);
+		$paymentProperty[] = $this->getPaymentProperty(PaymentProperty::TYPE_ORIGIN, Payment::ORIGIN_PLUGIN);
+		$paymentProperty[] = $this->getPaymentProperty(
+						PaymentProperty::TYPE_BOOKING_TEXT,
+						$this->getRefundPaymentBookingText($refundStatus)
+		);
+
+		$debitPayment->properties = $paymentProperty;
+		$debitPayment->regenerateHash = true;
+
+		$debitPayment = $this->paymentRepository->createPayment($debitPayment);
+
+		$this->getLogger(__METHOD__)->error('PmPay:debitPayment', $debitPayment);
+
+		return $debitPayment;
+	}
+
+	/**
 	 * get domain from webstoreconfig.
 	 *
 	 * @return string

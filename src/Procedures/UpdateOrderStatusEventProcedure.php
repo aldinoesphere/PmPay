@@ -80,17 +80,10 @@ class UpdateOrderStatusEventProcedure
 						{
 							$paymentStatus = $updateResult['response'];
 
-							$generatedSignatured = $paymentHelper->generateMd5sigByResponse($paymentStatus);
-							$isCredentialValid = $paymentHelper->isPaymentSignatureEqualsGeneratedSignature(
-											$paymentStatus['md5sig'],
-											$generatedSignatured
-							);
-
-							$this->getLogger(__METHOD__)->error('PmPay:isCredentialValid', $isCredentialValid);
 
 							$state = $paymentHelper->mapTransactionState((string) $paymentStatus['status']);
 
-							if ($isCredentialValid && $payment->status != $state)
+							if ($payment->status != $state)
 							{
 								$payment->status = $state;
 
@@ -104,7 +97,7 @@ class UpdateOrderStatusEventProcedure
 							$paymentHelper->updatePaymentPropertyValue(
 											$payment->properties,
 											PaymentProperty::TYPE_BOOKING_TEXT,
-											$paymentHelper->getPaymentBookingText($paymentStatus, $isCredentialValid)
+											$paymentHelper->getPaymentBookingText($paymentStatus)
 							);
 
 							$this->getLogger(__METHOD__)->error('PmPay:update_payment', $payment);

@@ -337,6 +337,93 @@ class PaymentService
 		return $result;
 	}
 
+	/**
+	 * send refund to the gateway with transaction_id and returns error or success.
+	 *
+	 * @param string $transactionId
+	 * @param Payment $payment
+	 */
+	public function refund($transactionId, Payment $payment)
+	{
+		try
+		{
+			$pmpaySettings = $this->getPmPaySettings();
+			$parameters = [
+				'authentication.userId' => $pmpaySettings['userId'],
+				'authentication.password' => $pmpaySettings['password'],
+				'authentication.entityId' => $ccSettings['entityId'],
+				'amount' => $basket->basketAmount,
+				'currency' => $basket->currency,
+				'paymentType' => 'RF'
+			];
+
+			$this->getLogger(__METHOD__)->error('PmPay:refund', $payment);
+
+			// $response = $this->gatewayService->doRefund($parameters);
+
+		}
+		catch (\Exception $e)
+		{
+			$this->getLogger(__METHOD__)->error('PmPay:refundFailed', $e);
+
+			return [
+				'error' => true,
+				'errorMessage' => $e->getMessage()
+			];
+		}
+
+		return [
+			'success' => true,
+			'response' => $response
+		];
+	}
+
+	/**
+	 * send get currenty payment status to the gateway with transaction_id and returns error or success.
+	 *
+	 * @param string $transactionId
+	 * @param Order $order
+	 */
+	public function updateOrderStatus($transactionId, Order $order)
+	{
+		try {
+			// $skrillSettings = $this->getSkrillSettings();
+			// $parameters['email'] = $skrillSettings['merchantAccount'];
+			// $parameters['password'] = md5($skrillSettings['apiPassword']);
+			// $parameters['trn_id'] = $transactionId;
+
+			// $parametersLog = $parameters;
+			// $parametersLog['password'] = '*****';
+
+			// $this->getLogger(__METHOD__)->error('Skrill:parametersLog', $parametersLog);
+
+			// $response = $this->gatewayService->getPaymentStatus($parameters);
+
+			// $this->getLogger(__METHOD__)->error('Skrill:response', $response);
+		}
+		catch (\Exception $e)
+		{
+			$this->getLogger(__METHOD__)->error('PmPay:updateOrderStatusFailed', $e->getMessage());
+
+			// $this->orderRepository->updateOrder(['statusId' => 3], $order->id);
+
+			return [
+				'error' => true,
+				'errorMessage' => $e->getMessage()
+			];
+		}
+
+		if ($response['status'] != '2')
+		{
+			// $this->orderRepository->updateOrder(['statusId' => 3], $order->id);
+		}
+
+		return [
+			'success' => true,
+			'response' => $response
+		];
+	}
+
 }
 
 ?>
