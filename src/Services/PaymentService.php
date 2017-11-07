@@ -354,13 +354,14 @@ class PaymentService
 				'authentication.password' => $pmpaySettings['password'],
 				'authentication.entityId' => $ccSettings['entityId'],
 				'amount' => $payment->amount,
-				'currency' => $paymnet->currency,
+				'currency' => $payment->currency,
 				'paymentType' => 'RF'
 			];
 
 			$this->getLogger(__METHOD__)->error('PmPay:refund', $payment);
 
 			// $response = $this->gatewayService->doRefund($parameters);
+			$response ='';
 
 		}
 		catch (\Exception $e)

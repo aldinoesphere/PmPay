@@ -120,4 +120,37 @@ class GatewayService
 		
 	}
 
+	/**
+	 * send request and get refund status from gateway
+	 *
+	 * @param $parameters
+	 * @throws \Exception
+	 * @return xml
+	 */
+	public function doRefund($parameters)
+	{
+		$parameters['action'] = 'prepare';
+		$response = $this->getGatewayResponse($this->skrillRefundUrl, $parameters);
+
+		$this->getLogger(__METHOD__)->error('Skrill:prepare_response', $response);
+
+		$xmlResponse = simplexml_load_string($response);
+		$sid = (string) $xmlResponse->sid;
+
+		if (!$this->isMd5Valid($sid))
+		{
+			throw new \Exception('Sid is not valid : ' . $response);
+		}
+
+		unset($parameters);
+		$parameters['action'] = 'refund';
+		$parameters['sid'] = $sid;
+
+		$response = $this->getGatewayResponse($this->skrillRefundUrl, $parameters);
+
+		$this->getLogger(__METHOD__)->error('Skrill:refund_response', $response);
+
+		return simplexml_load_string($response);
+	}
+
 }
