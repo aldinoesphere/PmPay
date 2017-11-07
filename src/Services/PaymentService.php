@@ -400,6 +400,7 @@ class PaymentService
 			// $this->getLogger(__METHOD__)->error('Skrill:parametersLog', $parametersLog);
 
 			// $response = $this->gatewayService->getPaymentStatus($parameters);
+			$response = '';
 
 			// $this->getLogger(__METHOD__)->error('Skrill:response', $response);
 		}

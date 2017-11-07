@@ -195,7 +195,7 @@ class PaymentHelper
 		$paymentProperty[] = $this->getPaymentProperty(PaymentProperty::TYPE_ORIGIN, Payment::ORIGIN_PLUGIN);
 		$paymentProperty[] = $this->getPaymentProperty(
 						PaymentProperty::TYPE_BOOKING_TEXT,
-						$this->getPaymentBookingText($paymentStatus, true)
+						$this->getPaymentBookingText($paymentStatus)
 		);
 
 		$payment->properties = $paymentProperty;
