@@ -105,7 +105,7 @@ class PaymentController extends Controller
 
 		$orderId = $orderData->order->id;
 
-		$this->handleValidation($checkoutId, $orderId);
+		$validation = $this->handleValidation($checkoutId, $orderId);
 
 		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
 
@@ -119,7 +119,9 @@ class PaymentController extends Controller
 			$this->basketItemRepository->removeBasketItem($basketItem->id);
 		}
 
-		return $this->response->redirectTo('execute-payment/'.$orderId);
+		if ($validation) {
+			return $this->response->redirectTo('execute-payment/'.$orderId);
+		}
 	}
 
 	/**
@@ -170,11 +172,14 @@ class PaymentController extends Controller
 
 		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
 
-		if ($paymentConfirmation['result']->code == '000.100.110') {
+		if ($paymentConfirmation['result']['code'] == '000.100.110') {
 			$this->paymentHelper->updatePlentyPayment($paymentData);
+			return true;
 		}
-
-		return 'ok';
+		else 
+		{
+			return false;
+		}
 	}
 
 }
