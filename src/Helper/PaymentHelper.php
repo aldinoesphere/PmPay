@@ -78,7 +78,7 @@ class PaymentHelper
 		$debitPayment->type = 'debit';
 		$debitPayment->transactionType = Payment::TRANSACTION_TYPE_BOOKED_POSTING;
 		$debitPayment->currency = (string)$refundStatus['currency'];
-		$debitPayment->amount = (string)$refundStatus['amount'];
+		$debitPayment->amount = (string)$refundStatus->amount;
 
 		$state = $this->mapTransactionState('2', true);
 
@@ -477,7 +477,7 @@ class PaymentHelper
 	{
 		$orderRepo = pluginApp(OrderRepositoryContract::class);
 		$authHelper = pluginApp(AuthHelper::class);
-		
+
 		$order = $authHelper->processUnguarded(
 						function () use ($orderRepo, $orderId) {
 							return $orderRepo->findOrderById($orderId);
