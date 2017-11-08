@@ -35,6 +35,8 @@ class RefundEventProcedure
 		/** @var Order $order */
 		$order = $eventTriggered->getOrder();
 
+		$this->getLogger(__METHOD__)->error('PmPay:order', $order);
+
 		// only sales orders and credit notes are allowed order types to refund
 		switch ($order->typeId)
 		{
@@ -111,6 +113,7 @@ class RefundEventProcedure
 						{
 							// create the new debit payment
 							/** @var Payment $debitPayment */
+							$this->getLogger(__METHOD__)->error('PmPay:payment', $payment);
 							$debitPayment = $paymentHelper->createPlentyRefundPayment($payment, $refundResult['response']);
 
 							$this->getLogger(__METHOD__)->error('PmPay:debitPayment', $debitPayment);
@@ -118,6 +121,7 @@ class RefundEventProcedure
 							if (isset($debitPayment) && $debitPayment instanceof Payment)
 							{
 								// assign the new debit payment to the order
+								$this->getLogger(__METHOD__)->error('PmPay:debitPayment', $debitPayment);
 								$paymentHelper->assignPlentyPaymentToPlentyOrder($debitPayment, (int) $order->id);
 							}
 						}
