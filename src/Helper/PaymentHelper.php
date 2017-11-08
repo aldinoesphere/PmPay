@@ -71,6 +71,8 @@ class PaymentHelper
 	{
 		$debitPayment = pluginApp(\Plenty\Modules\Payment\Models\Payment::class);
 
+		$this->getLogger(__METHOD__)->error('PmPay:refundStatus', $refundStatus);
+
 		$debitPayment->mopId = $payment->mopId;
 		$debitPayment->parentId = $payment->id;
 		$debitPayment->type = 'debit';
