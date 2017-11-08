@@ -151,7 +151,6 @@ class PaymentController extends Controller
 		
 		$pmpaySettings = $this->paymentService->getPmPaySettings();
 		$ccSettings = $this->paymentService->getCcSettings();
-		$orderData = $this->orderService->placeOrder();
 
 		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
 
