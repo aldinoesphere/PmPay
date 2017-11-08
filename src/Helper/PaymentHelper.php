@@ -77,10 +77,10 @@ class PaymentHelper
 		$debitPayment->parentId = $payment->id;
 		$debitPayment->type = 'debit';
 		$debitPayment->transactionType = Payment::TRANSACTION_TYPE_BOOKED_POSTING;
-		$debitPayment->currency = (string)$refundStatus->mb_currency;
-		$debitPayment->amount = (string)$refundStatus->mb_amount;
+		$debitPayment->currency = (string)$refundStatus->currency;
+		$debitPayment->amount = (string)$refundStatus->amount;
 
-		$state = $this->mapTransactionState((string)$refundStatus->status, true);
+		$state = $this->mapTransactionState('2', true);
 
 		$this->getLogger(__METHOD__)->error('PmPay:state', $state);
 
@@ -96,7 +96,7 @@ class PaymentHelper
 		$paymentProperty = [];
 		$paymentProperty[] = $this->getPaymentProperty(
 						PaymentProperty::TYPE_TRANSACTION_ID,
-						(string)$refundStatus->mb_transaction_id
+						(string)$refundStatus->id
 		);
 		$paymentProperty[] = $this->getPaymentProperty(PaymentProperty::TYPE_ORIGIN, Payment::ORIGIN_PLUGIN);
 		$paymentProperty[] = $this->getPaymentProperty(
