@@ -105,7 +105,7 @@ class PaymentController extends Controller
 
 		$orderId = $orderData->order->id;
 
-		$this->handleValidation($checkoutId);
+		$this->handleValidation($checkoutId, $orderId);
 
 		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
 
@@ -141,7 +141,7 @@ class PaymentController extends Controller
 	/**
 	 * handle validation payment
 	 */
-	public function handleValidation($checkoutId)
+	public function handleValidation($checkoutId, $orderId)
 	{
 		$paymentData = [];
 
@@ -151,9 +151,7 @@ class PaymentController extends Controller
 		$ccSettings = $this->paymentService->getCcSettings();
 		$orderData = $this->orderService->placeOrder();
 
-		$orderId = $orderData->order->id;
-
-		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderData->order->id);
+		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
 
 		$parameters = [
 			'authentication.userId' => $pmpaySettings['userId'],
