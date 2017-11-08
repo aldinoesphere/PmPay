@@ -80,6 +80,8 @@ class PaymentHelper
 
 		$state = $this->mapTransactionState((string)$refundStatus->status, true);
 
+		$this->getLogger(__METHOD__)->error('PmPay:state', $state);
+
 		$debitPayment->status = $state;
 
 		if ($state == Payment::STATUS_REFUNDED)
@@ -99,13 +101,14 @@ class PaymentHelper
 						PaymentProperty::TYPE_BOOKING_TEXT,
 						$this->getRefundPaymentBookingText($refundStatus)
 		);
+		$this->getLogger(__METHOD__)->error('PmPay:paymentProperty', $paymentProperty);
 
 		$debitPayment->properties = $paymentProperty;
 		$debitPayment->regenerateHash = true;
 
-		$debitPayment = $this->paymentRepository->createPayment($debitPayment);
-
 		$this->getLogger(__METHOD__)->error('PmPay:debitPayment', $debitPayment);
+
+		$debitPayment = $this->paymentRepository->createPayment($debitPayment);
 
 		return $debitPayment;
 	}
