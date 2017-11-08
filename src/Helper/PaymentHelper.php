@@ -77,8 +77,8 @@ class PaymentHelper
 		$debitPayment->parentId = $payment->id;
 		$debitPayment->type = 'debit';
 		$debitPayment->transactionType = Payment::TRANSACTION_TYPE_BOOKED_POSTING;
-		$debitPayment->currency = (string)$refundStatus->currency;
-		$debitPayment->amount = (string)$refundStatus->amount;
+		$debitPayment->currency = (string)$refundStatus['currency'];
+		$debitPayment->amount = (string)$refundStatus['amount'];
 
 		$state = $this->mapTransactionState('2', true);
 
@@ -96,7 +96,7 @@ class PaymentHelper
 		$paymentProperty = [];
 		$paymentProperty[] = $this->getPaymentProperty(
 						PaymentProperty::TYPE_TRANSACTION_ID,
-						(string)$refundStatus->id
+						(string)$refundStatus['id']
 		);
 		$paymentProperty[] = $this->getPaymentProperty(PaymentProperty::TYPE_ORIGIN, Payment::ORIGIN_PLUGIN);
 		$paymentProperty[] = $this->getPaymentProperty(
