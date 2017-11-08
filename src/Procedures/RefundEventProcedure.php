@@ -122,7 +122,8 @@ class RefundEventProcedure
 							{
 								// assign the new debit payment to the order
 								$this->getLogger(__METHOD__)->error('PmPay:debitPayment', $debitPayment);
-								$paymentHelper->assignPlentyPaymentToPlentyOrder($debitPayment, (int) $order->id);
+								$paymentHelper->assignPlentyPaymentToPlentyOrder($debitPayment, (int)$order->id);
+								$paymentHelper->assignPlentyPaymentToPlentyOrder($payment, (int)$orderId);
 							}
 						}
 					}

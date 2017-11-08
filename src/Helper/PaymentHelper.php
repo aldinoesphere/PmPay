@@ -477,13 +477,13 @@ class PaymentHelper
 	{
 		$orderRepo = pluginApp(OrderRepositoryContract::class);
 		$authHelper = pluginApp(AuthHelper::class);
-		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
+		
 		$order = $authHelper->processUnguarded(
 						function () use ($orderRepo, $orderId) {
 							return $orderRepo->findOrderById($orderId);
 						}
 		);
-		$this->getLogger(__METHOD__)->error('PmPay:order', $order);
+
 		if (!is_null($order) && $order instanceof Order)
 		{
 			$this->getLogger(__METHOD__)->error('PmPay:payment', $payment);

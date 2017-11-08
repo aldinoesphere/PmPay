@@ -99,6 +99,7 @@ class PaymentController extends Controller
 	 */
 	public function handleReturn($checkoutId)
 	{
+		$this->getLogger(__METHOD__)->error('PmPay:checkoutId', $checkoutId);
 		$this->getLogger(__METHOD__)->error('PmPay:return_url', $this->request->all());
 		$orderData = $this->orderService->placeOrder();
 
@@ -109,6 +110,7 @@ class PaymentController extends Controller
 		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
 
 		$basketItems = $this->basketItemRepository->all();
+
 		$this->getLogger(__METHOD__)->error('PmPay:basketItems', $basketItems);
 
 		#Reset all basket.
@@ -170,7 +172,9 @@ class PaymentController extends Controller
 
 		$this->getLogger(__METHOD__)->error('PmPay:paymentConfirmation', $paymentConfirmation);
 
-		$this->paymentHelper->updatePlentyPayment($paymentData);
+		if ($paymentConfirmation['result']->code == '000.100.110') {
+			$this->paymentHelper->updatePlentyPayment($paymentData);
+		}
 
 		return 'ok';
 	}
