@@ -181,7 +181,7 @@ class PaymentHelper
 
 		$this->getLogger(__METHOD__)->error('PmPay:mapTransactionState', $state);
 
-		$payment->status = 5;
+		$payment->status = $state;
 		$payment->currency = $paymentStatus['currency'];
 		$payment->amount = $paymentStatus['amount'];
 
