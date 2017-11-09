@@ -132,7 +132,7 @@ class PaymentController extends Controller
 		$paymentPageUrl = $this->paymentHelper->getDomain() . '/payment/pmpay/return/' . $checkoutId . '/';
 		$this->getLogger(__METHOD__)->error('PmPay:paymentPageUrl', $paymentPageUrl);
 
-		$ccSettings = $this->paymentService->getCcSettings();
+		$ccSettings = $this->paymentService->getPaymentSettings('credit-card');
 		$cardType = '';
 
 		if (is_array($ccSettings['cardType'])) {
@@ -160,7 +160,7 @@ class PaymentController extends Controller
 		$this->getLogger(__METHOD__)->error('PmPay:checkoutId', $checkoutId);
 		
 		$pmpaySettings = $this->paymentService->getPmPaySettings();
-		$ccSettings = $this->paymentService->getCcSettings();
+		$ccSettings = $this->paymentService->getPaymentSettings('credit-card');
 
 		$this->getLogger(__METHOD__)->error('PmPay:orderId', $orderId);
 

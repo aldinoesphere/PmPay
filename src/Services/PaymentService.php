@@ -181,7 +181,7 @@ class PaymentService
 	{
 		
 		
-		$parameters = array_merge_recursive(
+		$parameters = array_merge(
 			$this->getCredentials(),
 			$this->getTransactionParameters($basket),
 			$this->getCcParameters()
@@ -221,8 +221,7 @@ class PaymentService
 		$pmpaySettings = $this->getPmPaySettings();
 		$credentials = [
 			'authentication.userId' => $pmpaySettings['userId'],
-			'authentication.password' => $pmpaySettings['password'],
-			'authentication.entityId' => $ccSettings['entityId']
+			'authentication.password' => $pmpaySettings['password']
 		];
 
 		return $credentials;
@@ -231,9 +230,10 @@ class PaymentService
 	public function getCcParameters(PaymentMethod $paymentMethod) 
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:paymentMethod', $paymentMethod);
-		
+
 		$ccSettings = $this->getPaymentSettings('credit-card');
 		$ccParameters = [
+			'authentication.entityId' => $ccSettings['entityId'],
 			'paymentType' => $ccSettings['transactionMode']
 		];
 
@@ -387,7 +387,7 @@ class PaymentService
 		{
 			$pmpaySettings = $this->getPmPaySettings();
 			$transactionId = $payment->properties[0]->value;
-			$ccSettings = $this->getCcSettings();
+			$ccSettings = $this->getPaymentSettings('credit-card');
 			$parameters = [
 				'authentication.userId' => $pmpaySettings['userId'],
 				'authentication.password' => $pmpaySettings['password'],
