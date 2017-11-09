@@ -148,9 +148,9 @@ class PaymentService
 	 *
 	 * @return array|null
 	 */
-	public function getCcSettings()
+	public function getPaymentSettings($settingType)
 	{
-		$this->loadCurrentSettings('credit-card');
+		$this->loadCurrentSettings($settingType);
 		return $this->settings;
 	}
 
@@ -179,17 +179,21 @@ class PaymentService
 	 */
 	public function getPaymentContent(Basket $basket, PaymentMethod $paymentMethod)
 	{
-		$pmpaySettings = $this->getPmPaySettings();
-		$ccSettings = $this->getCcSettings();
-
-		$parameters = [
-			'authentication.userId' => $pmpaySettings['userId'],
-			'authentication.password' => $pmpaySettings['password'],
-			'authentication.entityId' => $ccSettings['entityId'],
-			'amount' => $basket->basketAmount,
-			'currency' => $basket->currency,
-			'paymentType' => $ccSettings['transactionMode']
-		];
+		
+		
+		$parameters = array_merge_recursive(
+			$this->getCredentials(),
+			$this->getTransactionParameters($basket),
+			$this->getCcParameters()
+		);
+		// $parameters = [
+		// 	'authentication.userId' => $pmpaySettings['userId'],
+		// 	'authentication.password' => $pmpaySettings['password'],
+		// 	'authentication.entityId' => $ccSettings['entityId'],
+		// 	'amount' => $basket->basketAmount,
+		// 	'currency' => $basket->currency,
+		// 	'paymentType' => $ccSettings['transactionMode']
+		// ];
 
 		try
 		{
@@ -211,6 +215,40 @@ class PaymentService
 			'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
 			'content' => $paymentPageUrl
 		];
+	}
+
+	public function getCredentials() {
+		$pmpaySettings = $this->getPmPaySettings();
+		$credentials = [
+			'authentication.userId' => $pmpaySettings['userId'],
+			'authentication.password' => $pmpaySettings['password'],
+			'authentication.entityId' => $ccSettings['entityId']
+		];
+
+		return $credentials;
+	}
+
+	public function getCcParameters(PaymentMethod $paymentMethod) 
+	{
+		$this->getLogger(__METHOD__)->error('PmPay:paymentMethod', $paymentMethod);
+		
+		$ccSettings = $this->getPaymentSettings('credit-card');
+		$ccParameters = [
+			'paymentType' => $ccSettings['transactionMode']
+		];
+
+		return $ccParameters;
+	}
+
+	public function getTransactionParameters($basket)
+	{
+		$transactionParameters = [];
+		$transactionParameters = [
+			'amount' => $basket->basketAmount,
+			'currency' => $basket->currency
+		];
+
+		return $transactionParameters;
 	}
 
 	/**
