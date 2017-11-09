@@ -21,6 +21,7 @@ use Plenty\Plugin\Log\Loggable;
 use PmPay\Helper\PaymentHelper;
 use PmPay\Services\PaymentService;
 use PmPay\Methods\AccPaymentMethod;
+use PmPay\Methods\AecPaymentMethod;
  
 class PmPayServiceProvider extends ServiceProvider
 {
