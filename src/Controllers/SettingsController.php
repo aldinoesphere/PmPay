@@ -169,7 +169,7 @@ class SettingsController extends Controller
 			case 'easy-credit':
 				$settings['settings'][0]['PID_'.$plentyId] = array(
 							'server' => $this->request->get('server'),
-							'enable' => $this->request->get('enable'),
+							'display' => $this->request->get('display'),
 							'entityId' => $this->request->get('entityId')
 						);
 				break;
