@@ -117,7 +117,7 @@ class PaymentHelper
 
 	public function updateRefundStatus($status, $orderId) 
 	{
-		return $this->orderRepository->updateOrder($status, $orderId);
+		$this->orderRepository->updateOrder($status, $orderId);
 	}
 
 	/**
