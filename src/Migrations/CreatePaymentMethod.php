@@ -47,6 +47,7 @@ class CreatePaymentMethod
 		$paymentMethod = $this->paymentHelper->getPaymentMethodByPaymentKey($paymentKey);
 		if (is_null($paymentMethod))
 		{
+			$this->getLogger(__METHOD__)->error('PmPay:paymentMethod', $paymentMethod);
 			$this->paymentMethodRepository->createPaymentMethod(
 							[
 								'pluginKey' => 'PlentyPmpay',
