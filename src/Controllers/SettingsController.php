@@ -101,8 +101,6 @@ class SettingsController extends Controller
 	{
 		$plentyId = $this->systemService->getPlentyId();
 
-		$this->getLogger(__METHOD__)->error('PmPay:plentyId', $plentyId);
-		
 		try {
 			$configuration = $this->settingsService->getConfiguration($plentyId, $settingType);
 		}
@@ -137,43 +135,9 @@ class SettingsController extends Controller
 	{
 		$settingType = $this->request->get('settingType');
 		$plentyId = $this->request->get('plentyId');
-		$cardTypes = $this->request->get('cardTypes');
-		$newCardTypes = [];
-
-		foreach ($cardTypes as $key => $value) {
-			array_push($newCardTypes, $value);
-		}
-
-		$settings['settingType'] = $settingType;
-
-		switch ($settingType) {
-			case 'general-setting':
-				$settings['settings'][0]['PID_'.$plentyId] = array(
-							'userId' => $this->request->get('userId'),
-							'password' => $this->request->get('password'),
-							'merchantEmail' => $this->request->get('merchantEmail'),
-							'shopUrl' => $this->request->get('shopUrl')
-						);
-				break;
-
-			case 'credit-card':
-				$settings['settings'][0]['PID_'.$plentyId] = array(
-							'language' => $this->request->get('language'),
-							'display' => $this->request->get('display'),
-							'cardType' => implode(',', $newCardTypes),
-							'transactionMode' => $this->request->get('transactionMode'),
-							'entityId' => $this->request->get('entityId')
-						);		
-				break;
-
-			case 'easy-credit':
-				$settings['settings'][0]['PID_'.$plentyId] = array(
-							'server' => $this->request->get('language'),
-							'enable' => $this->request->get('display'),
-							'entityId' => $this->request->get('entityId')
-						);
-				break;
-		}
+		
+		$settings = $this->setSettings($settingType, $plentyId);
+		array_push($settings, ['settingType' => $settingType]);
 
 		$this->getLogger(__METHOD__)->error('PmPay:settings', $settings);
 
@@ -191,5 +155,48 @@ class SettingsController extends Controller
 		$this->getLogger(__METHOD__)->error('PmPay:saveConfiguration', $settings);
 
 		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status=' . $status);
+	}
+
+
+	public function setSettings($settingType, $plentyId) {
+		$cardTypes = $this->request->get('cardTypes');
+		$newCardTypes = [];
+
+		foreach ($cardTypes as $key => $value) {
+			array_push($newCardTypes, $value);
+		}
+
+		switch ($settingType) {
+			case 'general-setting':
+				return $settings['settings'][0]['PID_'.$plentyId] = array(
+							'userId' => $this->request->get('userId'),
+							'password' => $this->request->get('password'),
+							'merchantEmail' => $this->request->get('merchantEmail'),
+							'shopUrl' => $this->request->get('shopUrl')
+						);
+				break;
+
+			case 'credit-card':
+				return $settings['settings'][0]['PID_'.$plentyId] = array(
+							'language' => $this->request->get('language'),
+							'display' => $this->request->get('display'),
+							'cardType' => implode(',', $newCardTypes),
+							'transactionMode' => $this->request->get('transactionMode'),
+							'entityId' => $this->request->get('entityId')
+						);		
+				break;
+
+			case 'easy-credit':
+				return $settings['settings'][0]['PID_'.$plentyId] = array(
+							'server' => $this->request->get('language'),
+							'enable' => $this->request->get('display'),
+							'entityId' => $this->request->get('entityId')
+						);
+				break;
+			
+			default:
+				return $settings[];
+				break;
+		}
 	}
 }
