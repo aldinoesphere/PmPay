@@ -102,7 +102,7 @@ class SettingsController extends Controller
 		$plentyId = $this->systemService->getPlentyId();
 
 		$this->getLogger(__METHOD__)->error('PmPay:plentyId', $plentyId);
-		
+
 		try {
 			$configuration = $this->settingsService->getConfiguration($plentyId, $settingType);
 		}
@@ -177,8 +177,7 @@ class SettingsController extends Controller
 
 		$this->getLogger(__METHOD__)->error('PmPay:settings', $settings);
 
-		// $result = $this->settingsService->saveConfiguration($settings);
-		$result = '';
+		$result = $this->settingsService->saveConfiguration($settings);
 
 		if ($result == 1)
 		{
