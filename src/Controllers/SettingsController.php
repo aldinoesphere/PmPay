@@ -42,6 +42,11 @@ class SettingsController extends Controller
 	private $settingsService;
 
 	/**
+	 * @var paymentHelper
+	 */
+	private $paymentHelper;
+
+	/**
 	 * SettingsController constructor.
 	 * @param SettingsService $settingsService
 	 */
@@ -49,10 +54,12 @@ class SettingsController extends Controller
 					Request $request,
 					Response $response,
 					SystemService $systemService,
-					SettingsService $settingsService
+					SettingsService $settingsService,
+					PaymentHelper $paymentHelper
 	) {
 		$this->request = $request;
 		$this->response = $response;
+		$this->paymentHelper = $paymentHelper;
 		$this->systemService = $systemService;
 		$this->settingsService = $settingsService;
 	}
