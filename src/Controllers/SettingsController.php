@@ -136,12 +136,13 @@ class SettingsController extends Controller
 		$settingType = $this->request->get('settingType');
 		$plentyId = $this->request->get('plentyId');
 		
-		$settings = $this->setSettings($settingType, $plentyId, $this->request);
+		$settings = $this->setSettings($settingType, $plentyId);
 		array_push($settings, ['settingType' => $settingType]);
 
 		$this->getLogger(__METHOD__)->error('PmPay:settings', $settings);
 
-		$result = $this->settingsService->saveConfiguration($settings);
+		// $result = $this->settingsService->saveConfiguration($settings);
+		$result = '';
 
 		if ($result == 1)
 		{
@@ -157,39 +158,39 @@ class SettingsController extends Controller
 	}
 
 
-	public function setSettings($settingType, $plentyId, $request) {
+	public function setSettings($settingType, $plentyId) {
 		$cardTypes = $this->request->get('cardTypes');
 		$newCardTypes = [];
 
 		foreach ($cardTypes as $key => $value) {
 			array_push($newCardTypes, $value);
 		}
-		
+
 		switch ($settingType) {
 			case 'general-setting':
 				return $settings['settings'][0]['PID_'.$plentyId] = array(
-							'userId' => $request->get('userId'),
-							'password' => $request->get('password'),
-							'merchantEmail' => $request->get('merchantEmail'),
-							'shopUrl' => $request->get('shopUrl')
+							'userId' => $this->request->get('userId'),
+							'password' => $this->request->get('password'),
+							'merchantEmail' => $this->request->get('merchantEmail'),
+							'shopUrl' => $this->request->get('shopUrl')
 						);
 				break;
 
 			case 'credit-card':
 				return $settings['settings'][0]['PID_'.$plentyId] = array(
-							'language' => $request->get('language'),
-							'display' => $request->get('display'),
+							'language' => $this->request->get('language'),
+							'display' => $this->request->get('display'),
 							'cardType' => implode(',', $newCardTypes),
-							'transactionMode' => $request->get('transactionMode'),
-							'entityId' => $request->get('entityId')
+							'transactionMode' => $this->request->get('transactionMode'),
+							'entityId' => $this->request->get('entityId')
 						);		
 				break;
 
 			case 'easy-credit':
 				return $settings['settings'][0]['PID_'.$plentyId] = array(
-							'server' => $request->get('language'),
-							'enable' => $request->get('display'),
-							'entityId' => $request->get('entityId')
+							'server' => $this->request->get('language'),
+							'enable' => $this->request->get('display'),
+							'entityId' => $this->request->get('entityId')
 						);
 				break;
 			
