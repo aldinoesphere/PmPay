@@ -71,9 +71,6 @@ class PmPayServiceProvider extends ServiceProvider
 		$eventDispatcher->listen(
 						GetPaymentMethodContent::class,
 						function (GetPaymentMethodContent $event) use ($paymentHelper, $basket, $paymentService, $paymentMethodService) {
-							$this->getLogger(__METHOD__)->error('PmPay:basketLoad', $basket->load());
-							$this->getLogger(__METHOD__)->error('PmPay:methodService', $paymentMethodService->findByPaymentMethodId($event->getMop()));
-							$this->getLogger(__METHOD__)->error('PmPay:mop', $event->getMop());
 							if ($paymentHelper->isPmPayPaymentMopId($event->getMop()))
 							{
 								$content = $paymentService->getPaymentContent(
@@ -113,7 +110,7 @@ class PmPayServiceProvider extends ServiceProvider
 	private function registerPaymentMethod($payContainer, $paymentKey, $class)
 	{
 		$payContainer->register(
-			'PlentyPmpay::' . $paymentKey,
+			'pmpay1::' . $paymentKey,
 			$class,
 			[
 				AfterBasketChanged::class,
