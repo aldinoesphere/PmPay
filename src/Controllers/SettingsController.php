@@ -135,12 +135,6 @@ class SettingsController extends Controller
 	{
 		$settingType = $this->request->get('settingType');
 		$plentyId = $this->request->get('plentyId');
-		$cardTypes = $this->request->get('cardTypes');
-		$newCardTypes = [];
-
-		foreach ($cardTypes as $key => $value) {
-			array_push($newCardTypes, $value);
-		}
 		
 		$settings = $this->setSettings($settingType, $plentyId, $this->request);
 		array_push($settings, ['settingType' => $settingType]);
@@ -164,6 +158,13 @@ class SettingsController extends Controller
 
 
 	public function setSettings($settingType, $plentyId, $request) {
+		$cardTypes = $this->request->get('cardTypes');
+		$newCardTypes = [];
+
+		foreach ($cardTypes as $key => $value) {
+			array_push($newCardTypes, $value);
+		}
+		
 		switch ($settingType) {
 			case 'general-setting':
 				return $settings['settings'][0]['PID_'.$plentyId] = array(
