@@ -13,30 +13,6 @@
                         "menu": "settings/orders/pmpay",
                         "urlKey": "credit-card",
                         "entryPoint": "../../../../../pmpay/settings/credit-card"
-                    },
-                    {
-                        "label": "Credit Card (Recurring)",
-                        "menu": "settings/orders/pmpay",
-                        "urlKey": "credit-card-recurring",
-                        "entryPoint": "../../../../../pmpay/settings/credit-card"
-                    },
-                    {
-                        "label": "Direct Debit",
-                        "menu": "settings/orders/pmpay",
-                        "urlKey": "direct-debit",
-                        "entryPoint": "../../../../../pmpay/settings/credit-card"
-                    },
-                    {
-                        "label": "Direct Debit (Recurring)",
-                        "menu": "settings/orders/pmpay",
-                        "urlKey": "deirect-debit-recurring",
-                        "entryPoint": "../../../../../pmpay/settings/credit-card"
-                    },
-                    {
-                        "label": "Easy Credit",
-                        "menu": "settings/orders/pmpay",
-                        "urlKey": "easy-credit",
-                        "entryPoint": "../../../../../pmpay/settings/easy-credit"
                     }
     ]
 }
