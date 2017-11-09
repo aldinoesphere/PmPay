@@ -4,12 +4,14 @@ namespace PmPay\Migrations;
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodRepositoryContract;
 
 use PmPay\Helper\PaymentHelper;
+use Plenty\Plugin\Log\Loggable;
 
 /**
 * 
 */
 class CreatePaymentMethod
 {
+	use Loggable;
 	
 	/**
 	 * @var PaymentMethodRepositoryContract
