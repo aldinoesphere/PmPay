@@ -184,7 +184,7 @@ class PaymentService
 		$parameters = array_merge(
 			$this->getCredentials(),
 			$this->getTransactionParameters($basket),
-			$this->getCcParameters()
+			$this->getCcParameters($paymentMethod)
 		);
 		// $parameters = [
 		// 	'authentication.userId' => $pmpaySettings['userId'],
@@ -227,7 +227,7 @@ class PaymentService
 		return $credentials;
 	}
 
-	public function getCcParameters(PaymentMethod $paymentMethod) 
+	public function getCcParameters($paymentMethod) 
 	{
 		$this->getLogger(__METHOD__)->error('PmPay:paymentMethod', $paymentMethod);
 
