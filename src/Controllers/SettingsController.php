@@ -154,7 +154,7 @@ class SettingsController extends Controller
 		}
 		$this->getLogger(__METHOD__)->error('PmPay:saveConfiguration', $settings);
 
-		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status='.implode(',', $newCardTypes));
+		return $this->response->redirectTo('pmpay/settings/'.$settingType.'?status=' . $status);
 	}
 
 
