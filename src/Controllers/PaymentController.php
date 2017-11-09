@@ -132,7 +132,17 @@ class PaymentController extends Controller
 		$paymentPageUrl = $this->paymentHelper->getDomain() . '/payment/pmpay/return/' . $checkoutId . '/';
 		$this->getLogger(__METHOD__)->error('PmPay:paymentPageUrl', $paymentPageUrl);
 
+		$ccSettings = $this->paymentService->getCcSettings();
+		$cardType = '';
+
+		if (is_array($ccSettings['cardType'])) {
+			$cardType = implode(' ', $ccSettings['cardType']);
+		} else {
+			$cardType = $ccSettings['cardType'];
+		}
+		
 		$data = [
+			'cardType' => $cardType,
 			'checkoutId' => $checkoutId,
 			'paymentPageUrl' => $paymentPageUrl
 		];
