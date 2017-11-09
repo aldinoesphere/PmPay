@@ -240,7 +240,7 @@ class PaymentHelper
 	 */
 	public function isPmPayPaymentMopId($mopId)
 	{
-		$paymentMethods = $this->paymentMethodRepository->allForPlugin('pmpay1');
+		$paymentMethods = $this->paymentMethodRepository->allForPlugin('PlentyPmpay');
 		
 		$this->getLogger(__METHOD__)->error('PmPay:isPmPayPaymentMopId', $paymentMethods);
 

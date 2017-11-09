@@ -1,6 +1,6 @@
 {
     "defaultEntryPoint": "index.html",
-    "namespace": "pmpay1",
+    "namespace": "PlentyPmpay",
     "menuEntries": [
                     {
                         "label": "General Settings",

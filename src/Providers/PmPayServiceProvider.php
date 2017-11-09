@@ -110,7 +110,7 @@ class PmPayServiceProvider extends ServiceProvider
 	private function registerPaymentMethod($payContainer, $paymentKey, $class)
 	{
 		$payContainer->register(
-			'pmpay1::' . $paymentKey,
+			'PlentyPmpay::' . $paymentKey,
 			$class,
 			[
 				AfterBasketChanged::class,

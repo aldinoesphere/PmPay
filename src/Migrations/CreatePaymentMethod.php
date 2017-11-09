@@ -49,7 +49,7 @@ class CreatePaymentMethod
 		{
 			$this->paymentMethodRepository->createPaymentMethod(
 							[
-								'pluginKey' => 'pmpay1',
+								'pluginKey' => 'PlentyPmpay',
 								'paymentKey' => (string) $paymentKey,
 								'name' => $name
 							]
