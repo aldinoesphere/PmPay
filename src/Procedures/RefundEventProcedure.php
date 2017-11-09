@@ -123,7 +123,7 @@ class RefundEventProcedure
 								// assign the new debit payment to the order
 								$this->getLogger(__METHOD__)->error('PmPay:debitPayment', $debitPayment);
 								$paymentHelper->assignPlentyPaymentToPlentyOrder($debitPayment, (int)$order->id);
-								$this->orderRepository->updateOrder(['statusId' => $debitPayment['status']], $orderId);
+								$paymentHelper->updateRefundStatus(['statusId' => $debitPayment['status']], $orderId);
 							}
 						}
 					}

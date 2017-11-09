@@ -115,6 +115,11 @@ class PaymentHelper
 		return $debitPayment;
 	}
 
+	public function updateRefundStatus($status, $orderId) 
+	{
+		return $this->orderRepository->updateOrder($status, $orderId);
+	}
+
 	/**
 	 * get domain from webstoreconfig.
 	 *
