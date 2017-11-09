@@ -180,6 +180,7 @@ class SettingsController extends Controller
 							'entityId' => $this->request->get('entityId')
 						);
 				$this->getLogger(__METHOD__)->error('PmPay:easy-credit', $this->paymentHelper->getPaymentMethodByPaymentKey('PMPAY_AEC'));
+				$this->getLogger(__METHOD__)->error('PmPay:credit-card', $this->paymentHelper->getPaymentMethodByPaymentKey('PMPAY_ACC'));
 				break;
 		}
 
