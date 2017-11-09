@@ -122,7 +122,7 @@ img {
 					<label for="Shop Url">Shop Url</label>
 					<input type="text" class="input-text" name="shopUrl" value="{{ setting.shopUrl }}"/>
 				</div>
-			{% elseif settingType == 'credit-card' %}
+			{% else %}
 				<div>
 					<label for="Enabled">Language *</label>
 					<select name="language" value="{{ setting.language }}">
@@ -157,29 +157,6 @@ img {
 					<select name="transactionMode" onchange="onChange()" value="{{ setting.transactionMode }}">
 						<option value="DB" {{ (setting.transactionMode == 'DB') ? 'selected' : '' }}>Debit</option>
 						<option value="PA" {{ (setting.transactionMode == 'PA') ? 'selected' : '' }}>Pre - Authorization</option>
-					</select>
-				</div>
-				<div class="clear"></div>
-				<div class="div-separator clear"></div>
-				<div>
-					<label for="Shop Url">Entity-ID</label>
-					<input type="text" class="input-text" name="entityId" value="{{ setting.entityId }}"/>
-				</div>
-			{% elseif settingType == 'easy-credit'  %}
-				<div>
-					<label for="Enabled">Server</label>
-					<select name="server" value="{{ setting.server }}">
-						<option value="LIVE" {{ (setting.server == 'de') ? 'selected' : '' }}>Live</option>
-						<option value="TEST" {{ (setting.server == 'en') ? 'selected' : '' }}>Test</option>
-					</select>
-				</div>
-				<div class="clear"></div>
-				<div class="div-separator clear"></div>
-				<div>
-					<label for="Enabled">Enabled *</label>
-					<select name="display" value="{{ setting.display }}">
-						<option value="0" {{ (setting.display == '0') ? 'selected' : '' }}>No</option>
-						<option value="1" {{ (setting.display == '1') ? 'selected' : '' }}>Yes</option>
 					</select>
 				</div>
 				<div class="clear"></div>
