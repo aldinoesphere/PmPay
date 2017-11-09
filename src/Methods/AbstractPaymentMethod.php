@@ -26,6 +26,11 @@ class AbstractPaymentMethod extends PaymentMethodService
 	protected $paymentService;
 
 	/**
+	 * @var paymentSettings
+	 */
+	protected $paymentSettings;
+
+	/**
 	 * @var name
 	 */
 	protected $name = '';
@@ -42,13 +47,13 @@ class AbstractPaymentMethod extends PaymentMethodService
 	/**
 	 * @var settingsType
 	 */
-	protected $settingsType = 'credit-card';
+	protected $settingsType = '';
 	
 	function __construct(Checkout $checkout, PaymentService $paymentService)
 	{
 		$this->checkout         = $checkout;
 		$this->paymentService   = $paymentService;
-		// $this->paymentService->loadCurrentSettings($this->settingsType);
+		$this->paymentSettings 	= $this->paymentService->getPaymentSettings($this->settingsType);
 	}
 
 	/**

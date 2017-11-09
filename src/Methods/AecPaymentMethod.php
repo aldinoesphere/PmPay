@@ -5,25 +5,25 @@ namespace PmPay\Methods;
 use Plenty\Plugin\Log\Loggable;
 
 /**
-* Class AccPaymentMethod
+* Class AecPaymentMethod
 * @package PmPay\Methods
 */
-class AccPaymentMethod extends AbstractPaymentMethod
+class AecPaymentMethod extends AbstractPaymentMethod
 {
 	use Loggable;
 
 	/**
 	 * @var name
 	 */
-	protected $name = 'Credit Cards';
+	protected $name = 'Easy Credit';
 
 	/**
 	 * @var logoFileName
 	 */
-	protected $logoFileName = 'acc.png';
+	protected $logoFileName = 'aec.png';
 
 	/**
 	 * @var settingsType
 	 */
-	protected $settingsType = 'credit-card';
+	protected $settingsType = 'easy-credit';
 }

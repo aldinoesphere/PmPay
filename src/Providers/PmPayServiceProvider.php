@@ -42,6 +42,7 @@ class PmPayServiceProvider extends ServiceProvider
 		EventProceduresService $eventProceduresService
     ) {
     	$this->registerPaymentMethod($payContainer, 'PMPAY_ACC', AccPaymentMethod::class);
+    	$this->registerPaymentMethod($payContainer, 'PMPAY_AEC', AecPaymentMethod::class);
 
     	// Register PmPay Refund Event Procedure
 		$eventProceduresService->registerProcedure(
