@@ -78,7 +78,7 @@ class PaymentHelper
 		$debitPayment->type = 'debit';
 		$debitPayment->transactionType = Payment::TRANSACTION_TYPE_BOOKED_POSTING;
 		$debitPayment->currency = (string)$refundStatus['currency'];
-		$debitPayment->amount = (string)$refundStatus->amount;
+		$debitPayment->amount = (string)$refundStatus['amount'];
 
 		$state = $this->mapTransactionState('2', true);
 
@@ -88,9 +88,9 @@ class PaymentHelper
 
 		if ($state == Payment::STATUS_REFUNDED)
 		{
-			$debitPayment->unaccountable = 0;
-		} else {
 			$debitPayment->unaccountable = 1;
+		} else {
+			$debitPayment->unaccountable = 0;
 		}
 
 		$paymentProperty = [];
@@ -370,12 +370,12 @@ class PaymentHelper
 
 		if (is_array($refundStatus))
 		{
-			$mbTransactionId = (string)$refundStatus['mb_transaction_id'];
-			$status = (string)$refundStatus['status'];
+			$mbTransactionId = (string)$refundStatus['id'];
+			$status = 2;
 		}
 		else
 		{
-			$mbTransactionId = (string)$refundStatus->mb_transaction_id;
+			$mbTransactionId = (string)$refundStatus->id;
 			$status = (string)$refundStatus->status;
 		}
 		if (isset($mbTransactionId))
