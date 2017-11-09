@@ -172,6 +172,7 @@ class SettingsController extends Controller
 							'display' => $this->request->get('display'),
 							'entityId' => $this->request->get('entityId')
 						);
+				$this->getLogger(__METHOD__)->error('PmPay:easy-credit', $this->paymentHelper->getPaymentMethodByPaymentKey('PMPAY_AEC'));
 				break;
 		}
 
